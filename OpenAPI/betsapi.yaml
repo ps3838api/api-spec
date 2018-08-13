@@ -742,18 +742,6 @@ definitions:
       pitcher2MustStart:
         type: boolean
         description: 'Baseball only. Refers to the pitcher for Team2. This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'
-      fillType:
-        type: string
-        description: |
-            NORMAL - bet will be placed on specified stake.  
-            FILLANDKILL - If the stake is over the max limit, bet will be placed on max limit, otherwise it will be placed on specified stake.  
-            FILLMAXLIMIT - bet will be places on max limit, stake amount will be ignored. Please note that maximum limits can change at any moment, which may result in risking more than anticipated. This option is replacement of isMaxStakeBet from v1/bets/place'
-        enum:
-          - NORMAL
-          - FILLANDKILL
-          - FILLMAXLIMIT
-        example: NORMAL
-        default: NORMAL
       sportId:
         type: integer
         format: int32
