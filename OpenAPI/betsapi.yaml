@@ -718,10 +718,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/BettingStatusResponse'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
           schema:
