@@ -90,7 +90,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/PlaceBetResponseV3'
+            $ref: '#/definitions/PlaceBetResponseV2'
         '400':
           description: BadRequest
           schema:
@@ -145,6 +145,45 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+      deprecated: true
+  /v2/bets/parlay:
+    post:
+      tags:
+        - Place Bets
+      summary: Place parlay bet - v2
+      operationId: Bets_ParlayV2
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: The Parlay request.
+          required: true
+          schema:
+            $ref: '#/definitions/PlaceParlayBetRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PlaceParlayBetResponseV2'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'			
   /v1/bets/teaser:
     post:
       tags:
@@ -886,7 +925,7 @@ definitions:
           - NO_API_ACCESS
       message:
         type: string
-  PlaceBetResponseV3:
+  PlaceBetResponseV2:
     type: object
     properties:
       status:
@@ -1635,6 +1674,97 @@ definitions:
         items:
           $ref: '#/definitions/ParlayLegResponse'
     description: ''
+  PlaceParlayBetResponseV2:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ACCEPTED
+        description: Status of the response.
+        enum:
+          - ACCEPTED
+          - PROCESSED_WITH_ERROR
+      errorCode:
+        type: string
+        example: null
+        x-nullable: true
+        description: | 
+          When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+          
+          
+          ABOVE_MAX_BET_AMOUNT = Stake is above allowed maximum amount,  
+          ALL_BETTING_CLOSED = Betting is not allowed at this moment,  
+          BELOW_MIN_BET_AMOUNT = Stake is below allowed minimum amount,  
+          BLOCKED_BETTING = Betting is suspended for the client,   
+          BLOCKED_CLIENT = Client is no longer active,  
+          INSUFFICIENT_FUNDS = Bet is submitted by a client with insufficient funds,  
+          INVALID_COUNTRY = Client country is not allowed for betting,  
+          INVALID_LEGS = One or more legs are invalid,  
+          INVALID_ODDS_FORMAT = If a bet was submitted with the odds format that is not allowed for the client,  
+          INVALID_ROUND_ROBIN_OPTIONS = Round robin options are invalid (i.e. does not match with number of legs),  
+          ROUND_ROBIN_DISALLOWED = Round robin is disallowed for one of the leagues,  
+          TOO_MANY_LEGS = Maximum of 10 legs can be specified,  
+          TOO_FEW_LEGS = At least 2 legs are required for Parlay,  
+          RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Client has reached his total loss limit,  
+          RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
+          INVALID_REQUEST = Request has invalid parameters,  
+          DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          SYSTEM_ERROR_3 = Unexpected error 
+        enum:
+          - ABOVE_MAX_BET_AMOUNT
+          - ALL_BETTING_CLOSED
+          - BELOW_MIN_BET_AMOUNT
+          - BLOCKED_BETTING
+          - BLOCKED_CLIENT
+          - INSUFFICIENT_FUNDS
+          - INVALID_COUNTRY
+          - INVALID_LEGS
+          - INVALID_ODDS_FORMAT
+          - INVALID_ROUND_ROBIN_OPTIONS
+          - ROUND_ROBIN_DISALLOWED
+          - TOO_MANY_LEGS
+          - TOO_FEW_LEGS
+          - RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED
+          - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
+          - INVALID_REQUEST
+          - DUPLICATE_UNIQUE_REQUEST_ID
+          - SYSTEM_ERROR_3
+      betId:
+        type: integer
+        format: int64
+        example: 759629245
+        description: Id of a newly created bet.
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
+        description: Unique identifier provided in the request.
+      roundRobinOptionWithOdds:
+        type: array
+        description: Provides array with all acceptable Round Robin options with parlay odds for that option.
+        items:
+          $ref: '#/definitions/RoundRobinOptionWithOdds'
+      maxRiskStake:
+        type: number
+        format: double
+        description: Maximum stake amount
+      minRiskStake:
+        type: number
+        format: double
+        description: Minimum stake amount
+      validLegs:
+        type: array
+        description: Collection of valid legs (format described below). Can be empty if no valid legs found.
+        items:
+          $ref: '#/definitions/ParlayLegResponse'
+      invalidLegs:
+        type: array
+        description: The collection of legs that resulted in error (format described below). Can be empty if no invalid legs found.
+        items:
+          $ref: '#/definitions/ParlayLegResponse'
+      parlayBet:
+        $ref: '#/definitions/ParlayBet'		
+    description: ''	
   RoundRobinOptionWithOdds:
     type: object
     properties:
@@ -2142,6 +2272,9 @@ definitions:
         description: 'A collection of valid legs, if any.'
         items:
           $ref: '#/definitions/PlaceTeaserBetLegResponse'
+      teaserBet:
+        $ref: '#/definitions/TeaserBet'
+        description: 'Present if bet was accepted'
   PlaceTeaserBetLegResponse:
     type: object
     properties:
@@ -2328,6 +2461,8 @@ definitions:
         type: boolean
         example: false
         description: Whether or not the bet was accepted on the line that changed in favour of client. This can be true only if acceptBetterLine in the Place Bet request is set to TRUE.
+      specialBet:
+        $ref: '#/definitions/SpecialBet'
     description: ''
   SpecialBet:
     type: object
