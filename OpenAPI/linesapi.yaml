@@ -413,6 +413,272 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true
+  /v2/fixtures/special:
+    get:
+      tags:
+        - Fixtures
+      summary: Get Special Fixtures - v2
+      description: Returns all **non-settled** specials for the given sport.
+      operationId: Fixtures_Special_V2_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: sportId
+          in: query
+          description: Id of a sport for which to retrieve the specials.
+          required: true
+          type: integer
+          format: int32
+        - name: leagueIds
+          in: query
+          description: The leagueIds array may contain a list of comma separated league ids.
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int32
+          collectionFormat: multi
+        - name: since
+          in: query
+          description: This is used to receive incremental updates. Use the value of last field from the previous response. When since parameter is not provided, the fixtures are delayed up to 1 min to encourage the use of the parameter.
+          required: false
+          type: integer
+          format: int64
+        - name: category
+          in: query
+          description: The category the special falls under.
+          required: false
+          type: string
+        - name: eventId
+          in: query
+          description: Id of an event associated with a special.
+          required: false
+          type: integer
+          format: int64
+        - name: specialId
+          in: query
+          description: Id of the special.
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SpecialsFixturesResponse'
+          examples:
+            application/json:
+              sportId: 4
+              last: 636433059508250600
+              leagues:
+                - id: 487
+                  specials:
+                    - id: 1
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 4th quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: I
+                      event:
+                        id: 1
+                        periodNumber: 0
+                      contestants:
+                        - id: 1
+                          name: Odd
+                          rotNum: 100
+                        - id: 2
+                          name: Even
+                          rotNum: 101
+                    - id: 2
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 3rd quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: I
+                      event:
+                        id: 1
+                        periodNumber: 0
+                      contestants:
+                        - id: 3
+                          name: Odd
+                          rotNum: 100
+                        - id: 4
+                          name: Even
+                          rotNum: 101
+                    - id: 3
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 2nd quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: H
+                      event:
+                        id: 1
+                        periodNumber: 0
+                      contestants:
+                        - id: 5
+                          name: Odd
+                          rotNum: 100
+                        - id: 6
+                          name: Even
+                          rotNum: 101
+                    - id: 4
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 1st quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: I
+                      event:
+                        id: 1
+                        periodNumber: 0
+                      contestants:
+                        - id: 7
+                          name: Odd
+                          rotNum: 100
+                        - id: 8
+                          name: Even
+                          rotNum: 101
+                    - id: 5
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 4th quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: null
+                      event:
+                        id: 2
+                        periodNumber: 0
+                      contestants:
+                        - id: 9
+                          name: Odd
+                          rotNum: 100
+                        - id: 10
+                          name: Even
+                          rotNum: 101
+                    - id: 6
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 3rd quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: I
+                      event:
+                        id: 2
+                        periodNumber: 0
+                      contestants:
+                        - id: 11
+                          name: Odd
+                          rotNum: 100
+                        - id: 12
+                          name: Even
+                          rotNum: 101
+                    - id: 7
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 2nd quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: I
+                      event:
+                        id: 2
+                        periodNumber: 0
+                      contestants:
+                        - id: 13
+                          name: Odd
+                          rotNum: 100
+                        - id: 14
+                          name: Even
+                          rotNum: 101
+                    - id: 8
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Will the 1st quarter be odd or even?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: 1/4 Totals
+                      units: ""
+                      status: H
+                      event:
+                        id: 2
+                        periodNumber: 0
+                      contestants:
+                        - id: 15
+                          name: Odd
+                          rotNum: 100
+                        - id: 16
+                          name: Even
+                          rotNum: 101
+                    - id: 9
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Who will win the NBA finals?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: Outright Winner
+                      units: ""
+                      status: I
+                      contestants:
+                        - id: 17
+                          name: Golden State Warriors
+                          rotNum: 100
+                        - id: 18
+                          name: Cleveland Cavaliers
+                          rotNum: 101
+                        - id: 19
+                          name: San Antonio Spurs
+                          rotNum: 102
+                        - id: 20
+                          name: Chicago Bulls
+                          rotNum: 103
+                - id: 578
+                  specials:
+                    - id: 10
+                      betType: MULTI_WAY_HEAD_TO_HEAD
+                      name: Who will win the WNBA finals?
+                      date: '2017-10-11T14:00:00Z'
+                      cutoff: '2017-10-11T14:00:00Z'
+                      category: Outright Winner
+                      units: ""
+                      status: I
+                      contestants:
+                        - id: 21
+                          name: Minnesota Lynx
+                          rotNum: 100
+                        - id: 22
+                          name: Indiana Fever
+                          rotNum: 101
+                        - id: 23
+                          name: Phoenix Mercury
+                          rotNum: 102
+                        - id: 24
+                          name: Chicago Sky
+                          rotNum: 103
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false
   /v1/fixtures/settled:
     get:
@@ -1170,7 +1436,128 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false
+      deprecated: true
+  /v2/odds/special:
+    get:
+      tags:
+        - Odds
+      summary: Get Special Odds - v2
+      description: Returns odds for specials for all non-settled events.
+      operationId: Odds_Special_V2_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: oddsFormat
+          in: query
+          description: Format the odds are returned in. [American, Decimal, HongKong, Indonesian, Malay]
+          required: false
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: sportId
+          in: query
+          description: Id of a sport for which to retrieve the specials.
+          required: true
+          type: integer
+          format: int32
+        - name: leagueIds
+          in: query
+          description: The leagueIds array may contain a list of comma separated league ids.
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int32
+          collectionFormat: multi
+        - name: since
+          in: query
+          description: This is used to receive incremental updates. Use the value of last from previous response. When since parameter is not provided, the fixtures are delayed up to 1 min to encourage the use of the parameter.
+          required: false
+          type: integer
+          format: int64
+        - name: specialId
+          in: query
+          description: Id of the special. This is an optional argument.
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SpecialOddsResponse'
+          examples:
+            application/json:
+              sportId: 4
+              last: 636433059510590700
+              leagues:
+                - id: 487
+                  specials:
+                    - id: 1
+                      maxBet: 100
+                      contestantLines:
+                        - id: 1
+                          lineId: 1001
+                          price: -199
+                          handicap: null
+                        - id: 2
+                          lineId: 1002
+                          price: -198
+                          handicap: null
+                    - id: 7
+                      maxBet: 100
+                      contestantLines:
+                        - id: 13
+                          lineId: 1013
+                          price: -187
+                          handicap: null
+                        - id: 14
+                          lineId: 1014
+                          price: -186
+                          handicap: null
+                - id: 578
+                  specials:
+                    - id: 10
+                      maxBet: 100
+                      contestantLines:
+                        - id: 21
+                          lineId: 1021
+                          price: -179
+                          handicap: null
+                        - id: 22
+                          lineId: 1022
+                          price: -178
+                          handicap: null
+                        - id: 23
+                          lineId: 1023
+                          price: -177
+                          handicap: null
+                        - id: 24
+                          lineId: 1024
+                          price: -176
+                          handicap: null
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: false      
   /v1/line:
     get:
       tags:
@@ -1271,6 +1658,107 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true              
+  /v2/line:
+    get:
+      tags:
+        - Line
+      summary: Get Straight Line - v2
+      description: Returns latest line.
+      operationId: Line_Straight_V2_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: leagueId
+          in: query
+          description: League Id.
+          required: true
+          type: integer
+          format: int32
+        - name: handicap
+          in: query
+          description: This is needed for SPREAD, TOTAL_POINTS and TEAM_TOTAL_POINTS bet types
+          required: true
+          type: number
+          format: double
+        - name: oddsFormat
+          in: query
+          description: Format in which we return the odds. Default is American.
+          required: true
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: sportId
+          in: query
+          description: Sport identification
+          required: true
+          type: integer
+          format: int32
+        - name: eventId
+          in: query
+          description: Event identification
+          required: true
+          type: integer
+          format: int64
+        - name: periodNumber
+          in: query
+          description: This represents the period of the match. For example, for soccer we have 0 (Game),  1 (1st Half) & 2 (2nd Half)
+          required: true
+          type: integer
+          format: int32
+        - name: betType
+          in: query
+          description: Bet Type
+          required: true
+          type: string
+          enum:
+            - SPREAD
+            - MONEYLINE
+            - TOTAL_POINTS
+            - TEAM_TOTAL_POINTS
+        - name: team
+          in: query
+          description: Chosen team type. This is needed only for SPREAD, MONEYLINE and TEAM_TOTAL_POINTS bet types
+          required: false
+          type: string
+          enum:
+            - Team1
+            - Team2
+            - Draw
+        - name: side
+          in: query
+          description: Chosen side. This is needed only for TOTAL_POINTS and TEAM_TOTAL_POINTS
+          required: false
+          type: string
+          enum:
+            - OVER
+            - UNDER
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LineResponse'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'            
   /v1/line/parlay:
     post:
       tags:
@@ -1309,6 +1797,45 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true              
+  /v2/line/parlay:
+    post:
+      tags:
+        - Line
+      summary: Get Parlay Line - v2
+      description: Returns parlay lines and calculate odds.
+      operationId: Line_Parlay_V2_Post
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParlayLinesRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParlayLinesResponse'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'            
   /v1/line/teaser:
     post:
       tags:
@@ -1402,7 +1929,63 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false
+      deprecated: true
+  /v2/line/special:
+    get:
+      tags:
+        - Line
+      operationId: Line_Special_V2_Get
+      summary: Get Special Line - v2
+      description: Returns special lines and calculate odds.
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: oddsFormat
+          in: query
+          description: Format the odds are returned in. [American, Decimal, HongKong, Indonesian, Malay]
+          required: true
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: specialId
+          in: query
+          description: Id of the special.
+          required: true
+          type: integer
+          format: int64
+        - name: contestantId
+          in: query
+          description: Id of the contestant.
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SpecialLineResponse'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: false      
   /v1/sports:
     get:
       tags:
@@ -1620,6 +2203,35 @@ paths:
       summary: Get In-Running - v1
       description: Returns all live soccer events that have a status that indicates the event is in progress.
       operationId: InRunning_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/InRunningResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedLinesErrorResponse'
+      deprecated: true            
+  /v2/inrunning:
+    get:
+      tags:
+        - Others
+      summary: Get In-Running - v2
+      description: Returns all live soccer events that have a status that indicates the event is in progress.
+      operationId: InRunning_V2_Get
       consumes: []
       produces:
         - application/json
