@@ -848,8 +848,7 @@ definitions:
           OFFLINE_EVENT = Bet is submitted on a event that is offline or the submitted line is not offered at the moment due to points/handicap change or the submitted bet type is just not offered at the moment,  
           PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,  
           RED_CARDS_CHANGED = Bet is submitted on a live soccer event with changed red card count,  
-          SCORE_CHANGED = Bet is submitted on a live soccer event with changed score,  
-          TIME_RESTRICTION = Bet is submitted within too short of a period from the same bet previously placed by a client,  
+          SCORE_CHANGED = Bet is submitted on a live soccer event with changed score, 
           DUPLICATE_UNIQUE_REQUEST_ID = REquest with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
           INCOMPLETE_CUSTOMER_BETTING_PROFILE = System configuration issue,  
           INVALID_CUSTOMER_PROFILE = System configuration issue,   
@@ -875,8 +874,7 @@ definitions:
           - OFFLINE_EVENT
           - PAST_CUTOFFTIME
           - RED_CARDS_CHANGED
-          - SCORE_CHANGED
-          - TIME_RESTRICTION
+          - SCORE_CHANGED         
           - DUPLICATE_UNIQUE_REQUEST_ID
           - INCOMPLETE_CUSTOMER_BETTING_PROFILE
           - INVALID_CUSTOMER_PROFILE
@@ -955,8 +953,7 @@ definitions:
           OFFLINE_EVENT = Bet is submitted on a event that is offline or the submitted line is not offered at the moment due to points/handicap change or the submitted bet type is just not offered at the moment,  
           PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,  
           RED_CARDS_CHANGED = Bet is submitted on a live soccer event with changed red card count,  
-          SCORE_CHANGED = Bet is submitted on a live soccer event with changed score,  
-          TIME_RESTRICTION = Bet is submitted within too short of a period from the same bet previously placed by a client,  
+          SCORE_CHANGED = Bet is submitted on a live soccer event with changed score,             
           DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
           INCOMPLETE_CUSTOMER_BETTING_PROFILE = System configuration issue,  
           INVALID_CUSTOMER_PROFILE = System configuration issue,  
@@ -983,8 +980,7 @@ definitions:
           - OFFLINE_EVENT
           - PAST_CUTOFFTIME
           - RED_CARDS_CHANGED
-          - SCORE_CHANGED
-          - TIME_RESTRICTION
+          - SCORE_CHANGED          
           - DUPLICATE_UNIQUE_REQUEST_ID
           - INCOMPLETE_CUSTOMER_BETTING_PROFILE
           - INVALID_CUSTOMER_PROFILE
