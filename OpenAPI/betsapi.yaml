@@ -85,7 +85,7 @@ paths:
           description: ''
           required: true
           schema:
-            $ref: '#/definitions/PlaceBetRequest'
+            $ref: '#/definitions/PlaceBetRequestV2'
       responses:
         '200':
           description: OK
@@ -815,6 +815,99 @@ definitions:
           - OVER
           - UNDER
     description: Request to place a bet.
+  PlaceBetRequestV2:
+    type: object
+    properties:
+      oddsFormat:
+        $ref: '#/definitions/OddsFormat'
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
+        description: This is a Unique ID for PlaceBet requests. This is to support idempotent requests.
+      acceptBetterLine:
+        type: boolean
+        example: true
+        description: Whether or not to accept a bet when there is a line change in favor of the client.
+      stake:
+        type: number
+        format: double
+        example: 10.5
+        description: amount in client’s currency.
+      winRiskStake:
+        type: string
+        example: RISK
+        description: Whether the stake amount is risk or win amount.
+        enum:
+          - WIN
+          - RISK
+      lineId:
+        type: integer
+        format: int64
+        example: 420921914
+        description: Line identification.
+      altLineId:
+        type: integer
+        format: int64
+        example: null
+        x-nullable: true
+        description: Alternate line identification.
+      pitcher1MustStart:
+        type: boolean
+        description: 'Baseball only. Refers to the pitcher for Team1. This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'
+      pitcher2MustStart:
+        type: boolean
+        description: 'Baseball only. Refers to the pitcher for Team2. This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'
+      fillType:
+        type: string
+        description: |
+            NORMAL - bet will be placed on specified stake.  
+            FILLANDKILL - If the stake is over the max limit, bet will be placed on max limit, otherwise it will be placed on specified stake.  
+            FILLMAXLIMIT - bet will be places on max limit, stake amount will be ignored. Please note that maximum limits can change at any moment, which may result in risking more than anticipated. This option is replacement of isMaxStakeBet from v1/bets/place'
+        enum:
+          - NORMAL
+          - FILLANDKILL
+          - FILLMAXLIMIT
+        example: NORMAL
+        default: NORMAL        
+      sportId:
+        type: integer
+        format: int32
+        example: 29
+      eventId:
+        type: integer
+        format: int64
+        example: 757504261
+      periodNumber:
+        type: integer
+        format: int32
+        example: 0
+      betType:
+        type: string
+        example: MONEYLINE
+        description: 'Bet type.'
+        enum:
+          - MONEYLINE
+          - TEAM_TOTAL_POINTS
+          - SPREAD
+          - TOTAL_POINTS
+      team:
+        type: string
+        example: TEAM1
+        description: 'Team type.'
+        enum:
+          - TEAM1
+          - TEAM2
+          - DRAW
+      side:
+        type: string
+        example: null
+        x-nullable: true
+        description: 'Side type.'
+        enum:
+          - OVER
+          - UNDER
+    description: Request to place a bet.    
   PlaceBetResponse:
     type: object
     properties:
