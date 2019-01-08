@@ -1513,6 +1513,12 @@ definitions:
           type: boolean
           example: false
           description: Whether the bet is on live event
+        eventStartTime:
+          type: string 
+          format: date-time
+          example: 2017-10-05T01:32:59Z
+          x-nullable: true
+          description: 'Date time when the event starts.'
       description: ''    
   CancellationReason:
     type: object
