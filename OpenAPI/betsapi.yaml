@@ -1517,7 +1517,7 @@ definitions:
           type: string 
           format: date-time
           example: 2017-10-05T01:32:59Z
-          x-nullable: true
+          x-nullable: false
           description: 'Date time when the event starts.'
       description: ''    
   CancellationReason:
@@ -2880,7 +2880,7 @@ definitions:
         type: string 
         format: date-time
         example: 2017-10-05T01:32:59Z
-        x-nullable: true
+        x-nullable: false
         description: Date time when the event starts.
     description: ''    
   GetBetsByTypeResponse:
