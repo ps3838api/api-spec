@@ -907,7 +907,12 @@ definitions:
         enum:
           - OVER
           - UNDER
-    description: Request to place a bet.    
+      handicap:
+        type: number
+        format: double
+        example: 1.0
+        description: This is optional parameter for SPREAD, TOTAL_POINTS and TEAM_TOTAL_POINTS bet types.          
+    description: Request to place a bet.        
   PlaceBetResponse:
     type: object
     properties:
