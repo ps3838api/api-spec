@@ -1060,7 +1060,8 @@ definitions:
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           RESUBMIT_REQUEST = Unable to process the request but the request itself is valid. This happens more often on the live betting in situations when there is more than one place bet request at the same on the same line. When this happens, we don't keep the place bet request on the server until we know if we can accept or reject the bet, but instead we return the error. It's very likely that the line will change after that. To reduce a chance of getting RESUBMIT_REQUEST client can try to place a bet as fast as possible,  
           SYSTEM_ERROR_3 = Unexpected error,  
-          LICENCE_RESTRICTION_LIVE_BETTING_BLOCKED - Live betting blocked due to licence restrictions
+          LICENCE_RESTRICTION_LIVE_BETTING_BLOCKED - Live betting blocked due to licence restrictions,
+          INVALID_HANDICAP = Invalid handicap
         enum:
           - ALL_BETTING_CLOSED
           - ALL_LIVE_BETTING_CLOSED
@@ -1088,6 +1089,7 @@ definitions:
           - RESUBMIT_REQUEST
           - SYSTEM_ERROR_3
           - LICENCE_RESTRICTION_LIVE_BETTING_BLOCKED
+          - INVALID_HANDICAP
       uniqueRequestId:
         type: string
         example: D5CC50E4-284D-4D50-8D49-429BDC4F2A4
