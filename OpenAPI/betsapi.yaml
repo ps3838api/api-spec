@@ -1357,7 +1357,7 @@ definitions:
             REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
             NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
             WON = The bet is settled as won,  
-            REJECTED = Bet is rejected 
+            REJECTED = Bet is rejected
           enum:
             - ACCEPTED
             - CANCELLED
