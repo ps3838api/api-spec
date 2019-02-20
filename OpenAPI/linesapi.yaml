@@ -467,7 +467,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SpecialsFixturesResponse'
+            $ref: '#/definitions/SpecialsFixturesResponseV2'
           examples:
             application/json:
               sportId: 4
@@ -4402,6 +4402,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialsFixturesLeague'
+  SpecialsFixturesResponseV2:
+    type: object
+    properties:
+      sportId:
+        format: int32
+        description: Id of a sport for which to retrieve the odds.
+        type: integer
+      last:
+        format: int64
+        description: Used for retrieving changes only on subsequent requests. Provide this value as the Since paramter in subsequent calls to only retrieve changes.
+        type: integer
+      leagues:
+        description: Contains a list of Leagues.
+        type: array
+        items:
+          $ref: '#/definitions/SpecialsFixturesLeagueV2'          
   SpecialsFixturesLeague:
     type: object
     properties:
@@ -4414,6 +4430,18 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialFixture'
+  SpecialsFixturesLeagueV2:
+    type: object
+    properties:
+      id:
+        format: int32
+        description: FixturesLeague Id.
+        type: integer
+      specials:
+        description: A collection of Specials
+        type: array
+        items:
+          $ref: '#/definitions/SpecialFixtureV2'          
   SpecialFixture:
     type: object
     properties:
@@ -4464,6 +4492,56 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialsFixturesContestant'
+  SpecialFixtureV2:
+    type: object
+    properties:
+      id:
+        format: int64
+        description: Unique Id
+        type: integer
+      betType:
+        description: The type [MULTI_WAY_HEAD_TO_HEAD, SPREAD, OVER_UNDER]
+        enum:
+          - MULTI_WAY_HEAD_TO_HEAD
+          - SPREAD
+          - OVER_UNDER
+        type: string
+      name:
+        description: Name of the special.
+        type: string
+      date:
+        format: date-time
+        description: Date of the special in UTC.
+        type: string
+      cutoff:
+        format: date-time
+        description: Wagering cutoff date in UTC.
+        type: string
+      category:
+        description: The category that the special falls under.
+        type: string
+      units:
+        description: Measurment in the context of the special. This is applicable to specials bet type spead and over/under. In a hockey special this could be goals.
+        type: string
+      status:
+        description: |
+          Status of the Special 
+          
+          O = This is the starting status of a game. It means that the lines are open for betting, 
+          H = This status indicates that the lines are temporarily unavailable for betting, 
+          I = This status indicates that one or more lines have a red circle (a lower maximum bet amount)
+        enum:
+          - O
+          - H
+          - I
+        type: string
+      event:
+        $ref: '#/definitions/SpecialsFixturesEvent'
+      contestants:
+        description: ContestantLines available for wagering.
+        type: array
+        items:
+          $ref: '#/definitions/SpecialsFixturesContestant'          
   SpecialsFixturesEvent:
     type: object
     description: Optional event asscoaited with the special.
