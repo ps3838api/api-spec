@@ -1005,12 +1005,16 @@ definitions:
         type: string
         description: |
           INVALID_REQUEST_DATA  = Invalid request parameters (http status 400)  
+          SELF_EXCLUSION = Client's account is self-excluded (http status 400)
+          TERMS_AND_CONDITIONS_NOT_ACCEPTED = Terms and Condidtions has not been accepted (http status 400)
           INVALID_CREDENTIALS = Authorization failed, invalid credentials (http status 401)  
           INVALID_AUTHORIZATION_HEADER = HTTP Authorization header is missing (http status 401) 
           ACCOUNT_INACTIVE = Client's account is not active  (http status 403)  
           NO_API_ACCESS = Account not permitted to access the API  (http status 403) 
         enum:
           - INVALID_REQUEST_DATA
+          - SELF_EXCLUSION
+          - TERMS_AND_CONDITIONS_NOT_ACCEPTED
           - INVALID_CREDENTIALS
           - INVALID_AUTHORIZATION_HEADER
           - ACCOUNT_INACTIVE
