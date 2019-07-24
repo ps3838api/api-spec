@@ -1,8 +1,8 @@
 openapi: 3.0.0
 
 info:
-  version: 2.2.7
-  title: Pinnacle - B2B Bets API Reference
+  version: 1.0.0
+  title: PS3838 - B2B Bets API Reference
   description: |
     B2B API to place bets.  Main difference comparing to the Public Bets API is that B2B API can capture info about the actual bettor in the partner's system.    
     
