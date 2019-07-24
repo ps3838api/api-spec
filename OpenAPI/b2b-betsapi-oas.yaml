@@ -30,7 +30,7 @@ info:
     ```
    
 servers:
-  - url: 'https://api.pinnacle.com/'
+  - url: 'https://api.ps3838.com/'
     description: Production server
 
 paths:
