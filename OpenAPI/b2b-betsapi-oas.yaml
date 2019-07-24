@@ -29,11 +29,6 @@ info:
       Connection: Keep-Alive
     ```
    
-    
-  #x-logo:
-  #  url: >-
-  #    https://avatars2.githubusercontent.com/u/31601407?s=400&u=f3c6e1cfc8a26665e4a4df6d8da4a7ee527aeceb&v=4
-
 servers:
   - url: 'https://api.pinnacle.com/'
     description: Production server
