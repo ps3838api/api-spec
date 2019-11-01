@@ -1009,6 +1009,7 @@ definitions:
           TERMS_AND_CONDITIONS_NOT_ACCEPTED = Terms and Condidtions has not been accepted (http status 400)
           INVALID_CREDENTIALS = Authorization failed, invalid credentials (http status 401)  
           INVALID_AUTHORIZATION_HEADER = HTTP Authorization header is missing (http status 401) 
+          UNAUTHORIZED ACCESS = Your account balance is not enough (http status 401)
           ACCOUNT_INACTIVE = Client's account is not active  (http status 403)  
           NO_API_ACCESS = Account not permitted to access the API  (http status 403) 
         enum:
@@ -1019,6 +1020,7 @@ definitions:
           - INVALID_AUTHORIZATION_HEADER
           - ACCOUNT_INACTIVE
           - NO_API_ACCESS
+          - UNAUTHORIZED ACCESS
       message:
         type: string
   PlaceBetResponseV2:
