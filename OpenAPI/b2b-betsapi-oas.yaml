@@ -10,7 +10,7 @@ info:
 
     # Authentication 
     
-    Access is restricted by IP address. Partner would have to provide the list of IP addresses. Pinnacle will provide the api key.
+    Access is restricted by IP address. Partner would have to provide the list of IP addresses. PS3838 will provide the api key.
   
     B2B API requires both:  
       - [HTTP Basic access authentication](https://en.wikipedia.org/wiki/Basic_access_authentication)
@@ -22,7 +22,7 @@ info:
     
       POST /b2b/v1/bets/straight HTTP/1.1
       User-Agent: Apache-HttpClient/4.5.2
-      Host: api.pinnacle.com
+      Host: api.ps3838.com
       Authorization: Basic am9uYXRoYW46cmljaG1hbg==
       Accept-Encoding: gzip, deflate
       X-Partner-Key: B4B480D3-EB1B-44DB-AA9C-197A229EF717
@@ -463,7 +463,7 @@ components:
             Bet Status.  
             
             ACCEPTED = Bet was accepted,  
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            CANCELLED = Bet is cancelled as per PS3838 betting rules,  
             LOSE = The bet is settled as lose,  
             PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
             REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
@@ -821,7 +821,7 @@ components:
           description: | 
             Bet Status. 
             ACCEPTED = Bet was accepted, 
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
+            CANCELLED = Bet is cancelled as per PS3838 betting rules, 
             LOSE = The bet is settled as lose,
             REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
             WON = The bet is settled as won 
@@ -1237,7 +1237,7 @@ components:
             Bet Status. 
             
             ACCEPTED = Bet was accepted,  
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            CANCELLED = Bet is cancelled as per PS3838 betting rules,  
             LOSE = The bet is settled as lose,  
             PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or REJECTED status,  
             REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
