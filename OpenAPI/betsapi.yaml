@@ -622,7 +622,7 @@ paths:
       parameters:
         - name: eventId
           in: query
-          description: Event identification. Note that there is a restriction: querying by eventId is supported only up to 90 days from the moment the bet was settled.
+          description: Event identification. Note that there is a restriction that querying by eventId is supported only up to 90 days from the moment the bet was settled.
           required: false
           type: integer
           format: int64
