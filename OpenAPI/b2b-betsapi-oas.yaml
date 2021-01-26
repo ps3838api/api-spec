@@ -450,6 +450,11 @@ components:
           format: int64
           example: 759629245
           description: Bet identification
+        uniqueRequestId:
+          type: string
+          format: uuid
+          example: '10924E23-A2FE-4317-BFFD-80504675F554'
+          description: 'Unique identifier provided in the request.'
         wagerNumber:
           type: integer
           format: int32
