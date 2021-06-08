@@ -2652,6 +2652,11 @@ definitions:
         type: string
         description: | 
           Specifies based on what the event will be resulted, e.g. Corners, Bookings
+      version:
+        type: integer
+        format: int64
+        description: |
+           Fixture version, goes up when there is a change in the fixture.
   SettledFixturesSportV1:
     type: object
     properties:
