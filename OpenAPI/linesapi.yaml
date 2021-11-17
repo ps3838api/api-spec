@@ -2638,10 +2638,10 @@ definitions:
         
           Soccer live event bet acceptance type. This type indicates that the live soccer event is offered to the corresponding customer.
           
-          0 = Not Applicable. No bet acceptance type restriction
-          1 = Danger Zone
-          2 = Live Delay
-          3 = Both
+          0 = Not Applicable. No bet acceptance type restriction.
+          1 = Danger Zone.
+          2 = Live Delay.
+          3 = Both.
         enum:
           - 0
           - 1
