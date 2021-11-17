@@ -2636,7 +2636,7 @@ definitions:
         format: int32
         description: |
         
-          Soccer live event bet acceptance type. This type indicates that the live soccer event is offered corresponding customer.
+          Soccer live event bet acceptance type. This type indicates that the live soccer event is offered to the corresponding customer.
           
           0 = Not Applicable. No bet acceptance type restriction
           1 = Danger Zone
