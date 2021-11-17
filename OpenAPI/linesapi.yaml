@@ -2631,6 +2631,22 @@ definitions:
           - O
           - H
           - I
+      betAcceptanceType:
+        type: integer
+        format: int32
+        description: |
+        
+          Soccer live event bet acceptance type. This type indicates that the live soccer event is offered corresponding customer.
+          
+          0 = Not Applicable. No bet acceptance type restriction
+          1 = Danger Zone
+          2 = Live Delay
+          3 = Both
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
       parlayRestriction:
         type: integer
         format: int32
