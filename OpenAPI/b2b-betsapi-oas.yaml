@@ -327,7 +327,7 @@ components:
             - OVER
             - UNDER
         sourceId:
-          description: Bettor identifier in the partner's system.
+          description: Bettor identifier in the partner's system. Only alphanumeric characters are allowed.
           example: ABC1234
           type: string
         sourceIP:
