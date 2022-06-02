@@ -8,20 +8,6 @@ info:
     
     It should be used in the conjunction with the Public API, to get the fixtures, odds and bets from.
 
-# Fair Use Policy
-This API is protected by copyright laws and is provided only to our players, partners and affiliates.
-The use of this resource is subject to our "Fair Use Policy" which is set out below.
-Use of the API constitutes your agreement to this policy. You understand and agree that at our sole discretion, and without prior notice, we may block access to our site if we believe that your use of our site has violated or is inconsistent with this Fair Use Policy.
-We may at any time, and at our sole discretion, modify this Fair Use Policy, with or without prior notice. Any such modification will be effective immediately upon public posting. Your continued use of our APIs and this site following such modification constitutes your acceptance of the modified terms in this Fair Use Policy.
-
-## Fair usage
-The API is provided to players to facilitate wagering and may not be used for data gathering, scrapping or any other purpose. The API usage must be proportionate to wagering activities as determined on a case by case basis by PS3838.
-Unless explicitly agreed in writing by PS3838, the commercial usage of the API will lead to the permanent suspension of your access.
-You will not attempt or encourage others to:
-- To interfere with, disrupt, or disable any API features;
-- Use the API for commercial purposes without a written agreement with PS3838;
-- Sell, rent, lease, sublicense, redistribute, or syndicate the API to any third party without prior written approval from PS3838.
-    
     # Authentication 
     
     Access is restricted by IP address. Partner would have to provide the list of IP addresses. PS3838 will provide the api key.
