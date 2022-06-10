@@ -22,7 +22,7 @@ info:
     
       POST /b2b/v1/bets/straight HTTP/1.1
       User-Agent: Apache-HttpClient/4.5.2
-      Host: api.pinnaclesolution.com
+      Host: api.ps3838.com
       Authorization: Basic am9uYXRoYW46cmljaG1hbg==
       Accept-Encoding: gzip, deflate
       X-Partner-Key: B4B480D3-EB1B-44DB-AA9C-197A229EF717
@@ -30,7 +30,7 @@ info:
     ```
    
 servers:
-  - url: 'https://api.pinnaclesolution.com/'
+  - url: 'https://api.ps3838.com/'
     description: Production server
 
 paths:
