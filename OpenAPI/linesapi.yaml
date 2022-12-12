@@ -1707,7 +1707,7 @@ paths:
           format: int64
         - name: periodNumber
           in: query
-          description: This represents the period of the match. For example, for soccer we have 0 (Game),  1 (1st Half) & 2 (2nd Half)
+          description: This represents the period of the match. Please check Get Periods endpoint for the list of currently supported periods per sport.
           required: true
           type: integer
           format: int32
@@ -1742,7 +1742,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/LineResponse'
+            $ref: '#/definitions/LineResponseV2'
         '400':
           description: BadRequest
           schema:
@@ -3049,6 +3049,62 @@ definitions:
       effectiveAsOf:
         type: string
         description: Line is effective as of this date and time in UTC.
+  LineResponseV2:
+    type: object
+    properties:
+      status:
+        type: string
+        description: If the value is NOT_EXISTS, than this will be the only parameter in the response. All other params would be empty. [SUCCESS = OK, NOT_EXISTS = Line not offered anymore]
+        enum:
+          - SUCCESS
+          - NOT_EXISTS
+      price:
+        type: number
+        format: double
+        description: Latest price.
+      lineId:
+        type: integer
+        format: int64
+        description: Line identification needed to place a bet.
+      altLineId:
+        type: integer
+        format: int64
+        description: This would be needed to place the bet if the handicap is on alternate line, otherwise it will not be populated in the response.
+      team1Score:
+        type: integer
+        format: int32
+        description: Team 1 score for the period 0. Applicable to soccer only.
+      team2Score:
+        type: integer
+        format: int32
+        description: Team 2 score for the period 0. Applicable to soccer only.
+      team1RedCards:
+        type: integer
+        format: int32
+        description: Team 1 red cards for the period 0. Applicable to soccer only.
+      team2RedCards:
+        type: integer
+        format: int32
+        description: Team 2 red cards for the period 0. Applicable to soccer only.
+      maxRiskStake:
+        type: number
+        format: double
+        description: Maximum bettable risk amount.
+      minRiskStake:
+        type: number
+        format: double
+        description: Minimum bettable risk amount.
+      maxWinStake:
+        type: number
+        format: double
+        description: Maximum bettable win amount.
+      minWinStake:
+        type: number
+        format: double
+        description: Minimum bettable win amount.
+      effectiveAsOf:
+        type: string
+        description: Line is effective as of this date and time in UTC.        
   ParlayLinesRequest:
     type: object
     properties:
@@ -4229,6 +4285,14 @@ definitions:
         type: integer
         format: int64
         description: Unique identifier.
+      spreadUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last spread update.  
+      totalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last total update.          
       spread:
         $ref: '#/definitions/TeaserOddsSpread'
       total:
