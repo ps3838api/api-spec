@@ -3664,6 +3664,22 @@ definitions:
         type: number
         format: double
         description: Maximum team total points bet. Only in straight odds response.
+      moneylineUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last moneyline update.
+      spreadUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last spread update.
+      totalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last total update.
+      teamTotalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last team total update.        
       spreads:
         type: array
         description: Container for spread odds.
