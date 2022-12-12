@@ -1106,7 +1106,7 @@ paths:
           collectionFormat: multi
         - name: toCurrencyCode
           in: query
-          description: 3 letter currency code as in the [/currency](https://pinnacleapi.github.io/linesapi#operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
+          description: 3 letter currency code as in the [/currency](https://ps3838api.github.io/docs/#tag/Others/operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
           required: false
           type: string
       responses:
