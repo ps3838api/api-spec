@@ -2658,14 +2658,14 @@ definitions:
           
           0 = Allowed to parlay, without restrictions, 
           1 = Not allowed to parlay this event, 
-          2 = Allowed to parlay with the restrictions. You can not have more than one leg from the same event in the parlay. All events with the same rotation number are treated as same event.
+          2 = Allowed to parlay with the restrictions. You cannot have more than one leg from the same event in the parlay. All events with the same rotation number are treated as same event.
         enum:
           - 0
           - 1
           - 2
       altTeaser:
         type: boolean
-        description: Whether an event is offer with alterantive teaser points. Events with alternative teaser points may vary from teaser definition. 
+        description: Whether an event is offer with alternative teaser points. Events with alternative teaser points may vary from teaser definition. 
       resultingUnit:   
         type: string
         description: | 
