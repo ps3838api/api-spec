@@ -3729,6 +3729,11 @@ definitions:
         type: number
         format: double
         description: Away team price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.        
   OddsMoneylineV3:
     type: object
     properties:
@@ -3763,6 +3768,11 @@ definitions:
         type: number
         format: double
         description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.        
   OddsTeamTotalsV3:
     type: object
     properties:
