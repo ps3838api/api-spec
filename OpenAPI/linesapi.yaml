@@ -35,7 +35,7 @@ paths:
       parameters:
         - name: sportId
           in: query
-          description: The sport id to retrieve the fixutres for.
+          description: The sport id to retrieve the fixtures for.
           required: true
           type: integer
           format: int32
