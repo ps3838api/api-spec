@@ -2622,7 +2622,8 @@ definitions:
         type: string
         description: |
         
-          Status of the event. 
+          This is deprecated parameter, please check period's `status` in the
+            `/odds` endpoint to see if it's open for betting.
           
           O = This is the starting status of a game. It means that the lines are open for betting, 
           H = This status indicates that the lines are temporarily unavailable for betting, 
@@ -2631,6 +2632,7 @@ definitions:
           - O
           - H
           - I
+        deprecated: true  
       betAcceptanceType:
         type: integer
         format: int32
