@@ -4703,7 +4703,7 @@ definitions:
         description: Settled DateTime
         type: string
       cancellationReason:
-        $ref: '#/definitions/CancellationReason'
+        $ref: '#/definitions/CancellationReasonType'
         description: Cancellation Reason for Special Event
   SpecialLineResponse:
     type: object
