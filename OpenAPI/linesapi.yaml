@@ -3694,6 +3694,22 @@ definitions:
           $ref: '#/definitions/OddsTotalV3'
       teamTotal:
         $ref: '#/definitions/OddsTeamTotalsV3'
+      awayScore:
+        type: number
+        format: double
+        description: Period away team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeScore:
+        type: number
+        format: double
+        description: Period home team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      awayRedCards:
+        type: number
+        format: int32
+        description: Period away team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeRedCards:
+        type: number
+        format: int32
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).        
   OddsSpreadV3:
     type: object
     properties:
