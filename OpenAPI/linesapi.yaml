@@ -2585,7 +2585,7 @@ definitions:
       parentId:
         type: integer
         format: int64
-        description: If event is linked to another event , parentId will be populated.  Live event would have pre game event as parent id.
+        description: If event is linked to another event, parentId will be populated.  Live event would have pre game event as parent id.
       starts:
         type: string
         format: date-time
@@ -2598,7 +2598,7 @@ definitions:
         description: Away team name.
       rotNum:
         type: string
-        description: Team1 rotation number. Please note that in the next version of /fixtures, rotNum property will be decomissioned. ParentId can be used instead to group the related events.
+        description: Team1 rotation number. Please note that in the next version of /fixtures, rotNum property will be decommissioned. ParentId can be used instead to group the related events.
       liveStatus:
         type: integer
         format: int32
