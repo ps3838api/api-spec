@@ -3475,10 +3475,10 @@ definitions:
             INVALID_LEGS = One or more of the legs is invalid,
             SAME_EVENT_ONLY_REQUIRED = Teaser specified requires that all legs are from the same event,  
             TEASER_DISABLED = Teaser has been disabled and cannot be bet on,  
-            TEASER_DOES_NOT_EXIST = The teaser identifier could requeted could not be found,  
+            TEASER_DOES_NOT_EXIST = The teaser identifier could not be found,
             TOO_FEW_LEGS = You do not meet the minimum number of legs requirement for the teaser specified,  
             TOO_MANY_LEGS = You are above the maximum number of legs for the teaser specified,  
-            UNKNOWN = An unknown error has occured  
+            UNKNOWN = An unknown error has occurred  
         enum:
           - INVALID_LEGS
           - SAME_EVENT_ONLY_REQUIRED
