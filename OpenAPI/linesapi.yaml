@@ -1819,7 +1819,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/ParlayLinesResponse'
+            $ref: '#/definitions/ParlayLinesResponseV2'
         '400':
           description: BadRequest
           schema:
@@ -3215,6 +3215,48 @@ definitions:
           $ref: '#/definitions/ParlayLineLeg'
     required: 
       - status
+  ParlayLinesResponseV2:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Status of the parlay [VALID = Parlay is valid, PROCESSED_WITH_ERROR = Parlay contains error(s)]
+        example: PROCESSED_WITH_ERROR
+        enum:
+          - VALID
+          - PROCESSED_WITH_ERROR
+      error:
+        type: string
+        description: INVALID_LEGS. Signifies that one or more legs are invalid. Populated only if status is PROCESSED_WITH_ERROR.
+        example: INVALID_LEGS
+      minRiskStake:
+        type: number
+        format: double
+        description: Minimum allowed stake amount.
+      maxParlayRiskStake:
+        type: number
+        format: double
+        description: Maximum allowed stake amount for parlay bets.
+      maxRoundRobinTotalRisk:
+        type: number
+        format: double
+        description: Maximum allowed total stake amount for all the parlay bets in the round robin.
+      maxRoundRobinTotalWin:
+        type: number
+        format: double
+        description: Maximum allowed total win amount for all the parlay bets in the round robin.      
+      roundRobinOptionWithOdds:
+        type: array
+        description: Provides array with all acceptable Round Robin options with parlay odds for that option.
+        items:
+          $ref: '#/definitions/RoundRobinOptionWithOddsV2'
+      legs:
+        type: array
+        description: The collection of legs (the format of the object is described below).
+        items:
+          $ref: '#/definitions/ParlayLineLeg'
+    required: 
+      - status      
   RoundRobinOptionWithOdds:
     type: object
     properties:
@@ -3252,6 +3294,47 @@ definitions:
       - roundRobinOption
       - odds
       - unroundedDecimalOdds
+  RoundRobinOptionWithOddsV2:
+    type: object
+    properties:
+      roundRobinOption:
+        type: string
+        description: | 
+          RoundRobinOptions  
+            
+            Parlay = Single parlay that include all wagers (No Round Robin),  
+            TwoLegRoundRobin = Multiple parlays having 2 wagers each (round robin style),  
+            ThreeLegRoundRobin = Multiple parlays having 3 wagers each (round robin style),  
+            FourLegRoundRobin = Multiple parlays having 4 wagers each (round robin style),  
+            FiveLegRoundRobin = Multiple parlays having 5 wagers each (round robin style),  
+            SixLegRoundRobin = Multiple parlays having 6 wagers each (round robin style),  
+            SevenLegRoundRobin = Multiple parlays having 7 wagers each (round robin style),   
+            EightLegRoundRobin = Multiple parlays having 8 wagers each (round robin style)  
+        enum:
+          - Parlay
+          - TwoLegRoundRobin
+          - ThreeLegRoundRobin
+          - FourLegRoundRobin
+          - FiveLegRoundRobin
+          - SixLegRoundRobin
+          - SevenLegRoundRobin
+          - EightLegRoundRobin
+      odds:
+        type: number
+        format: double
+        description: Parlay odds for this option.
+      unroundedDecimalOdds:
+        type: number
+        format: double
+        description: Unrounded parlay odds in decimal format to be used for calculations only
+      numberOfBets:
+        type: number
+        format: int
+        description: Number of bets in the roundRobinOption.        
+    required: 
+      - roundRobinOption
+      - odds
+      - unroundedDecimalOdds      
   ParlayLineLeg:
     type: object
     properties:
