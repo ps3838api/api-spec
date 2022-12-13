@@ -35,7 +35,7 @@ paths:
       parameters:
         - name: sportId
           in: query
-          description: The sport id to retrieve the fixutres for.
+          description: The sport id to retrieve the fixtures for.
           required: true
           type: integer
           format: int32
@@ -1106,7 +1106,7 @@ paths:
           collectionFormat: multi
         - name: toCurrencyCode
           in: query
-          description: 3 letter currency code as in the [/currency](https://pinnacleapi.github.io/linesapi#operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
+          description: 3 letter currency code as in the [/currency](https://ps3838api.github.io/docs/#tag/Others/operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
           required: false
           type: string
       responses:
@@ -1707,7 +1707,7 @@ paths:
           format: int64
         - name: periodNumber
           in: query
-          description: This represents the period of the match. For example, for soccer we have 0 (Game),  1 (1st Half) & 2 (2nd Half)
+          description: This represents the period of the match. Please check Get Periods endpoint for the list of currently supported periods per sport.
           required: true
           type: integer
           format: int32
@@ -1742,7 +1742,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/LineResponse'
+            $ref: '#/definitions/LineResponseV2'
         '400':
           description: BadRequest
           schema:
@@ -2585,7 +2585,7 @@ definitions:
       parentId:
         type: integer
         format: int64
-        description: If event is linked to another event , parentId will be populated.  Live event would have pre game event as parent id.
+        description: If event is linked to another event, parentId will be populated.  Live event would have pre game event as parent id.
       starts:
         type: string
         format: date-time
@@ -2598,7 +2598,7 @@ definitions:
         description: Away team name.
       rotNum:
         type: string
-        description: Team1 rotation number. Please note that in the next version of /fixtures, rotNum property will be decomissioned. ParentId can be used instead to group the related events.
+        description: Team1 rotation number. Please note that in the next version of /fixtures, rotNum property will be decommissioned. ParentId can be used instead to group the related events.
       liveStatus:
         type: integer
         format: int32
@@ -2622,7 +2622,8 @@ definitions:
         type: string
         description: |
         
-          Status of the event. 
+          This is deprecated parameter, please check period's `status` in the
+            `/odds` endpoint to see if it's open for betting.
           
           O = This is the starting status of a game. It means that the lines are open for betting, 
           H = This status indicates that the lines are temporarily unavailable for betting, 
@@ -2631,6 +2632,7 @@ definitions:
           - O
           - H
           - I
+        deprecated: true  
       betAcceptanceType:
         type: integer
         format: int32
@@ -2656,14 +2658,14 @@ definitions:
           
           0 = Allowed to parlay, without restrictions, 
           1 = Not allowed to parlay this event, 
-          2 = Allowed to parlay with the restrictions. You can not have more than one leg from the same event in the parlay. All events with the same rotation number are treated as same event.
+          2 = Allowed to parlay with the restrictions. You cannot have more than one leg from the same event in the parlay. All events with the same rotation number are treated as same event.
         enum:
           - 0
           - 1
           - 2
       altTeaser:
         type: boolean
-        description: Whether an event is offer with alterantive teaser points. Events with alternative teaser points may vary from teaser definition. 
+        description: Whether an event is offer with alternative teaser points. Events with alternative teaser points may vary from teaser definition. 
       resultingUnit:   
         type: string
         description: | 
@@ -3047,6 +3049,78 @@ definitions:
       effectiveAsOf:
         type: string
         description: Line is effective as of this date and time in UTC.
+  LineResponseV2:
+    type: object
+    properties:
+      status:
+        type: string
+        description: If the value is NOT_EXISTS, than this will be the only parameter in the response. All other params would be empty. [SUCCESS = OK, NOT_EXISTS = Line not offered anymore]
+        enum:
+          - SUCCESS
+          - NOT_EXISTS
+      price:
+        type: number
+        format: double
+        description: Latest price.
+      lineId:
+        type: integer
+        format: int64
+        description: Line identification needed to place a bet.
+      altLineId:
+        type: integer
+        format: int64
+        description: This would be needed to place the bet if the handicap is on alternate line, otherwise it will not be populated in the response.
+      team1Score:
+        type: integer
+        format: int32
+        description: Team 1 score for the period 0. Applicable to soccer only.
+      team2Score:
+        type: integer
+        format: int32
+        description: Team 2 score for the period 0. Applicable to soccer only.
+      team1RedCards:
+        type: integer
+        format: int32
+        description: Team 1 red cards for the period 0. Applicable to soccer only.
+      team2RedCards:
+        type: integer
+        format: int32
+        description: Team 2 red cards for the period 0. Applicable to soccer only.
+      maxRiskStake:
+        type: number
+        format: double
+        description: Maximum bettable risk amount.
+      minRiskStake:
+        type: number
+        format: double
+        description: Minimum bettable risk amount.
+      maxWinStake:
+        type: number
+        format: double
+        description: Maximum bettable win amount.
+      minWinStake:
+        type: number
+        format: double
+        description: Minimum bettable win amount.
+      effectiveAsOf:
+        type: string
+        description: Line is effective as of this date and time in UTC.    
+      periodTeam1Score:
+        type: integer
+        format: int32
+        description: Team 1 score for the supported periods. Applicable to soccer only.     
+      periodTeam2Score:
+        type: integer
+        format: int32
+        description: Team 2 score for the supported periods. Applicable to soccer only.    
+      periodTeam1RedCards:
+        type: integer
+        format: int32
+        description: Team 1 red cards for the supported periods. Applicable to soccer only.   
+      periodTeam2RedCards:
+        type: integer
+        format: int32
+        description: Team 2 red cards for the supported periods. Applicable to soccer only.          
   ParlayLinesRequest:
     type: object
     properties:
@@ -3606,19 +3680,19 @@ definitions:
       awayScore:
         type: number
         format: double
-        description: Away team score. Only for live soccer events.
+        description: Away team score. Only for live soccer events.Supported only for full match period (number=0).
       homeScore:
         type: number
         format: double
-        description: Home team score. Only for live soccer events.
+        description: Home team score. Only for live soccer events.Supported only for full match period (number=0).
       awayRedCards:
         type: integer
         format: int32
-        description: Away team red cards. Only for live soccer events.
+        description: Away team red cards. Only for live soccer events. Supported only for full match period (number=0).
       homeRedCards:
         type: integer
         format: int32
-        description: Home team red cards. Only for live soccer events.
+        description: Home team red cards. Only for live soccer events.Supported only for full match period (number=0).
       periods:
         type: array
         description: Contains a list of periods.
@@ -3662,6 +3736,22 @@ definitions:
         type: number
         format: double
         description: Maximum team total points bet. Only in straight odds response.
+      moneylineUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last moneyline update.
+      spreadUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last spread update.
+      totalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last total update.
+      teamTotalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last team total update.        
       spreads:
         type: array
         description: Container for spread odds.
@@ -3676,6 +3766,22 @@ definitions:
           $ref: '#/definitions/OddsTotalV3'
       teamTotal:
         $ref: '#/definitions/OddsTeamTotalsV3'
+      awayScore:
+        type: number
+        format: double
+        description: Period away team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeScore:
+        type: number
+        format: double
+        description: Period home team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      awayRedCards:
+        type: number
+        format: int32
+        description: Period away team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeRedCards:
+        type: number
+        format: int32
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).        
   OddsSpreadV3:
     type: object
     properties:
@@ -3695,6 +3801,11 @@ definitions:
         type: number
         format: double
         description: Away team price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.        
   OddsMoneylineV3:
     type: object
     properties:
@@ -3729,6 +3840,11 @@ definitions:
         type: number
         format: double
         description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.        
   OddsTeamTotalsV3:
     type: object
     properties:
@@ -4185,6 +4301,14 @@ definitions:
         type: integer
         format: int64
         description: Unique identifier.
+      spreadUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last spread update.  
+      totalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last total update.          
       spread:
         $ref: '#/definitions/TeaserOddsSpread'
       total:
@@ -4701,7 +4825,7 @@ definitions:
         description: Settled DateTime
         type: string
       cancellationReason:
-        $ref: '#/definitions/CancellationReason'
+        $ref: '#/definitions/CancellationReasonType'
         description: Cancellation Reason for Special Event
   SpecialLineResponse:
     type: object
