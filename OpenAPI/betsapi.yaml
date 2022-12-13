@@ -438,7 +438,7 @@ paths:
             - ALL
         - name: betStatuses
           in: query
-          description: 'Type of bet statuse to return. This works only in conjustion with betlist, as additional filter.'
+          description: 'Type of bet statues to return. This works only in conjustion with betlist, as additional filter.'
           required: false
           type: array
           items:
@@ -503,7 +503,7 @@ paths:
               2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) for more details
               
               
-              Note that there is a restriction: querying by uniqueRequestIds  is supported only for straight bets and only up to 30 min from the moment the bet was place. 
+              Note that there is a restriction: querying by uniqueRequestIds  is supported for straight and special bets and only up to 30 min from the moment the bet was place. 
           required: false
           type: array
           items:
@@ -1320,6 +1320,7 @@ definitions:
       required:
         - betId
         - betStatus
+        - betStatus2
         - betType
         - oddsFormat
         - placedAt
@@ -1343,11 +1344,6 @@ definitions:
           format: date-time
           example: '2017-09-05T01:32:59Z'
           description: Date time when the bet was placed.
-        settledAt:
-          type: string
-          format: date-time
-          example: '2017-09-05T01:32:59Z'
-          description: Date time when the bet was settled.
         betStatus:
           type: string
           example: ACCEPTED
@@ -1371,6 +1367,33 @@ definitions:
             - NOT_ACCEPTED
             - WON
             - REJECTED
+        betStatus2:
+          type: string
+          example: ACCEPTED
+          description: |
+            Bet Status.  
+            
+            ACCEPTED = Bet was accepted,  
+            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            LOST = The bet is settled as lose,  
+            PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
+            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+            NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
+            WON = The bet is settled as won,  
+            REJECTED = Bet is rejected,  
+            HALF_WON_HALF_PUSHED = The bet is settled as half won half pushed. Only for asian handicap bets,  
+            HALF_LOST_HALF_PUSHED = The bet is settled as half lost half pushed. Only for asian handicap bets
+          enum:
+            - ACCEPTED
+            - CANCELLED
+            - LOST
+            - PENDING_ACCEPTANCE
+            - REFUNDED
+            - NOT_ACCEPTED
+            - WON
+            - REJECTED
+            - HALF_WON_HALF_PUSHED
+            - HALF_LOST_HALF_PUSHED
         betType:
           type: string
           example: MONEYLINE
@@ -1491,13 +1514,13 @@ definitions:
           format: double
           example: null
           x-nullable: true
-          description: 'Team 1 score that the bet was placed on, only for live bets.'
+          description: 'Team 1 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
         team2Score:
           type: number
           format: double
           example: null
           x-nullable: true
-          description: 'Team 2 score that the bet was placed, only for live bets.'
+          description: 'Team 2 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
         ftTeam1Score:
           type: number
           format: double
@@ -1515,13 +1538,13 @@ definitions:
           format: double
           example: null
           x-nullable: true
-          description: '.End of period team 1 score, only for settled bets. If the bet was placed on Game period (periodNumber =0) , this will be null . '
+          description: '.End of period team 1 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null . '
         pTeam2Score:
           type: number
           format: double
           example: null
           x-nullable: true
-          description: 'End of period team 2 score, only for settled bets. If the bet was placed on Game period (periodNumber =0) , this will be null'
+          description: 'End of period team 2 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null'
         isLive:
           type: boolean
           example: false
@@ -1532,6 +1555,9 @@ definitions:
           example: 2017-10-05T01:32:59Z
           x-nullable: false
           description: 'Date time when the event starts.'
+        resultingUnit:
+          type: string
+          description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'          
       description: ''    
   CancellationReason:
     type: object
@@ -3210,11 +3236,6 @@ definitions:
         format: date-time
         example: '2017-09-09T01:49:43Z'
         description: Date time when the bet was placed.
-      settledAt:
-        type: string
-        format: date-time
-        example: '2017-09-05T01:32:59Z'
-        description: Date time when the bet was settled.
       betStatus:
         type: string
         example: ACCEPTED
@@ -3391,7 +3412,7 @@ definitions:
         type: array
         description: A collection of placed parlay bets.
         items:
-          $ref: '#/definitions/ParlayBet'
+          $ref: '#/definitions/ParlayBetV2'
       teaserBets:
         type: array
         description: A collection of placed teaser bets.
@@ -3555,11 +3576,6 @@ definitions:
         format: date-time
         example: '2017-09-06T14:56:27Z'
         description: Date time when the bet was placed.
-      settledAt:
-        type: string
-        format: date-time
-        example: '2017-09-05T01:32:59Z'
-        description: Date time when the bet was settled.
       betStatus:
         type: string
         description: |
@@ -3647,6 +3663,8 @@ definitions:
         description: ''
       eventStartTime:
         type: string
+        format: date-time
+        example: '2017-10-05T01:32:59Z'
         description: 'Date time when the event starts.'
       handicap:
         type: number
