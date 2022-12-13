@@ -2794,10 +2794,10 @@ definitions:
           ALL_BETTING_CLOSED = Betting is not allowed at this moment. This may happen during system maintenance.  
            ABOVE_MAX_BET_AMOUNT = Stake is above allowed maximum amount,  
            BELOW_MIN_BET_AMOUNT = Stake is below allowed minimum amount,  
-           BLOCKED_BETTING = Betting is suspened for the client,  
+           BLOCKED_BETTING = Betting is suspended for the client,  
            BLOCKED_CLIENT = Client is no longer active,  
            CONTEST_NOT_FOUND = Incorrect contest id provided or contest is no longer available,  
-           DUPLICATE_UNIQUE_REQUEST_ID = UniqueRequestId must be inque for each bet,  
+           DUPLICATE_UNIQUE_REQUEST_ID = UniqueRequestId must be unique for each bet,  
            INCOMPLETE_CUSTOMER_BETTING_PROFILE = Customer profile could not be loaded,   
            INSUFFICIENT_FUNDS = Bet is submitted by a client with insufficient funds,  
            INVALID_COUNTRY = Client country is not allowed for betting,  
@@ -2847,7 +2847,7 @@ definitions:
         example: false
         description: Whether or not the bet was accepted on the line that changed in favour of client. This can be true only if acceptBetterLine in the Place Bet request is set to TRUE.
       specialBet:
-        $ref: '#/definitions/SpecialBet'
+        $ref: '#/definitions/SpecialBetV2'
     description: ''
   SpecialBet:
     type: object
@@ -3010,6 +3010,166 @@ definitions:
         x-nullable: true
         description: Populated if bet was placed on a special linked to the event.
     description: ''
+  SpecialBetV2:
+    type: object
+    required:
+      - betId
+      - betStatus
+      - betType
+      - contestantId
+      - contestantName
+      - leagueId
+      - oddsFormat
+      - placedAt
+      - price
+      - risk
+      - specialId
+      - specialName
+      - sportId
+      - updateSequence
+      - wagerNumber
+      - win
+    properties:
+      betId:
+        type: integer
+        format: int64
+        example: 760748770
+        description: Bet identification
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Unique Request Id
+      wagerNumber:
+        type: integer
+        format: int32
+        example: 1
+        description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+      placedAt:
+        type: string
+        format: date-time
+        example: '2017-09-09T01:49:43Z'
+        description: Date time when the bet was placed.
+      betStatus:
+        type: string
+        example: ACCEPTED
+        description: | 
+          Bet Status. 
+          ACCEPTED = Bet was accepted, 
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
+          LOSE = The bet is settled as lose,
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
+          WON = The bet is settled as won 
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOSE
+          - REFUNDED
+          - WON
+      betType:
+        type: string
+        default: SPECIAL
+        example: SPECIAL
+      win:
+        type: number
+        format: double
+        example: 1
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 1.51
+        description: Risk amount.
+      winLoss:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Win-Loss for settled bets.
+      oddsFormat:
+        $ref: '#/definitions/OddsFormat'
+      customerCommission:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Client’s commission on the bet.
+      cancellationReason:
+        $ref: '#/definitions/CancellationReason'
+      updateSequence:
+        type: integer
+        format: int64
+        example: 113214135
+        description: Update Sequence. It gets updated when the bet status change.
+      specialId:
+        type: integer
+        format: int64
+        example: 726397620
+        description: ''
+      specialName:
+        type: string
+        example: Denver Broncos Regular Season Wins?
+        description: ''
+      contestantId:
+        type: integer
+        format: int64
+        example: 726397622
+        description: ''
+      contestantName:
+        type: string
+        example: Under
+        description: ''
+      price:
+        type: number
+        format: double
+        example: -151
+        description: ''
+      handicap:
+        type: number
+        format: double
+        example: 8.5
+        description: ''
+      units:
+        type: string
+        example: Regular Season Wins
+        description: ''
+      sportId:
+        type: integer
+        format: int32
+        example: 15
+        description: ''
+      leagueId:
+        type: integer
+        format: int32
+        example: 889
+        description: ''
+      eventId:
+        type: integer
+        format: int64
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      periodNumber:
+        type: integer
+        format: int32
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      team1:
+        type: string
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      team2:
+        type: string
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      eventStartTime:
+        type: string
+        format: date-time
+        description: Date time when the event starts.        
+    description: ''    
   SpecialBetV3:
     type: object
     required:
