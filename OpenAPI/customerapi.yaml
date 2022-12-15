@@ -144,19 +144,19 @@ paths:
       parameters:
         - name: cultureCodes
           in: query
-          description: Array of strings and must be in Language Culture Name format.
+          description: Array of language cultures separated with |.
           required: true
           type: string
         - name: baseTexts
           in: query
-          description: Array of strings to be translated.
+          description: Array of base texts to be translated separated with |. Each base text in the array must be URL encoded. Base texts are not case sensitive.
           required: true
           type: string
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/TranslationResponse'
+            $ref: '#/definitions/TranslationResponseV3'
         '400':
           description: BadRequest
           schema:
@@ -228,6 +228,14 @@ definitions:
         description: Collection of translations.
         items:
           $ref: '#/definitions/Translation'
+  TranslationResponseV3:
+    type: object
+    properties:
+      translations:
+        type: array
+        description: Collection of translations.
+        items:
+          $ref: '#/definitions/TranslationV3'          
   Translation:
     type: object
     properties:
@@ -239,6 +247,17 @@ definitions:
         description: Collection of translations by culture.
         items:
           $ref: '#/definitions/TranslationByCulture'
+  TranslationV3:
+    type: object
+    properties:
+      text:
+        type: string
+        description: Original requested text to be translated.
+      cultures:
+        type: array
+        description: Collection of translations by culture.
+        items:
+          $ref: '#/definitions/TranslationByCultureV3'          
   TranslationByCulture:
     type: object
     properties:
@@ -248,3 +267,35 @@ definitions:
       text:
         type: string
         description: Translation text.
+  TranslationByCultureV3:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Culture based on which the text is translated.
+        enum:
+          - en-US
+          - en-GB
+          - zh-CN
+          - zh-TW
+          - fi-FI
+          - de-DE
+          - he-IL
+          - it-IT
+          - nb-NO
+          - pt-BR
+          - ru-RU
+          - es-ES
+          - sv-SE
+          - th-TH
+          - pl-PL
+          - fr-FR
+          - ja-JP
+          - ko-KR
+          - vi-VN
+          - id-ID
+          - cs-CZ
+        example: fr-FR        
+      text:
+        type: string
+        description: Translation text.        
