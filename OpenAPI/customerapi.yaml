@@ -102,7 +102,41 @@ paths:
       tags:
         - Default
       summary: Get Translations - v3
-      description: Returns translations for strings in base texts array and culture codes array. Each string in parameters must be URL encoded and separated with '|' character. Parameters are not case-sensitive.
+      description: |
+        Returns language translations.  
+        
+        ```
+          
+        https://api.ps3838.com/v3/translations?cultureCodes=de-DE|fr-FR&baseTexts=Football|Soccer
+          
+    
+        ```
+        ## Supported languages 
+        | Language   | Culture |
+        |------------|---------|
+        | English    | en-US   |
+        | British    | en-GB   |
+        | ChineseSI  | zh-CN   |
+        | ChineseTR  | zh-TW   |
+        | Finnish    | fi-FI   |
+        | German     | de-DE   |
+        | Hebrew     | he-IL   |
+        | Italian    | it-IT   |
+        | Norwegian  | nb-NO   |
+        | Portuguese | pt-BR   |
+        | Russian    | ru-RU   |
+        | Spanish    | es-ES   |
+        | Swedish    | sv-SE   |
+        | Thai       | th-TH   |
+        | Polish     | pl-PL   |
+        | French     | fr-FR   |
+        | Japanese   | ja-JP   |
+        | Korean     | ko-KR   |
+        | Vietnamese | vi-VN   |
+        | Indonesian | id-ID   |
+        | Czech      | cs-CZ   |
+        
+        
       operationId: Translations_V3_Get
       consumes: []
       produces:
