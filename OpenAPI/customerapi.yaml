@@ -146,12 +146,18 @@ paths:
           in: query
           description: Array of language cultures separated with |.
           required: true
-          type: string
+          type: array
+          items:
+            type: string
+          collectionFormat: pipes
         - name: baseTexts
           in: query
           description: Array of base texts to be translated separated with |. Each base text in the array must be URL encoded. Base texts are not case sensitive.
           required: true
-          type: string
+          type: array
+          items:
+            type: string
+          collectionFormat: pipes
       responses:
         '200':
           description: OK
