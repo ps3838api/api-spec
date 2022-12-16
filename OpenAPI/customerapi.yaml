@@ -105,6 +105,9 @@ paths:
       description: |
         Returns language translations.  
         
+        
+        Example to translate `football` and `soccer` to German and French language: 
+        
         ```
           
         https://api.ps3838.com/v3/translations?cultureCodes=de-DE|fr-FR&baseTexts=Football|Soccer
