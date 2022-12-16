@@ -4242,6 +4242,22 @@ definitions:
         type: number
         format: double
         description: Maximum team total points bet. Only in straight odds response.
+      moneylineUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last moneyline update.
+      spreadUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last spread update.
+      totalUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last total update.
+      teamTotalUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last team total update.                
       spreads:
         type: array
         description: Container for spread odds.
@@ -4256,6 +4272,22 @@ definitions:
           $ref: '#/definitions/ParlayOddsTotalV3'
       teamTotal:
         $ref: '#/definitions/ParlayOddsTeamTotalsV3'
+      awayScore:
+        type: number
+        format: double
+        description: Period away team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeScore:
+        type: number
+        format: double
+        description: Period home team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      awayRedCards:
+        type: number
+        format: double
+        description: Period away team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeRedCards:
+        type: number
+        format: double
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).               
     required:
       - lineId
       - number
@@ -4279,6 +4311,11 @@ definitions:
         type: number
         format: double
         description: Away team price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.
     required:
       - hdp
       - home
@@ -4329,6 +4366,11 @@ definitions:
         type: number
         format: double
         description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.         
     required:
       - points
       - over
