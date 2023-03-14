@@ -1819,7 +1819,7 @@ paths:
           name: request
           required: true
           schema:
-            $ref: '#/definitions/ParlayLinesRequest'
+            $ref: '#/definitions/ParlayLinesRequestV2'
       responses:
         '200':
           description: OK
@@ -3143,6 +3143,23 @@ definitions:
         description: This is a collection of legs
         items:
           $ref: '#/definitions/ParlayLineRequest'
+  ParlayLinesRequestV2:
+    type: object
+    properties:
+      oddsFormat:
+        type: string
+        description: Odds in the response will be in this format. [American, Decimal, HongKong, Indonesian, Malay]
+        enum:
+          - American
+          - Decimal
+          - HongKong
+          - Indonesian
+          - Malay
+      legs:
+        type: array
+        description: This is a collection of legs
+        items:
+          $ref: '#/definitions/ParlayLineRequestV2'          
   ParlayLineRequest:
     type: object
     properties:
@@ -3186,6 +3203,50 @@ definitions:
       - eventId
       - periodNumber
       - legBetType
+  ParlayLineRequestV2:
+    type: object
+    properties:
+      uniqueLegId:
+        type: string
+        description: This unique id of the leg. It used to identify and match leg in the response.
+      eventId:
+        type: integer
+        format: int64
+        description: Id of the event.
+      periodNumber:
+        type: integer
+        format: int32
+        description: This represents the period of the match. For example, for soccer we have 0 (Game), 1 (1st Half), 2 (2nd Half)
+      legBetType:
+        type: string
+        description: SPREAD, MONEYLINE, TOTAL_POINTS and TEAM_TOTAL_POINTS are supported.
+        enum:
+          - SPREAD
+          - MONEYLINE
+          - TOTAL_POINTS
+          - TEAM_TOTAL_POINTS
+      team:
+        type: string
+        description: Chosen team type. This is needed only for SPREAD and MONEYLINE wager types. [Team1, Team2, Draw (MONEYLINE only)]
+        enum:
+          - Team1
+          - Team2
+          - Draw
+      side:
+        type: string
+        description: Chosen side. This is needed only for TOTAL_POINTS wager type.  [OVER, UNDER]
+        enum:
+          - OVER
+          - UNDER
+      handicap:
+        type: number
+        format: double
+        description: This is needed for SPREAD and TOTAL_POINTS bet type.
+    required: 
+      - uniqueLegId
+      - eventId
+      - periodNumber
+      - legBetType      
   ParlayLinesResponse:
     type: object
     properties:
