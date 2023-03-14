@@ -3194,7 +3194,10 @@ definitions:
       eventStartTime:
         type: string
         format: date-time
-        description: Date time when the event starts.        
+        description: Date time when the event starts.
+      resultingUnit:
+        type: string
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.                
     description: ''    
   SpecialBetV3:
     type: object
