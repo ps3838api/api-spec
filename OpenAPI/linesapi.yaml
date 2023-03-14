@@ -945,6 +945,11 @@ paths:
                       status: 0
                       settlementId: 0
                       settledAt: '2017-10-11T15:05:50.996671Z'
+                      contestants:
+                        - name: Barranquilla
+                          outcome: "X"
+                        - name: Valledupar
+                          outcome: "X"  
                       cancellationReason:
                         code: string
                         details:
@@ -4970,6 +4975,40 @@ definitions:
       cancellationReason:
         $ref: '#/definitions/CancellationReasonType'
         description: Cancellation Reason for Special Event
+      contestants:
+        description: A collection of contestants
+        type: array
+        items:
+          $ref: '#/definitions/SettledSpecialV3'
+  SettledContestants:
+    description: Settled Special
+    type: object
+    properties:
+      name: 
+        description: Contestant name
+        type: string
+        example: Union Magdalena
+      outcome: 
+        description: >
+            Contestant outcomes
+
+            W =  Won,
+
+            L = Lost, 
+
+            X = Cancelled,
+            
+            T = Tie,
+            
+            Z = Scratched
+           type: string
+           example: Z
+           enum:
+            - W
+            - L
+            - X
+            - T
+            - Z
   SpecialLineResponse:
     type: object
     properties:
