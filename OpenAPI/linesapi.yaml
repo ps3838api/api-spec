@@ -4989,8 +4989,7 @@ definitions:
         type: string
         example: Union Magdalena
       outcome: 
-        type: integer
-        format: int32
+        type: string
         description: |
           Contestant outcomes. 
           
