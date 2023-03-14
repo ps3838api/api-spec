@@ -945,6 +945,11 @@ paths:
                       status: 0
                       settlementId: 0
                       settledAt: '2017-10-11T15:05:50.996671Z'
+                      contestants:
+                        - name: Barranquilla
+                          outcome: "X"
+                        - name: Valledupar
+                          outcome: "X"  
                       cancellationReason:
                         code: string
                         details:
