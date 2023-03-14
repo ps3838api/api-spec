@@ -4989,26 +4989,22 @@ definitions:
         type: string
         example: Union Magdalena
       outcome: 
-        description: >
-          Contestant outcomes
-
-          W =  Won,
-
+        type: integer
+        format: int32
+        description: |
+          Contestant outcomes. 
+          
+          W = Won, 
           L = Lost, 
-
-          X = Cancelled,
-            
-          T = Tie,
-            
-          Z = Scratched
-          type: string
-          example: Z
-          enum:
-            - W
-            - L
-            - X
-            - T
-            - Z
+          X = Cancelled, 
+          T = Tie, 
+          Z = Scratched          
+        enum:
+          - W
+          - L
+          - X
+          - T
+          - Z
   SpecialLineResponse:
     type: object
     properties:
