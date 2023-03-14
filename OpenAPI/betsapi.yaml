@@ -3360,6 +3360,10 @@ definitions:
         example: 2017-10-05T01:32:59Z
         x-nullable: false
         description: Date time when the event starts.
+      resultingUnit:
+        type: string 
+        x-nullable: false
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.        
     description: ''    
   GetBetsByTypeResponse:
     type: object
