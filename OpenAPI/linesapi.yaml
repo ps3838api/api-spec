@@ -4806,7 +4806,7 @@ definitions:
           - I
         type: string
       event:
-        $ref: '#/definitions/SpecialsFixturesEvent'
+        $ref: '#/definitions/SpecialsFixturesEventV2'
       contestants:
         description: ContestantLines available for wagering.
         type: array
@@ -4835,6 +4835,24 @@ definitions:
         format: int32
         description: The period of the match. For example in soccer 0 (Game), 1 (1st Half) & 2 (2nd Half)
         type: integer
+  SpecialsFixturesEventV2:
+    type: object
+    description: Optional event asscoaited with the special.
+    properties:
+      id:
+        format: int32
+        description: Event Id
+        type: integer
+      periodNumber:
+        format: int32
+        description: The period of the match. For example in soccer 0 (Game), 1 (1st Half) & 2 (2nd Half)
+        type: integer
+      home:
+        description: Home team name.
+        type: string
+      away:
+        description: Away team name.
+        type: string        
   SpecialsFixturesContestant:
     type: object
     properties:
