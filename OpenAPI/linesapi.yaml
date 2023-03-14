@@ -4979,7 +4979,7 @@ definitions:
         description: A collection of contestants
         type: array
         items:
-          $ref: '#/definitions/SettledSpecialV3'
+          $ref: '#/definitions/SettledContestants'
   SettledContestants:
     description: Settled Special
     type: object
@@ -4990,20 +4990,20 @@ definitions:
         example: Union Magdalena
       outcome: 
         description: >
-            Contestant outcomes
+          Contestant outcomes
 
-            W =  Won,
+          W =  Won,
 
-            L = Lost, 
+          L = Lost, 
 
-            X = Cancelled,
+          X = Cancelled,
             
-            T = Tie,
+          T = Tie,
             
-            Z = Scratched
-           type: string
-           example: Z
-           enum:
+          Z = Scratched
+          type: string
+          example: Z
+          enum:
             - W
             - L
             - X
