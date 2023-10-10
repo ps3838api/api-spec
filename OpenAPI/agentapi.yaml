@@ -7,6 +7,7 @@ info:
     # Authentication 
     
     The API uses HTTP Basic access authentication. Always use HTTPS to access the API.
+    
     You need to send HTTP Request header like this:    
     
     `Authorization: Basic <Base64 value of UTF-8 encoded "username:password">`
@@ -14,7 +15,6 @@ info:
     Example:
     
     `Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=`
-    
     
     # Data Formats 
     
@@ -33,7 +33,11 @@ info:
     # API Path
     
     To access the API, the user must use the correct path.
+    
     The root path for the API is:
+    
     api.{domain-name}.com/partner
+    
     The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
+    
     Example URI: api.{domain-name}.com/partner/v1/balance
