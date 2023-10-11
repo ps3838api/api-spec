@@ -61,20 +61,15 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: level
+        - name: cultureCodes
           in: query
-          description: The level for which to get the data. Value must be one of the following.
-          required: false
+          description: Must be in Language Culture Name format.
+          required: true
           type: string
-        - name: direct
+        - name: baseTexts
           in: query
-          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
-          required: false
-          type: boolean
-        - name: username
-          in: query
-          description: The username of the account for which to return data.
-          required: false
+          description: Array of strings to be translated.
+          required: true
           type: string
       responses:
         '200':
