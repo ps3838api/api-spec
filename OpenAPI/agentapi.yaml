@@ -42,5 +42,27 @@ info:
     
     Example URI: api.{domain-name}.com/partner/v1/balance
 
+  x-logo:
+    url: ''
+host: api.ps3838.com
+schemes:
+  - https
+security:
+  - basicAuth: []
+paths:
+  /v1/client/balance:
+    get:
+      tags:
+        - Default
+      summary: Get Client Balance - v1
+      description: Returns current client balance.
+      operationId: Client_Balance_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+      deprecated: false
 
 
