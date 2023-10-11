@@ -143,6 +143,7 @@ definitions:
       moreAvailable:
         type: boolean 
         description: Indicates whether more pages are available.
+        example: true
       pageSize:
         type: integer 
         description: The requested page size. Default is 1000.
@@ -150,9 +151,11 @@ definitions:
       fromRecord:
         type: integer 
         description: Starting record number of the result set. Records start at zero
+        example: 0
       toRecord:
         type: integer 
         description: Ending record number of the result set. 
+        example: 999
       reportDateTime:
         type: string
         format: date-time
@@ -162,25 +165,31 @@ definitions:
         type: array
         description: A collection of agents.
         items:
-          $ref: '#/definitions/GetBalanceAgent'
-  GetBalanceAgent:
+          $ref: '#/definitions/BalanceAgentResult'
+  BalanceAgentResult:
     type: object
     properties:
       username:
         type: string 
         description: Username.
-      pageSize:
-        type: integer 
-        description: The requested page size. Default is 1000.
-        example: 1000
-      fromRecord:
-        type: integer 
-        description: Starting record number of the result set. Records start at zero
-      toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
-      reportDateTime:
-        type: string
-        format: date-time
-        example: '2023-06-13T15:24:48Z'
-        description: Report date time.
+        example: 'ABC123'
+      level:
+        type: string 
+        description: Username level.
+        enum:
+          - PART
+          - CORP
+          - SMA
+          - MA
+          - AG
+          - PL
+        example: 'SMA'
+      currency:
+        type: string 
+        description: Currency.
+        example: 'USD'
+      totalBalance:
+        type: number
+        format: double
+        example: -16480.15
+        description: Total Balance.
