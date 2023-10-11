@@ -54,17 +54,6 @@ info:
       produces:
         - application/json
       parameters:
-        - name: level
-          in: query
-          description: The level for which to get the data. Value must be one of the following.
-          required: false
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
         - name: direct
           in: query
           description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false
