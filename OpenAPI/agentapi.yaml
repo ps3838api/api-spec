@@ -76,12 +76,12 @@ paths:
         - name: direct
           in: query
           description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
-          required: true
+          required: false
           type: boolean
         - name: username
           in: query
           description: The username of the account for which to return data.
-          required: true
+          required: false
           type: string
       responses:
         '200':
