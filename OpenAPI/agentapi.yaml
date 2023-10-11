@@ -83,3 +83,15 @@ paths:
           description: The username of the account for which to return data.
           required: false
           type: string
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0  
