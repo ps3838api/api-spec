@@ -1,0 +1,85 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: PS3838 API - Agent API Reference
+  description:  |
+    
+    # Authentication 
+    
+    The API uses HTTP Basic access authentication. Always use HTTPS to access the API.
+    
+    You need to send HTTP Request header like this:    
+    
+    `Authorization: Basic <Base64 value of UTF-8 encoded "username:password">`
+    
+    Example:
+    
+    `Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=`
+    
+    # Data Formats 
+    
+    PS3838 API supports only JSON format. HTTP header Accept must be set:
+    
+    `Accept: application/json`
+    
+    POST HTTP Request must have JSON body content and Content-Type HTTP header must be set:
+    
+    `Content-Type: application/json`
+    
+    # Date Time Format
+    
+    All dates and times are in GMT time zone, ISO 8601 format
+    
+    # API Path
+    
+    To access the API, the user must use the correct path.
+    
+    The root path for the API is:
+    
+    api.{domain-name}.com/partner
+    
+    The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
+    
+    Example URI: api.{domain-name}.com/partner/v1/balance
+
+  x-logo:
+    url: ''
+host: api.{domain-name}.com
+schemes:
+  - https
+security:
+  - basicAuth: []
+paths:
+  /partner/v1/balance:
+    get:
+      tags:
+        - Balance
+      summary: Get Balance – v1
+      description: Gets the account balance for the account(s) requested.
+      operationId: Balance_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: The level for which to get the data. Value must be one of the following.
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
+          required: false
+          type: boolean
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
