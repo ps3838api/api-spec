@@ -50,28 +50,27 @@ schemes:
 security:
   - basicAuth: []
 paths:
-  /partner/v1/balance:
+  /v1/translations:
     get:
       tags:
-        - Balance
-      summary: Get Balance – v1
-      description: Gets the account balance for the account(s) requested.
-      operationId: Balance_V1_Get
+        - Default
+      summary: Get Translations - v1
+      description: Returns translations for strings in base texts array. Each string in parameters must be URL encoded and separated with '|' character. Parameters are not case-sensitive.
+      operationId: Translations_V1_Get
       consumes: []
       produces:
         - application/json
       parameters:
-        - name: level
+        - name: cultureCodes
           in: query
-          description: The level for which to get the data. Value must be one of the following:
-          required: false
+          description: Must be in Language Culture Name format.
+          required: true
           type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
+        - name: baseTexts
+          in: query
+          description: Array of strings to be translated.
+          required: true
+          type: string
       responses:
         '200':
           description: OK
