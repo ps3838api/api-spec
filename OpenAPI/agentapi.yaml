@@ -193,3 +193,18 @@ definitions:
         format: double
         example: -16480.15
         description: Total Balance.
+      yesterdayBalance:
+        type: number
+        format: double
+        example: -14580.15
+        description: Yesterday Balance.
+      totalCash:
+        type: number
+        format: double
+        example: 1000
+        description: Total Cash.
+      yesterdayCash:
+        type: number
+        format: double
+        example: 2048.65
+        description: Yesterday Cash.
