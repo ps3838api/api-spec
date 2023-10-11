@@ -153,46 +153,34 @@ definitions:
       toRecord:
         type: integer 
         description: Ending record number of the result set. 
-      username:
-        type: integer
-        format: int64
-        description: Line identification needed to place a bet.
-      altLineId:
-        type: integer
-        format: int64
-        description: This would be needed to place the bet if the handicap is on alternate line, otherwise it will not be populated in the response.
-      team1Score:
-        type: integer
-        format: int32
-        description: Away team score. Applicable to soccer only.
-      team2Score:
-        type: integer
-        format: int32
-        description: Home team score. Applicable to soccer only.
-      team1RedCards:
-        type: integer
-        format: int32
-        description: Team 1 red cards. Applicable to soccer only.
-      team2RedCards:
-        type: integer
-        format: int32
-        description: Team 2 red cards. Applicable to soccer only.
-      maxRiskStake:
-        type: number
-        format: double
-        description: Maximum bettable risk amount.
-      minRiskStake:
-        type: number
-        format: double
-        description: Minimum bettable risk amount.
-      maxWinStake:
-        type: number
-        format: double
-        description: Maximum bettable win amount.
-      minWinStake:
-        type: number
-        format: double
-        description: Minimum bettable win amount.
-      effectiveAsOf:
+      reportDateTime:
         type: string
-        description: Line is effective as of this date and time in UTC.
+        format: date-time
+        example: '2023-06-13T15:24:48Z'
+        description: Report date time.
+      agent:
+        type: array
+        description: A collection of agents.
+        items:
+          $ref: '#/definitions/GetBalanceAgent'
+  GetBalanceAgent:
+    type: object
+    properties:
+      username:
+        type: string 
+        description: Username.
+      pageSize:
+        type: integer 
+        description: The requested page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+      reportDateTime:
+        type: string
+        format: date-time
+        example: '2023-06-13T15:24:48Z'
+        description: Report date time.
