@@ -83,7 +83,3 @@ paths:
           description: The username of the account for which to return data.
           required: false
           type: string
-      responses:
-        '200':
-          description: OK
-      deprecated: false
