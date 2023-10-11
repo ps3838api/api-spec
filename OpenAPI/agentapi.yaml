@@ -53,14 +53,4 @@ info:
       consumes: []
       produces:
         - application/json
-      parameters:
-        - name: direct
-          in: query
-          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false
-          required: false
-          type: boolean
-        - name: username
-          in: query
-          description: The username of the account for which to return data.
-          required: false
-          type: string
+
