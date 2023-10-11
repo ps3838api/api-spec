@@ -99,7 +99,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/LineResponse'
+            $ref: '#/definitions/GetBalanceV1Response'
         '400':
           description: BadRequest
           schema:
@@ -116,7 +116,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true  
+      deprecated: false  
 definitions:
   ErrorResponse:
     type: object
@@ -137,20 +137,23 @@ definitions:
         type: string
       message:
         type: string
-  LineResponse:
+  GetBalanceV1Response:
     type: object
     properties:
-      status:
-        type: string
-        description: If the value is NOT_EXISTS, than this will be the only parameter in the response. All other params would be empty. [SUCCESS = OK, NOT_EXISTS = Line not offered anymore]
-        enum:
-          - SUCCESS
-          - NOT_EXISTS
-      price:
-        type: number
-        format: double
-        description: Latest price.
-      lineId:
+      moreAvailable:
+        type: boolean 
+        description: Indicates whether more pages are available.
+      pageSize:
+        type: integer 
+        description: The requested page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+      username:
         type: integer
         format: int64
         description: Line identification needed to place a bet.
