@@ -41,3 +41,37 @@ info:
     The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
     
     Example URI: api.{domain-name}.com/partner/v1/balance
+
+  /partner/v1/balance:
+    get:
+      tags:
+        - Balance
+      summary: Get Balance – v1
+      description: |
+        Gets the account balance for the account(s) requested.  
+      operationId: Get_Balance_v1
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: The level for which to get the data. Value must be one of the following:
+          required: false
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false
+          required: false
+          type: boolean
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
