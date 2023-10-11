@@ -42,15 +42,5 @@ info:
     
     Example URI: api.{domain-name}.com/partner/v1/balance
 
-  /partner/v1/balance:
-    get:
-      tags:
-        - Balance
-      summary: Get Balance – v1
-      description: |
-        Gets the account balance for the account(s) requested.  
-      operationId: Get_Balance_v1
-      consumes: []
-      produces:
-        - application/json
+
 
