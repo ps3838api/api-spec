@@ -80,5 +80,3 @@ paths:
         '200':
           description: OK
       deprecated: false
-
-
