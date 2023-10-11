@@ -95,3 +95,101 @@ paths:
           required: false
           type: integer
           default: 0  
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LineResponse'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true  
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Identifier representing the type of error that occurred.
+      message:
+        type: string
+        description: Description of the error.
+    description: Contains details of an error that was encountered.
+  ExtendedErrorResponse:
+    type: object
+    properties:
+      ref:
+        type: string
+      code:
+        type: string
+      message:
+        type: string
+  LineResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        description: If the value is NOT_EXISTS, than this will be the only parameter in the response. All other params would be empty. [SUCCESS = OK, NOT_EXISTS = Line not offered anymore]
+        enum:
+          - SUCCESS
+          - NOT_EXISTS
+      price:
+        type: number
+        format: double
+        description: Latest price.
+      lineId:
+        type: integer
+        format: int64
+        description: Line identification needed to place a bet.
+      altLineId:
+        type: integer
+        format: int64
+        description: This would be needed to place the bet if the handicap is on alternate line, otherwise it will not be populated in the response.
+      team1Score:
+        type: integer
+        format: int32
+        description: Away team score. Applicable to soccer only.
+      team2Score:
+        type: integer
+        format: int32
+        description: Home team score. Applicable to soccer only.
+      team1RedCards:
+        type: integer
+        format: int32
+        description: Team 1 red cards. Applicable to soccer only.
+      team2RedCards:
+        type: integer
+        format: int32
+        description: Team 2 red cards. Applicable to soccer only.
+      maxRiskStake:
+        type: number
+        format: double
+        description: Maximum bettable risk amount.
+      minRiskStake:
+        type: number
+        format: double
+        description: Minimum bettable risk amount.
+      maxWinStake:
+        type: number
+        format: double
+        description: Maximum bettable win amount.
+      minWinStake:
+        type: number
+        format: double
+        description: Minimum bettable win amount.
+      effectiveAsOf:
+        type: string
+        description: Line is effective as of this date and time in UTC.
