@@ -36,15 +36,15 @@ info:
     
     The root path for the API is:
     
-    api.{domain-name}.com/partner
+    api.ps3838.com/partner
     
     The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
     
-    Example URI: api.{domain-name}.com/partner/v1/balance
+    Example URI: api.ps3838.com/partner/v1/balance
 
   x-logo:
     url: ''
-host: api.{domain-name}.com
+host: api.ps3838.com
 schemes:
   - https
 security:
