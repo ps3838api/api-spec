@@ -208,3 +208,161 @@ definitions:
         format: double
         example: 2048.65
         description: Yesterday Cash.
+  /partner/v1/credit:
+    get:
+      tags:
+        - Get Credit
+      summary: Get Credit – v1
+      description: Gets the credit information for the account(s) requested.
+      operationId: Credit_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
+          required: false
+          type: boolean
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0  
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetBalanceV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: false  
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Identifier representing the type of error that occurred.
+      message:
+        type: string
+        description: Description of the error.
+    description: Contains details of an error that was encountered.
+  ExtendedErrorResponse:
+    type: object
+    properties:
+      ref:
+        type: string
+      code:
+        type: string
+      message:
+        type: string
+  GetBalanceV1Response:
+    type: object
+    properties:
+      moreAvailable:
+        type: boolean 
+        description: Indicates whether more pages are available.
+        example: true
+      pageSize:
+        type: integer 
+        description: The requested page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+        example: 0
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+        example: 999
+      reportDateTime:
+        type: string
+        format: date-time
+        example: '2023-06-13T15:24:48Z'
+        description: Report date time.
+      agent:
+        type: array
+        description: A collection of agents.
+        items:
+          $ref: '#/definitions/BalanceAgentResult'
+  BalanceAgentResult:
+    type: object
+    properties:
+      username:
+        type: string 
+        description: Username.
+        example: 'ABC123'
+      level:
+        type: string 
+        description: Username level.
+        enum:
+          - PART
+          - CORP
+          - SMA
+          - MA
+          - AG
+          - PL
+        example: 'SMA'
+      currency:
+        type: string 
+        description: Currency.
+        example: 'USD'
+      totalBalance:
+        type: number
+        format: double
+        example: -16480.15
+        description: Total Balance.
+      yesterdayBalance:
+        type: number
+        format: double
+        example: -14580.15
+        description: Yesterday Balance.
+      totalCash:
+        type: number
+        format: double
+        example: 1000
+        description: Total Cash.
+      yesterdayCash:
+        type: number
+        format: double
+        example: 2048.65
+        description: Yesterday Cash.
