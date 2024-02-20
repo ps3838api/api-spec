@@ -120,7 +120,7 @@ paths:
   /partner/v1/credit:
     get:
       tags:
-        - Get Credit
+        - Credit
       summary: Get Credit – v1
       description: Gets the credit information for the account(s) requested.
       operationId: Credit_V1_Get
