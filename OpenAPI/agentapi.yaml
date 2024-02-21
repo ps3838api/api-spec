@@ -449,14 +449,12 @@ definitions:
       status:
         type: string
         example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
         enum:
           - REJECTED
       rejectCode:
         type: string
         description: |
-        
-          If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-          
           
           SYSTEM_SECURITY_BLOCK_BALANCE = Credit Given exceeds Max Exposure Setting of Top Agent,  
           CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
