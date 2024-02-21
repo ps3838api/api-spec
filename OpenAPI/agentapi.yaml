@@ -183,7 +183,45 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false  
+      deprecated: false 
+  /partner/v1/credit:
+    post:
+      tags:
+        - Credit
+      summary: Set Credit - v1
+      operationId: Credit_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Set Credit request.
+          required: true
+          schema:
+            $ref: '#/definitions/SetCreditV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SetCreditV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'	
 definitions:
   ErrorResponse:
     type: object
@@ -361,3 +399,88 @@ definitions:
         format: double
         example: 1563.89
         description: Member Max Credit.
+  SetCreditV1Request:
+    type: object
+    properties:
+      credit:
+        $ref: '#/definitions/SetCreditObject'
+    description: ''
+  SetCreditObject:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: QSA
+        description: Usercode of account to be updated.
+      currency:
+        type: string
+        example: USD
+        description: Currency of the update. Expected value: Destination Currency (currency of account being updated)
+      creditGiven:
+        type: number
+        format: double
+        example: 1000
+        description: Credit Given. NULL value for unchanged value.
+      downlineMaxCredit:
+        type: number
+        format: double
+        example: 200
+        description: Downline Max Credit. NULL value for unchanged value.
+            For member and AG level accounts value should be set to NULL; any value set will be ignored.
+      memberMaxCredit:
+        type: number
+        format: double
+        example: 200
+        description: Member Max Credit. NULL value for unchanged value.
+            For member accounts value should be set to NULL; any value set will be ignored.
+    description: ''
+  SetCreditV1Response:
+    type: object
+    properties:
+      status:
+        type: string
+        example: SUCCESS
+        description: Status of the response.
+        enum:
+          - SUCCESS
+          - REJECTED
+          - ERROR
+      rejectCode:
+        type: string
+        description: |
+          If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+          
+          
+          SYSTEM_SECURITY_BLOCK_BALANCE = Credit Given exceeds Max Exposure Setting of Top Agent,  
+          CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
+          CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent.,  
+          CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
+          CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,
+          DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),
+          DOWNLINE_EXCEEDS_USED = Downline Max Credit reduction exceeds current credit used,
+          MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),
+          MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),
+          MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,
+          INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,
+          USER_NOT_FOUND = Account to be updated is Closed. NOTE: This cannot  happen on the Partner Services Back Office as the option is not available,
+          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit and “Member’s Total Bet Credit may not exceed Given Credit” is checked,
+        enum:
+          - SYSTEM_SECURITY_BLOCK_BALANCE
+          - CREDIT_EXCEEDS_USED
+          - CREDIT_EXCEEDS_PARENT_DOWNLINE
+          - CREDIT_EXCEEDS_DOWNLINE
+          - CREDIT_EXCEEDS_MEMBER
+          - DOWNLINE_EXCEEDS_CREDIT
+          - DOWNLINE_EXCEEDS_USED
+          - MEMBER_EXCEEDS_CREDIT
+          - MEMBER_EXCEEDS_DOWNLINE
+          - MEMBER_EXCEEDS_USED
+          - INVALID_CURRENCY
+          - USER_NOT_FOUND
+          - MEMBER_EXCEEDS_GIVEN
+      errorCode:
+        type: string
+        description: NULL on successful submission.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
