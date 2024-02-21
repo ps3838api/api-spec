@@ -414,7 +414,7 @@ definitions:
       currency:
         type: string
         example: USD
-        description: Currency of the update. Expected value: Destination Currency (currency of account being updated)
+        description: Currency of the update. Destination Currency (currency of account being updated). 
       creditGiven:
         type: number
         format: double
