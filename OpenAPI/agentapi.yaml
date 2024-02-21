@@ -338,10 +338,10 @@ definitions:
         description: Date and time of the response.
       agent:
         type: array
-        description: A collection of agents.
+        description: Contains a list of Agents.
         items:
-          $ref: '#/definitions/GetCreditAgentResult'
-  GetCreditAgentResult:
+          $ref: '#/definitions/Agent'
+  Agent:
     type: object
     properties:
       username:
