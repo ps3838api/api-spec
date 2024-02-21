@@ -208,7 +208,7 @@ paths:
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/SetCreditV1Response'
+            $ref: '#/definitions/ErrorResponse'
         '401':
           description: Unauthorized
           schema:
