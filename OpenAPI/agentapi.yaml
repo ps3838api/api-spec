@@ -208,7 +208,7 @@ paths:
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/SetCreditV1Response'
         '401':
           description: Unauthorized
           schema:
@@ -438,7 +438,7 @@ definitions:
     properties:
       status:
         type: string
-        example: SUCCESS
+        example: REJECTED
         description: Status of the response.
         enum:
           - SUCCESS
