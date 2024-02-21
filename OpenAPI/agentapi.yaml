@@ -208,7 +208,7 @@ paths:
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/SetCreditV1ErrorResponse'
         '401':
           description: Unauthorized
           schema:
@@ -438,12 +438,19 @@ definitions:
     properties:
       status:
         type: string
-        example: REJECTED
+        example: SUCCESS
         description: Status of the response.
         enum:
           - SUCCESS
+    description: ''
+  SetCreditV1ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        enum:
           - REJECTED
-          - ERROR
       rejectCode:
         type: string
         description: |
@@ -488,7 +495,7 @@ definitions:
           - MEMBER_EXCEEDS_GIVEN
       errorCode:
         type: string
-        description: NULL on successful submission.
+        description: Error code.
         enum:
           - INVALID_REQUEST_DATA
     description: ''
