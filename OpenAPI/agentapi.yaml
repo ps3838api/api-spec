@@ -184,7 +184,6 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false 
-  /partner/v1/credit:
     post:
       tags:
         - Credit
