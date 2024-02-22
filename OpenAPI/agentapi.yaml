@@ -346,11 +346,11 @@ definitions:
     properties:
       username:
         type: string 
-        description: Username.
+        description: Account username.
         example: 'ABC123'
       level:
         type: string 
-        description: Username level.
+        description: Agent Level.
         enum:
           - PART
           - CORP
@@ -359,45 +359,57 @@ definitions:
           - AG
           - PL
         example: 'SMA'
+      status:
+        type: string 
+        description: Account Status.
+        enum:
+          - ACTIVE
+          - INACTIVE
+          - SUSPENDED
+          - CLOSED
+          - COSUSP
+          - COINACT
+          - FAILED_LOGINS
+        example: 'ACTIVE'
       currency:
         type: string 
-        description: Currency.
+        description: Account Currency.
         example: 'USD'
       creditGiven:
         type: number
         format: double
         example: 7819.49
-        description: Credit Given.
+        description: Amount of Credit Given.
       creditUsed:
         type: number
         format: double
         example: 1000.00
-        description: Credit Used.
+        description: Amount of Credit Used.
       availableCredit:
         type: number
         format: double
         example: 6819.49
-        description: Available Credit.
+        description: Amount of Available Credit.
       totalBalance:
         type: number
         format: double
         example: 6819.49
-        description: Total Balance.
+        description: Total Balance of the Account.
       outstanding:
         type: number
         format: double
         example: 100.00
-        description: Outstanding.
+        description: Amount of Outstanding Bets.
       downlineMaxCredit:
         type: number
         format: double
         example: 1563.89
-        description: Downline Max Credit.
+        description: Maximum Credit Amount for downline accounts.
       memberMaxCredit:
         type: number
         format: double
         example: 1563.89
-        description: Member Max Credit.
+        description: Maximum Credit Amount for member accounts.
   SetCreditV1Request:
     type: object
     properties:
@@ -419,19 +431,17 @@ definitions:
         type: number
         format: double
         example: 1000
-        description: Credit Given. NULL value for unchanged value.
+        description: Amount of Credit Given.
       downlineMaxCredit:
         type: number
         format: double
         example: 200
-        description: Downline Max Credit. NULL value for unchanged value.
-            For member and AG level accounts value should be set to NULL; any value set will be ignored.
+        description: Maximum Credit Amount for downline accounts.
       memberMaxCredit:
         type: number
         format: double
         example: 200
-        description: Member Max Credit. NULL value for unchanged value.
-            For member accounts value should be set to NULL; any value set will be ignored.
+        description: Maximum Credit Amount for member accounts.
     description: ''
   SetCreditV1Response:
     type: object
