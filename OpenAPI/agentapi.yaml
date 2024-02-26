@@ -466,7 +466,7 @@ definitions:
         type: string
         description: |
           
-          SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,
+          SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
           CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
           CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
           CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
