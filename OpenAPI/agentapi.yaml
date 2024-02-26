@@ -466,7 +466,7 @@ definitions:
         type: string
         description: |
           
-          SYSTEM_SECURITY_BLOCK_BALANCE = Credit Given exceeds Max Exposure Setting of Top Agent,  
+          SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,
           CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
           CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
           CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
@@ -486,7 +486,7 @@ definitions:
           
           USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,
           
-          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit and “Member’s Total Bet Credit may not exceed Given Credit” is checked,
+          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
           - CREDIT_EXCEEDS_USED
