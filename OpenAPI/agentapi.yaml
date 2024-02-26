@@ -470,23 +470,15 @@ definitions:
           CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
           CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
           CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
-          CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,
-          
-          DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),
-          
-          DOWNLINE_EXCEEDS_USED = Downline Max Credit reduction exceeds current credit used,
-          
-          MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),
-          
-          MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),
-          
-          MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,
-          
-          INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,
-          
-          USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,
-          
-          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,
+          CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
+          DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
+          DOWNLINE_EXCEEDS_USED = Downline Max Credit reduction exceeds current credit used,  
+          MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
+          MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
+          MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,  
+          INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
+          USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
+          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
           - CREDIT_EXCEEDS_USED
