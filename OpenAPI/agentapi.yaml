@@ -116,7 +116,111 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false  
+      deprecated: false
+  /partner/v1/credit:
+    get:
+      tags:
+        - Credit
+      summary: Get Credit – v1
+      description: Gets the credit information for the account(s) requested.
+      operationId: Credit_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: Agent Level to be returned. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
+          required: false
+          type: boolean
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0  
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetCreditV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: false 
+    post:
+      tags:
+        - Credit
+      summary: Set Credit - v1
+      operationId: Credit_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Set Credit request.
+          required: true
+          schema:
+            $ref: '#/definitions/SetCreditV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SetCreditV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/SetCreditV1ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'	
 definitions:
   ErrorResponse:
     type: object
@@ -208,3 +312,190 @@ definitions:
         format: double
         example: 2048.65
         description: Yesterday Cash.
+  GetCreditV1Response:
+    type: object
+    properties:
+      moreAvailable:
+        type: boolean 
+        description: Indicates whether more pages are available.
+        example: true
+      pageSize:
+        type: integer 
+        description: The requested page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+        example: 0
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+        example: 999
+      reportDateTime:
+        type: string
+        format: date-time
+        example: '2023-06-13T15:24:48Z'
+        description: Date and time of the response.
+      agent:
+        type: array
+        description: Contains a list of Agents.
+        items:
+          $ref: '#/definitions/Agent'
+  Agent:
+    type: object
+    properties:
+      username:
+        type: string 
+        description: Account username.
+        example: 'ABC123'
+      level:
+        type: string 
+        description: Agent Level.
+        enum:
+          - PART
+          - CORP
+          - SMA
+          - MA
+          - AG
+          - PL
+        example: 'SMA'
+      status:
+        type: string 
+        description: Account Status.
+        enum:
+          - ACTIVE
+          - INACTIVE
+          - SUSPENDED
+          - CLOSED
+          - COSUSP
+          - COINACT
+          - FAILED_LOGINS
+        example: 'ACTIVE'
+      currency:
+        type: string 
+        description: Account Currency.
+        example: 'USD'
+      creditGiven:
+        type: number
+        format: double
+        example: 7819.49
+        description: Amount of Credit Given.
+      creditUsed:
+        type: number
+        format: double
+        example: 1000.00
+        description: Amount of Credit Used.
+      availableCredit:
+        type: number
+        format: double
+        example: 6819.49
+        description: Amount of Available Credit.
+      totalBalance:
+        type: number
+        format: double
+        example: 6819.49
+        description: Total Balance of the Account.
+      outstanding:
+        type: number
+        format: double
+        example: 100.00
+        description: Amount of Outstanding Bets.
+      downlineMaxCredit:
+        type: number
+        format: double
+        example: 1563.89
+        description: Maximum Credit Amount for downline accounts.
+      memberMaxCredit:
+        type: number
+        format: double
+        example: 1563.89
+        description: Maximum Credit Amount for member accounts.
+  SetCreditV1Request:
+    type: object
+    properties:
+      credit:
+        $ref: '#/definitions/SetCreditObject'
+    description: ''
+  SetCreditObject:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: QSA
+        description: Usercode of account to be updated.
+      currency:
+        type: string
+        example: USD
+        description: Currency of the update. Destination Currency (currency of account being updated). 
+      creditGiven:
+        type: number
+        format: double
+        example: 1000
+        description: Amount of Credit Given.
+      downlineMaxCredit:
+        type: number
+        format: double
+        example: 200
+        description: Maximum Credit Amount for downline accounts.
+      memberMaxCredit:
+        type: number
+        format: double
+        example: 200
+        description: Maximum Credit Amount for member accounts.
+    description: ''
+  SetCreditV1Response:
+    type: object
+    properties:
+      status:
+        type: string
+        example: SUCCESS
+        description: Status of the response.
+        enum:
+          - SUCCESS
+    description: ''
+  SetCreditV1ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        description: |
+          
+          SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
+          CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
+          CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
+          CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
+          CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
+          DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
+          DOWNLINE_EXCEEDS_USED = Downline Max Credit reduction exceeds current credit used,  
+          MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
+          MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
+          MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,  
+          INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
+          USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
+          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
+        enum:
+          - SYSTEM_SECURITY_BLOCK_BALANCE
+          - CREDIT_EXCEEDS_USED
+          - CREDIT_EXCEEDS_PARENT_DOWNLINE
+          - CREDIT_EXCEEDS_DOWNLINE
+          - CREDIT_EXCEEDS_MEMBER
+          - DOWNLINE_EXCEEDS_CREDIT
+          - DOWNLINE_EXCEEDS_USED
+          - MEMBER_EXCEEDS_CREDIT
+          - MEMBER_EXCEEDS_DOWNLINE
+          - MEMBER_EXCEEDS_USED
+          - INVALID_CURRENCY
+          - USER_NOT_FOUND
+          - MEMBER_EXCEEDS_GIVEN
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
