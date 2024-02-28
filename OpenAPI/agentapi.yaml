@@ -544,11 +544,11 @@ definitions:
         type: string
         example: QSA
         description: Usercode of account to be updated.
-      usercode:
+      password:
         type: string
         example: 1234qwer@
         description: New Password.
-      usercode:
+      confirmPassword:
         type: string
         example: 1234qwer@
         description: Confirm New Password.
