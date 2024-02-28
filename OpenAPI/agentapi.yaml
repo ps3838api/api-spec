@@ -235,7 +235,6 @@ paths:
       parameters:
         - in: body
           name: request
-          description: Change Password request.
           required: true
           schema:
             $ref: '#/definitions/ChangePasswordV1Request'
