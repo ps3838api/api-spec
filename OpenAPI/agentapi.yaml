@@ -226,6 +226,7 @@ paths:
       tags:
         - Account
       summary: Change Password - v1
+      description: Updates the password for the account posted.
       operationId: Change_Password_V1
       consumes:
         - application/json
