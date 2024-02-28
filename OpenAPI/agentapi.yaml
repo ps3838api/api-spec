@@ -221,6 +221,44 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'	
+  /partner/v1/change-password:
+    post:
+      tags:
+        - Account
+      summary: Change Password - v1
+      operationId: Change_Password_V1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Change Password request.
+          required: true
+          schema:
+            $ref: '#/definitions/ChangePasswordV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ChangePasswordV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ChangePasswordV1ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'	
 definitions:
   ErrorResponse:
     type: object
@@ -493,6 +531,64 @@ definitions:
           - INVALID_CURRENCY
           - USER_NOT_FOUND
           - MEMBER_EXCEEDS_GIVEN
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
+  ChangePasswordV1Request:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: QSA
+        description: Usercode of account to be updated.
+      usercode:
+        type: string
+        example: 1234qwer@
+        description: New Password.
+      usercode:
+        type: string
+        example: 1234qwer@
+        description: Confirm New Password.
+    description: ''
+  ChangePasswordV1Response:
+    type: object
+    properties:
+      status:
+        type: string
+        example: SUCCESS
+        description: Status of the response.
+        enum:
+          - SUCCESS
+    description: ''
+  ChangePasswordV1ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        description: |
+          
+          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,  
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+          PASSWORD_MISMATCH = Password and Confirm Password do not match,  
+          PASSWORD_CRITERIA_FAIL = Password fails to meet the required criteria,  
+          PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
+        enum:
+          - ACCOUNT_NOT_DOWNLINE
+          - ACCOUNT_NOT_DIRECT
+          - ACCOUNT_CLOSED
+          - PASSWORD_MISMATCH
+          - PASSWORD_CRITERIA_FAIL
+          - PASSWORD_SAME_AS_OLD
       errorCode:
         type: string
         description: Error code.
