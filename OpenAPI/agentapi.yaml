@@ -221,6 +221,44 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'	
+  /partner/v1/account-status:
+    post:
+      tags:
+        - Account
+      summary: Account Status - v1
+      description: Updates the account status for the account posted.
+      operationId: Update_Account_Status_V1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateAccountStatusV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdateAccountStatusV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/UpdateAccountStatusV1ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'	  
   /partner/v1/change-password:
     post:
       tags:
@@ -589,6 +627,65 @@ definitions:
           - PASSWORD_MISMATCH
           - PASSWORD_CRITERIA_FAIL
           - PASSWORD_SAME_AS_OLD
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
+  UpdateAccountStatusV1Request:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: QSA
+        description: Usercode of account to be updated.
+      status:
+        type: string 
+        description: Account Status.
+        enum:
+          - ACTIVE
+          - INACTIVE
+          - SUSPENDED
+          - CLOSED
+          - COSUSP
+          - COINACT
+        example: 'INACTIVE'
+    description: ''
+  UpdateAccountStatusV1Response:
+    type: object
+    properties:
+      status:
+        type: string
+        example: SUCCESS
+        description: Status of the response.
+        enum:
+          - SUCCESS
+    description: ''
+  UpdateAccountStatusV1ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        description: |
+          
+          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,  
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+          PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
+          INVALID_STATUS = Invalid account status,  
+        enum:
+          - ACCOUNT_NOT_DOWNLINE
+          - ACCOUNT_NOT_DIRECT
+          - ACCOUNT_CLOSED
+          - PARENT_ACCOUNT_NOT_ACTIVE
+          - INVALID_STATUS
       errorCode:
         type: string
         description: Error code.
