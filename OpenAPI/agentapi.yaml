@@ -680,12 +680,14 @@ definitions:
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
           INVALID_STATUS = Invalid account status,  
+          INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
         enum:
           - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
           - ACCOUNT_CLOSED
           - PARENT_ACCOUNT_NOT_ACTIVE
           - INVALID_STATUS
+          - INVALID_STATUS_UPDATE
       errorCode:
         type: string
         description: Error code.
