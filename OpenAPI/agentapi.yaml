@@ -297,6 +297,9 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'	
+securityDefinitions:
+  basicAuth:
+    type: basic  
 definitions:
   ErrorResponse:
     type: object
