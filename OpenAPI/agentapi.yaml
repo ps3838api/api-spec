@@ -468,8 +468,7 @@ definitions:
         type: number
         format: double
         example: 6819.49
-        description: Amount of Available Credit.  
-        Not present in object for member (PL) level accounts.
+        description: Amount of Available Credit. Not present in object for member (PL) level accounts.
       totalBalance:
         type: number
         format: double
@@ -484,12 +483,16 @@ definitions:
         type: number
         format: double
         example: 1563.89
-        description: Maximum Credit Amount for downline accounts.
+        description: Maximum Credit Amount for downline accounts. Not present in object for member (PL) level accounts.
       memberMaxCredit:
         type: number
         format: double
         example: 1563.89
-        description: Maximum Credit Amount for member accounts.
+        description: Maximum Credit Amount for member accounts. Not present in object for member (PL) level accounts.
+      availableBetCredit:
+        type: number
+        format: double
+        description: Amount of Bet Credit. Only present in object for member (PL) level accounts.
   SetCreditV1Request:
     type: object
     properties:
