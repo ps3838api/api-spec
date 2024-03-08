@@ -468,7 +468,8 @@ definitions:
         type: number
         format: double
         example: 6819.49
-        description: Amount of Available Credit.
+        description: Amount of Available Credit.  
+        Not present in object for member (PL) level accounts.
       totalBalance:
         type: number
         format: double
