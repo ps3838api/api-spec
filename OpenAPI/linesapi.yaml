@@ -5045,6 +5045,11 @@ definitions:
     description: Settled Special
     type: object
     properties:
+      id:
+        format: int64
+        description: Contestant Id.
+        type: integer
+        example: 1580534567
       name: 
         description: Contestant name
         type: string
