@@ -766,15 +766,15 @@ definitions:
         enum:
           - SUCCESS
       transferAccount:
-				$ref: '#/definitions/TransferAccountObject'
+	  	$ref: '#/definitions/TransferAccountObject'
     description: ''
 	TransferAccountObject:
 		type: object
 		properties:
-      usercode:
-				type: string 
+      		usercode:
+	  			type: string
 				description: Account Username.
-				example: 'MGZ10'
+  				example: 'MGZ10'
 			currency:
 				type: string 
 				description: Account Currency.
