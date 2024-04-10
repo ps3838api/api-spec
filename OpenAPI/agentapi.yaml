@@ -755,7 +755,7 @@ definitions:
         description: Optional.
         example: ''
     description: ''
-	DownlineTransferV1Response:
+  DownlineTransferV1Response:
     type: object
     properties:
       status:
