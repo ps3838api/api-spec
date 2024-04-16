@@ -818,18 +818,18 @@ definitions:
         type: string
         description: |
           
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,
-          INVALID_AMOUNT = Transfer amount must be numeric,
-          TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,
-          SYSTEM_SECURITY_BLOCK_TRANSFER = Please contact your upline,
-          INVALID_ACCOUNT_BALANCE = Cannot transfer if account balance is zero,
-          CANNOT_TRANSFER_TODAY = You are not authorised to transfer today,
-          INVALID_TRANSFER_AMOUNT = Invalid transfer amount,
-          INVALID_PARTIAL_TRANSFER = Partial transfer is not valid for this account,
-          PERMISSION_DENIED = User does not have permission to perform this action,
-          INVALID_ACCOUNT = Username is not valid,
-          COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,
-          COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          INVALID_AMOUNT = Transfer amount must be numeric,  
+          TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,  
+          SYSTEM_SECURITY_BLOCK_TRANSFER = Please contact your upline,  
+          INVALID_ACCOUNT_BALANCE = Cannot transfer if account balance is zero,  
+          CANNOT_TRANSFER_TODAY = You are not authorised to transfer today,  
+          INVALID_TRANSFER_AMOUNT = Invalid transfer amount,  
+          INVALID_PARTIAL_TRANSFER = Partial transfer is not valid for this account,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
+          INVALID_ACCOUNT = Username is not valid,  
+          COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,  
+          COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,  
         enum:
           - ACCOUNT_NOT_DIRECT
           - INVALID_AMOUNT
