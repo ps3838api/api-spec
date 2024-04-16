@@ -720,7 +720,8 @@ definitions:
         type: string
         description: |
           
-          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,  
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
           INVALID_STATUS = Invalid account status,  
