@@ -718,8 +718,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
-
-    /v1/regrades/wager-history:
+  /v1/regrades/wager-history:
     get:
       tags:
         - Get Bets
