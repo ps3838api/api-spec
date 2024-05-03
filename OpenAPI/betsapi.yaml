@@ -718,6 +718,99 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+
+    /v1/regrades/wager-history:
+    get:
+      tags:
+        - Get Bets
+      summary: Get Bets Settled History - v1
+      description: |
+          Returns historical data related to regraded wagers
+          
+          
+          ### Get bets settled history by time range:
+            
+          ```
+          https://api.ps3838.com/v1/regrades/wager-history?fromDate=2024-04-01T00:00:00Z&toDate=2024-04-27T00:00:00Z
+          ```
+          
+          
+          ### Get bets settled history by bet ids:
+          
+          ```
+          https://api.ps3838.com/v1/regrades/wager-history?betIds=52454247
+          ```
+          
+      operationId: Bets_GetBetsSettledHistoryV1
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: betids
+          in: query
+          description: 'A comma separated list of bet ids. When betids is submitted, no other parameter is necessary. Maximum is 100 ids. Works for all bets settled in the last 30 days.'
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int64
+          collectionFormat: csv
+        - name: fromDate
+          in: query
+          description: |
+            Start date of the requested period. Start date can be up to 30 days in the past. Expected format is ISO8601 - can be set to just date or date and time.
+          required: false
+          type: string
+        - name: toDate
+          in: query
+          description: |
+            End date of the requested period. Expected format is ISO8601 - can be set to just date or date and time. toDate value is exclusive, meaning it cannot be equal to fromDate.
+            
+          required: false
+          type: string
+        - name: sortDir
+          in: query
+          description: 'Sort direction by postedAt/settledAt. Respected only when querying by date range.'
+          required: false
+          type: string
+          enum:
+            - ASC
+            - DESC
+          default: ASC
+        - name: pageSize
+          in: query
+          description: 'Page size in case. Max is 1000. Respected only when querying by date range.'
+          required: false
+          type: integer
+          default: 1000 
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. Respected only when querying by date range. To fetch next page set it to toRecord+1'
+          required: false
+          type: integer
+          default: 0  
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetBetsByTypeResponseV3'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
             
   /v1/bets/betting-status:
     get:
