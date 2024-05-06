@@ -4018,6 +4018,177 @@ definitions:
         x-nullable: false
         description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.        
     description: ''    
+  SpecialBetRegradedWagerHistoryV1:
+    type: object
+    required:
+      - betId
+      - betStatus
+      - betType
+      - contestantId
+      - contestantName
+      - leagueId
+      - oddsFormat
+      - placedAt
+      - price
+      - risk
+      - specialId
+      - specialName
+      - sportId
+      - updateSequence
+      - wagerNumber
+      - win
+    properties:
+      betId:
+        type: integer
+        format: int64
+        example: 760748770
+        description: Bet identification
+      originalBetId:
+        type: integer
+        format: int64
+        example: 760748743
+        description: Original bet identification
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Unique Request Id
+      wagerNumber:
+        type: integer
+        format: int32
+        example: 1
+        description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+      placedAt:
+        type: string
+        format: date-time
+        example: '2017-09-09T01:49:43Z'
+        description: Date time when the bet was placed.
+      betStatus:
+        type: string
+        example: ACCEPTED
+        description: | 
+          Bet Status. 
+          ACCEPTED = Bet was accepted, 
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
+          LOSE = The bet is settled as lose,
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
+          WON = The bet is settled as won 
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOSE
+          - REFUNDED
+          - WON
+      betType:
+        type: string
+        default: SPECIAL
+        example: SPECIAL
+      win:
+        type: number
+        format: double
+        example: 1
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 1.51
+        description: Risk amount.
+      winLoss:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Win-Loss for settled bets.
+      oddsFormat:
+        $ref: '#/definitions/OddsFormat'
+      customerCommission:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Client’s commission on the bet.
+      cancellationReason:
+        $ref: '#/definitions/CancellationReason'
+      updateSequence:
+        type: integer
+        format: int64
+        example: 113214135
+        description: Update Sequence. It gets updated when the bet status change.
+      specialId:
+        type: integer
+        format: int64
+        example: 726397620
+        description: ''
+      specialName:
+        type: string
+        example: Denver Broncos Regular Season Wins?
+        description: ''
+      contestantId:
+        type: integer
+        format: int64
+        example: 726397622
+        description: ''
+      contestantName:
+        type: string
+        example: Under
+        description: ''
+      price:
+        type: number
+        format: double
+        example: -151
+        description: ''
+      handicap:
+        type: number
+        format: double
+        example: 8.5
+        description: ''
+      units:
+        type: string
+        example: Regular Season Wins
+        description: ''
+      sportId:
+        type: integer
+        format: int32
+        example: 15
+        description: ''
+      leagueId:
+        type: integer
+        format: int32
+        example: 889
+        description: ''
+      eventId:
+        type: integer
+        format: int64
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      periodNumber:
+        type: integer
+        format: int32
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      team1:
+        type: string
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      team2:
+        type: string
+        example: null
+        x-nullable: true
+        description: Populated if bet was placed on a special linked to the event.
+      eventStartTime:
+        type: string 
+        format: date-time
+        example: 2017-10-05T01:32:59Z
+        x-nullable: false
+        description: Date time when the event starts.
+      resultingUnit:
+        type: string 
+        x-nullable: false
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.        
+    description: ''    
   GetBetsByTypeResponse:
     type: object
     properties:
@@ -4119,17 +4290,17 @@ definitions:
         type: array
         description: A collection of placed teaser bets.
         items:
-          $ref: '#/definitions/TeaserBet'
+          $ref: '#/definitions/TeaserBetRegradedWagerHistoryV1'
       specialBets:
         type: array
         description: A collection of placed special bets.
         items:
-          $ref: '#/definitions/SpecialBetV3'
+          $ref: '#/definitions/SpecialBetRegradedWagerHistoryV1'
       manualBets:
         type: array
         description: A collection of placed manual bets.
         items:
-          $ref: '#/definitions/ManualBet'
+          $ref: '#/definitions/ManualBetRegradedWagerHistoryV1'
     description: ''  
   TeaserBet:
     type: object
@@ -4250,6 +4421,129 @@ definitions:
         items:
           $ref: '#/definitions/TeaserLeg'
     description: ''
+  TeaserBetRegradedWagerHistoryV1:
+    type: object
+    required:
+      - betId
+      - betStatus
+      - betType
+      - isSameEventOnly
+      - legs
+      - maxPicks
+      - minPicks
+      - oddsFormat
+      - placedAt
+      - risk
+      - teaserName
+      - updateSequence
+      - wagerNumber
+      - win
+    properties:
+      betId:
+        type: integer
+        format: int64
+        description: Bet identification
+      originalBetId:
+        type: integer
+        format: int64
+        description: Original bet identification
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Unique Request Id
+      wagerNumber:
+        type: integer
+        format: int32
+        description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+      placedAt:
+        type: string
+        format: date-time
+        description: Date time when the bet was placed.
+      betStatus:
+        type: string
+        description: | 
+            Bet Status. 
+            
+            ACCEPTED = Bet was accepted,  
+            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            LOSE = The bet is settled as lose,  
+            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+            WON = The bet is settled as won 
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOSE
+          - REFUNDED
+          - WON
+      betType:
+        type: string
+        default: TEASER
+        example: TEASER
+      win:
+        type: number
+        format: double
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        description: Risk amount.
+      winLoss:
+        type: number
+        format: double
+        description: Win-Loss for settled bets.
+      oddsFormat:
+        $ref: '#/definitions/OddsFormat'
+      customerCommission:
+        type: number
+        format: double
+        description: Client’s commission on the bet.
+      cancellationReason:
+        $ref: '#/definitions/CancellationReason'
+      updateSequence:
+        type: integer
+        format: int64
+        description: Update Sequence
+      teaserName:
+        type: string
+        description: ''
+      isSameEventOnly:
+        type: boolean
+        description: ''
+      minPicks:
+        type: number
+        format: double
+        description: ''
+      maxPicks:
+        type: number
+        format: double
+        description: ''
+      price:
+        type: number
+        format: double
+        example: 682
+        description: 'Populated for all teaser bets and will be the original price at the time of the placement.'
+      finalPrice:
+        type: number
+        format: double
+        example: 0
+        description: Only for settled parlay. Final price may differ in case leg was cancelled or half won. 
+      teaserId:
+        type: number
+        format: int32
+        example: 0
+        description: Reference to the teaser id. 
+      teaserGroupId:
+        type: number
+        format: int32
+        example: 0
+        description: Reference to the teaser group id.         
+      legs:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/TeaserLeg'
+    description: ''
   ManualBet:
     type: object
     required:
@@ -4268,6 +4562,89 @@ definitions:
         format: int64
         example: 760063588
         description: Bet identification
+      wagerNumber:
+        type: integer
+        format: int32
+        example: 1
+        description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+      placedAt:
+        type: string
+        format: date-time
+        example: '2017-09-06T14:56:27Z'
+        description: Date time when the bet was placed.
+      betStatus:
+        type: string
+        description: |
+          Bet Status. 
+          
+          ACCEPTED = Bet was accepted,  
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+          LOSE = The bet is settled as lose,  
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+          WON = The bet is settled as won 
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOSE
+          - REFUNDED
+          - WON
+      betType:
+        type: string
+        default: MANUAL
+        example: MANUAL
+      win:
+        type: number
+        format: double
+        example: 15000
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 500
+        description: Risk amount.
+      winLoss:
+        type: number
+        format: double
+        description: Win-Loss for settled bets.
+      updateSequence:
+        type: integer
+        format: int64
+        example: 112472310
+        description: Update Sequence
+      description:
+        type: string
+        example: Soccer Props - Partizan vs Crvena Zvezda - Partizan @ +3000
+        description: Manual bet description.
+      referenceBetId:
+        type: integer
+        format: int64
+        example: null
+        x-nullable: true
+        description: Referenced original bet id.
+    description: ''
+  ManualBetRegradedWagerHistoryV1:
+    type: object
+    required:
+      - betId
+      - betStatus
+      - betType
+      - description
+      - placedAt
+      - risk
+      - updateSequence
+      - wagerNumber
+      - win
+    properties:
+      betId:
+        type: integer
+        format: int64
+        example: 760063588
+        description: Bet identification
+      originalBetId:
+        type: integer
+        format: int64
+        example: 760063543
+        description: Original bet identification
       wagerNumber:
         type: integer
         format: int32
