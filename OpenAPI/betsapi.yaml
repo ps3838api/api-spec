@@ -741,7 +741,7 @@ paths:
           https://api.ps3838.com/v1/regrades/wager-history?betIds=52454247
           ```
           
-      operationId: Bets_GetBetsSettledHistoryV1
+      operationId: Bets_GetBetsSettlementHistoryV1
       consumes: []
       produces:
         - application/json
@@ -794,7 +794,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetBetsByTypeResponseV3'
+            $ref: '#/definitions/GetBetsSettlementHistoryV1'
         '400':
           description: BadRequest
           schema:
@@ -1669,6 +1669,259 @@ definitions:
           type: string
           description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'          
       description: ''    
+  StraightBetSettlementHistoryV1:
+      type: object
+      required:
+        - betId
+        - betStatus
+        - betStatus2
+        - betType
+        - oddsFormat
+        - placedAt
+        - risk
+        - updateSequence
+        - wagerNumber
+        - win
+      properties:
+        betId:
+          type: integer
+          format: int64
+          example: 759629245
+          description: Bet identification
+        originalBetId:
+          type: integer
+          format: int64
+          example: 759629245
+          description: Original bet identification
+        wagerNumber:
+          type: integer
+          format: int32
+          example: 1
+          description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+        placedAt:
+          type: string
+          format: date-time
+          example: '2017-09-05T01:32:59Z'
+          description: Date time when the bet was placed.
+        betStatus:
+          type: string
+          example: ACCEPTED
+          description: |
+            Bet Status.  
+            
+            ACCEPTED = Bet was accepted,  
+            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            LOSE = The bet is settled as lose,  
+            PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
+            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+            NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
+            WON = The bet is settled as won,  
+            REJECTED = Bet is rejected
+          enum:
+            - ACCEPTED
+            - CANCELLED
+            - LOSE
+            - PENDING_ACCEPTANCE
+            - REFUNDED
+            - NOT_ACCEPTED
+            - WON
+            - REJECTED
+        betStatus2:
+          type: string
+          example: ACCEPTED
+          description: |
+            Bet Status.  
+            
+            ACCEPTED = Bet was accepted,  
+            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+            LOST = The bet is settled as lose,  
+            PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
+            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+            NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
+            WON = The bet is settled as won,  
+            REJECTED = Bet is rejected,  
+            HALF_WON_HALF_PUSHED = The bet is settled as half won half pushed. Only for asian handicap bets,  
+            HALF_LOST_HALF_PUSHED = The bet is settled as half lost half pushed. Only for asian handicap bets
+          enum:
+            - ACCEPTED
+            - CANCELLED
+            - LOST
+            - PENDING_ACCEPTANCE
+            - REFUNDED
+            - NOT_ACCEPTED
+            - WON
+            - REJECTED
+            - HALF_WON_HALF_PUSHED
+            - HALF_LOST_HALF_PUSHED
+        betType:
+          type: string
+          example: MONEYLINE
+          description: 'Bet type.'
+          enum:
+            - MONEYLINE
+            - TEAM_TOTAL_POINTS
+            - SPREAD
+            - TOTAL_POINTS
+            - SPECIAL
+            - PARLAY
+            - TEASER
+            - MANUAL
+        win:
+          type: number
+          format: double
+          example: 1
+          description: Win amount.
+        risk:
+          type: number
+          format: double
+          example: 1.5
+          description: Risk amount.
+        winLoss:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: Win-Loss for settled bets.
+        oddsFormat:
+          $ref: '#/definitions/OddsFormat'
+        customerCommission:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: Client’s commission on the bet.
+        cancellationReason:
+          $ref: '#/definitions/CancellationReason'
+        updateSequence:
+          type: integer
+          format: int64
+          example: 111548915
+          description: Update Sequence
+        sportId:
+          type: integer
+          format: int32
+          example: 29
+          description: ''
+        leagueId:
+          type: integer
+          format: int32
+          example: 2462
+          description: ''
+        leagueName:
+          type: string
+          example: Spain - Copa del Rey
+          description: ''
+        eventId:
+          type: integer
+          format: int64
+          example: 757064557
+          description: ''
+        handicap:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: ''
+        price:
+          type: number
+          format: double
+          example: -155
+          description: ''
+        teamName:
+          type: string
+          example: Crvena Zvezda
+          description: ''
+        side:
+          type: string
+          example: null
+          x-nullable: true
+          description: 'Side type.'
+          enum:
+            - OVER
+            - UNDER
+        pitcher1:
+          type: string
+          example: null
+          x-nullable: true
+          description: 'Pitcher name of team1. Only for bets on baseball.'
+        pitcher2:
+          type: string
+          example: null
+          x-nullable: true
+          description: 'Pitcher name of team2. Only for bets on baseball.'
+        pitcher1MustStart:
+          type: boolean
+          example: false
+          description: 'Baseball only. Refers to the pitcher for Team1.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'  
+          x-nullable: true
+        pitcher2MustStart:
+          type: boolean
+          example: false
+          description: 'Baseball only. Refers to the pitcher for Team2.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'  
+          x-nullable: true  
+        team1:
+          type: string
+          example: Crvena Zvezda
+          description: ''
+        team2:
+          type: string
+          example: Partizan
+          description: ''
+        periodNumber:
+          type: integer
+          format: int32
+          example: 0
+          description: ''
+        team1Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: 'Team 1 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
+        team2Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: 'Team 2 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
+        ftTeam1Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: 'Full time team 1 score, only for settled bets.'
+        ftTeam2Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: 'Full time team 2 score, only for settled bets.'
+        pTeam1Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: '.End of period team 1 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null . '
+        pTeam2Score:
+          type: number
+          format: double
+          example: null
+          x-nullable: true
+          description: 'End of period team 2 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null'
+        isLive:
+          type: boolean
+          example: false
+          description: Whether the bet is on live event
+        eventStartTime:
+          type: string 
+          format: date-time
+          example: 2017-10-05T01:32:59Z
+          x-nullable: false
+          description: 'Date time when the event starts.'
+        resultingUnit:
+          type: string
+          description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'          
+      description: '' 
   CancellationReason:
     type: object
     required:
@@ -3525,6 +3778,48 @@ definitions:
         description: A collection of placed straight bets.
         items:
           $ref: '#/definitions/StraightBetV3'
+      parlayBets:
+        type: array
+        description: A collection of placed parlay bets.
+        items:
+          $ref: '#/definitions/ParlayBetV2'
+      teaserBets:
+        type: array
+        description: A collection of placed teaser bets.
+        items:
+          $ref: '#/definitions/TeaserBet'
+      specialBets:
+        type: array
+        description: A collection of placed special bets.
+        items:
+          $ref: '#/definitions/SpecialBetV3'
+      manualBets:
+        type: array
+        description: A collection of placed manual bets.
+        items:
+          $ref: '#/definitions/ManualBet'
+    description: ''  
+  GetBetsSettlementHistoryV1:
+    type: object
+    properties:
+      moreAvailable:
+        type: boolean 
+        description: Whether there are more pages available.
+      pageSize:
+        type: integer 
+        description: Page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+      straightBets:
+        type: array
+        description: A collection of placed straight bets.
+        items:
+          $ref: '#/definitions/StraightBetSettlementHistoryV1'
       parlayBets:
         type: array
         description: A collection of placed parlay bets.
