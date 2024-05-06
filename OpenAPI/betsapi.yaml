@@ -2739,7 +2739,7 @@ definitions:
         type: array
         description: ''
         items:
-          $ref: '#/definitions/ParlayLegV2'
+          $ref: '#/definitions/ParlayLegRegradedWagerHistoryV1'
       price:
         type: number
         format: double
@@ -3025,7 +3025,160 @@ definitions:
       resultingUnit:
         type: string
         description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular        
-    description: ''    
+    description: ''   
+  ParlayLegRegradedWagerHistoryV1:
+    type: object
+    properties:
+      sportId:
+        type: integer
+        format: int32
+        example: 29
+        description: ''
+      legBetType:
+        type: string
+        example: MONEYLINE
+        description: 'Parlay leg type.'
+        enum:
+          - MONEYLINE
+          - SPREAD
+          - TOTAL_POINTS
+      legBetStatus:
+        type: string
+        description: | 
+          Parlay Leg status.
+          CANCELLED = The leg is canceled- the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          LOSE = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
+          PUSH = The leg is a push - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          REFUNDED = The leg is refunded - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap 
+        enum:
+          - CANCELLED
+          - LOSE
+          - PUSH
+          - REFUNDED
+          - WON
+          - ACCEPTED
+      legBetStatus2:
+        type: string
+        description: | 
+          Parlay Leg status.
+          CANCELLED = The leg is canceled- the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          LOST = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
+          PUSHED = The leg is a push - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          REFUNDED = The leg is refunded - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
+          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap,  
+          HALF_WON_HALF_PUSHED = The bet is settled as half won half pushed. Only for asian handicap legs,  
+          HALF_LOST_HALF_PUSHED = The bet is settled as half lost half pushed. Only for asian handicap legs
+        enum:
+          - CANCELLED
+          - LOST
+          - PUSHED
+          - REFUNDED
+          - WON
+          - ACCEPTED
+          - HALF_WON_HALF_PUSHED
+          - HALF_LOST_HALF_PUSHED
+      leagueId:
+        type: integer
+        format: int32
+        example: 1766
+        description: ''
+      leagueName:
+        type: string
+        example: Australia - A League
+        description: ''
+      eventId:
+        type: integer
+        format: int64
+        example: 758024079
+        description: ''
+      eventStartTime:
+        type: string
+        format: date-time
+        example: '2017-10-07T21:00:00Z'
+        description: 'Date time when the event starts'
+      handicap:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: ''
+      price:
+        type: number
+        format: double
+        example: 193
+        description: ''
+      teamName:
+        type: string
+        example: Adelaide United
+        description: ''
+      side:
+        type: string
+        example: null
+        x-nullable: true
+        description: 'Side type.'
+        enum:
+          - OVER
+          - UNDER
+      pitcher1:
+        type: string
+        example: null
+        x-nullable: true
+        description: ''
+      pitcher2:
+        type: string
+        example: null
+        x-nullable: true
+        description: ''
+      pitcher1MustStart:
+        type: boolean
+        example: false
+        description: ''
+      pitcher2MustStart:
+        type: boolean
+        example: false
+        description: ''
+      team1:
+        type: string
+        description: Wellington Phoenix
+      team2:
+        type: string
+        description: Adelaide United
+      periodNumber:
+        type: integer
+        format: int32
+        example: 0
+        description: ''
+      ftTeam1Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Full time team 1 score
+      ftTeam2Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Full time team 2 score
+      pTeam1Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'End of period team 1 score. If the bet was placed on Game period (periodNumber =0) , this will be null'
+      pTeam2Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'End of period team 2 score. If the bet was placed on Game period (periodNumber =0) , this will be null'
+      cancellationReason:
+        $ref: '#/definitions/CancellationReason'
+      resultingUnit:
+        type: string
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular        
+    description: ''
   PlaceTeaserBetRequest:
     type: object
     properties:
