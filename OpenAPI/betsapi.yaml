@@ -723,19 +723,19 @@ paths:
     get:
       tags:
         - Get Bets
-      summary: Get Bets Settled History - v1
+      summary: Get Bets Settlement History - v1
       description: |
           Returns historical data related to regraded wagers
           
           
-          ### Get bets settled history by time range:
+          ### Get bets settlement history by time range:
             
           ```
           https://api.ps3838.com/v1/regrades/wager-history?fromDate=2024-04-01T00:00:00Z&toDate=2024-04-27T00:00:00Z
           ```
           
           
-          ### Get bets settled history by bet ids:
+          ### Get bets settlement history by bet ids:
           
           ```
           https://api.ps3838.com/v1/regrades/wager-history?betIds=52454247
