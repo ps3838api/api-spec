@@ -723,25 +723,25 @@ paths:
     get:
       tags:
         - Get Bets
-      summary: Get Bets Settlement History - v1
+      summary: Get Regraded Wager History - v1
       description: |
           Returns historical data related to regraded wagers
           
           
-          ### Get bets settlement history by time range:
+          ### Get regraded wager history by time range:
             
           ```
           https://api.ps3838.com/v1/regrades/wager-history?fromDate=2024-04-01T00:00:00Z&toDate=2024-04-27T00:00:00Z
           ```
           
           
-          ### Get bets settlement history by bet ids:
+          ### Get regraded wager history by bet ids:
           
           ```
           https://api.ps3838.com/v1/regrades/wager-history?betIds=52454247
           ```
           
-      operationId: Bets_GetBetsSettlementHistoryV1
+      operationId: Bets_GetRegradedWagerHistoryV1
       consumes: []
       produces:
         - application/json
@@ -794,7 +794,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetBetsSettlementHistoryV1'
+            $ref: '#/definitions/GetRegradedWagerHistoryResponseV1'
         '400':
           description: BadRequest
           schema:
@@ -1669,7 +1669,7 @@ definitions:
           type: string
           description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'          
       description: ''    
-  StraightBetSettlementHistoryV1:
+  StraightBetRegradedWagerHistoryV1:
       type: object
       required:
         - betId
@@ -2614,7 +2614,7 @@ definitions:
         example: 0
         description: Only for settled parlay. Final price may differ in case leg was cancelled or half won
     description: ''  
-  ParlayBetSettlementHistoryV1:
+  ParlayBetRegradedWagerHistoryV1:
     type: object
     required:
       - betId
@@ -3936,7 +3936,7 @@ definitions:
         items:
           $ref: '#/definitions/ManualBet'
     description: ''  
-  GetBetsSettlementHistoryV1:
+  GetRegradedWagerHistoryResponseV1:
     type: object
     properties:
       moreAvailable:
@@ -3956,12 +3956,12 @@ definitions:
         type: array
         description: A collection of placed straight bets.
         items:
-          $ref: '#/definitions/StraightBetSettlementHistoryV1'
+          $ref: '#/definitions/StraightBetRegradedWagerHistoryV1'
       parlayBets:
         type: array
         description: A collection of placed parlay bets.
         items:
-          $ref: '#/definitions/ParlayBetSettlementHistoryV1'
+          $ref: '#/definitions/ParlayBetRegradedWagerHistoryV1'
       teaserBets:
         type: array
         description: A collection of placed teaser bets.
