@@ -599,7 +599,7 @@ definitions:
           MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,  
           INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
           USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
-          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,
+          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
           PERMISSION_DENIED = User does not have permission to perform this action,
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
