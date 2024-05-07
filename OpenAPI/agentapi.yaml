@@ -600,6 +600,7 @@ definitions:
           INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
           USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
           MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
           - CREDIT_EXCEEDS_USED
@@ -614,6 +615,7 @@ definitions:
           - INVALID_CURRENCY
           - USER_NOT_FOUND
           - MEMBER_EXCEEDS_GIVEN
+          - PERMISSION_DENIED
       errorCode:
         type: string
         description: Error code.
@@ -665,6 +667,7 @@ definitions:
           PASSWORD_MISMATCH = Password and Confirm Password do not match,  
           PASSWORD_CRITERIA_FAIL = Password fails to meet the required criteria,  
           PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
           - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
@@ -672,6 +675,7 @@ definitions:
           - PASSWORD_MISMATCH
           - PASSWORD_CRITERIA_FAIL
           - PASSWORD_SAME_AS_OLD
+          - PERMISSION_DENIED
       errorCode:
         type: string
         description: Error code.
@@ -726,6 +730,8 @@ definitions:
           PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
           INVALID_STATUS = Invalid account status,  
           INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
+          OUTSTANDING_BETS = Account cannot be closed because at least one player has outstanding bets,  
         enum:
           - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
@@ -733,6 +739,8 @@ definitions:
           - PARENT_ACCOUNT_NOT_ACTIVE
           - INVALID_STATUS
           - INVALID_STATUS_UPDATE
+          - PERMISSION_DENIED
+          - OUTSTANDING_BETS
       errorCode:
         type: string
         description: Error code.
