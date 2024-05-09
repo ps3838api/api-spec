@@ -1761,6 +1761,10 @@ components:
                   - Api
                   - Mobile
                   - Other  
+            ptTaken:
+              description: Position Taking amount.
+              type: number
+              format: double
 security:
   - basicAuth: []
     partnerKey: []      
