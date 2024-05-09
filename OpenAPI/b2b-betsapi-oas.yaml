@@ -1763,7 +1763,8 @@ components:
                   - Other  
             ptTaken:
               description: Position Taking amount.
-              type: decimal
+              type: number
+              format: double
 security:
   - basicAuth: []
     partnerKey: []      
