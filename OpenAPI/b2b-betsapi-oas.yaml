@@ -1761,6 +1761,9 @@ components:
                   - Api
                   - Mobile
                   - Other  
+            ptTaken:
+              description: Position Taking amount.
+              type: decimal
 security:
   - basicAuth: []
     partnerKey: []      
