@@ -297,6 +297,44 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'	
+  /partner/v1/downline-transfer:
+    post:
+      tags:
+        - Downline Transfer
+      summary: Downline Transfer - v1
+      description: Performs a transfer to/from a direct downline account.
+      operationId: Downline_Transfer_V1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: '#/definitions/DownlineTransferV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DownlineTransferV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/DownlineTransferV1ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
 securityDefinitions:
   basicAuth:
     type: basic  
@@ -562,6 +600,7 @@ definitions:
           INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
           USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
           MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
           - CREDIT_EXCEEDS_USED
@@ -576,6 +615,7 @@ definitions:
           - INVALID_CURRENCY
           - USER_NOT_FOUND
           - MEMBER_EXCEEDS_GIVEN
+          - PERMISSION_DENIED
       errorCode:
         type: string
         description: Error code.
@@ -627,6 +667,7 @@ definitions:
           PASSWORD_MISMATCH = Password and Confirm Password do not match,  
           PASSWORD_CRITERIA_FAIL = Password fails to meet the required criteria,  
           PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
           - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
@@ -634,6 +675,7 @@ definitions:
           - PASSWORD_MISMATCH
           - PASSWORD_CRITERIA_FAIL
           - PASSWORD_SAME_AS_OLD
+          - PERMISSION_DENIED
       errorCode:
         type: string
         description: Error code.
@@ -688,6 +730,8 @@ definitions:
           PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
           INVALID_STATUS = Invalid account status,  
           INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
+          OUTSTANDING_BETS = Account cannot be closed because at least one player has outstanding bets,  
         enum:
           - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
@@ -695,6 +739,118 @@ definitions:
           - PARENT_ACCOUNT_NOT_ACTIVE
           - INVALID_STATUS
           - INVALID_STATUS_UPDATE
+          - PERMISSION_DENIED
+          - OUTSTANDING_BETS
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
+  DownlineTransferV1Request:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: QSA
+        description: Usercode of account to be updated.
+      transferAmount:
+        type: number
+        format: double
+        example: 12456.78
+        description: Amount to be transferred. May include decimal places.
+      comment:
+        type: string
+        description: Optional.
+        example: ''
+    description: ''
+  DownlineTransferV1Response:
+    type: object
+    properties:
+      status:
+        type: string
+        example: SUCCESS
+        description: Status of the response.
+        enum:
+          - SUCCESS
+      transferAccount:
+        $ref: '#/definitions/TransferAccountObject'
+    description: ''
+  TransferAccountObject:
+    type: object
+    properties:
+      usercode:
+        type: string
+        description: Account Username.
+        example: 'MGZ10'
+      currency:
+        type: string
+        description: Account Currency.
+        example: 'USD'
+      yesterdayBalance:
+        type: number
+        format: double
+        example: 56789.55
+        description: New value of Yesterday's Balance.
+      totalBalance:
+        type: number
+        format: double
+        example: 56789.55
+        description: New value of Total Balance.
+      yesterdayCash:
+        type: number
+        format: double
+        example: 67890.55
+        description: New value of Yesterday's Cash Balance.
+      totalCash:
+        type: number
+        format: double
+        example: 67890.55
+        description: New value of Total Cash Balance.
+      creditUsed:
+        type: number
+        format: double
+        example: 900000.00
+        description: New value of Credit Used.
+    description: Updated account information for the account updated.
+  DownlineTransferV1ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        description: |
+          
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          INVALID_AMOUNT = Transfer amount must be numeric,  
+          TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,  
+          SYSTEM_SECURITY_BLOCK_TRANSFER = Please contact your upline,  
+          INVALID_ACCOUNT_BALANCE = Cannot transfer if account balance is zero,  
+          CANNOT_TRANSFER_TODAY = You are not authorised to transfer today,  
+          INVALID_TRANSFER_AMOUNT = Invalid transfer amount,  
+          INVALID_PARTIAL_TRANSFER = Partial transfer is not valid for this account,  
+          PERMISSION_DENIED = User does not have permission to perform this action,  
+          INVALID_ACCOUNT = Username is not valid,  
+          COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,  
+          COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,  
+        enum:
+          - ACCOUNT_NOT_DIRECT
+          - INVALID_AMOUNT
+          - TRANSFER_AMOUNT_ZERO
+          - SYSTEM_SECURITY_BLOCK_TRANSFER
+          - INVALID_ACCOUNT_BALANCE
+          - CANNOT_TRANSFER_TODAY
+          - INVALID_TRANSFER_AMOUNT
+          - INVALID_PARTIAL_TRANSFER
+          - PERMISSION_DENIED
+          - INVALID_ACCOUNT
+          - COMMENT_CHAR_EXCEEDED
+          - COMMENT_SPECIAL_CHARS
       errorCode:
         type: string
         description: Error code.
