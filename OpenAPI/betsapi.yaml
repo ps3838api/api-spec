@@ -4,7 +4,7 @@ info:
   title: PS3838 API - Bets API Reference
   description:  |
     All about bets, place bets, get your bet history or current bet status.
-  
+    
     # Authentication 
     
     API uses HTTP Basic access authentication.You need to send Authorization HTTP Request header:  
@@ -14,7 +14,7 @@ info:
     Example:
     
     `Authorization: Basic U03MyOT23YbzMDc6d3c3O1DQ1`
-    
+
   x-logo:
     url: ''
 host: api.ps3838.com
@@ -68,12 +68,12 @@ paths:
       tags:
         - Place Bets
       summary: Place straight bet  - v2
-      description: | 
-           Place straight bet (SPREAD, MONEYLINE, TOTAL_POINTS, TEAM_TOTAL_POINTS).
-      
-           Please note when the status is PENDING_ACCEPTANCE and if the live delay was applied, the response will not have betId. Client would have to call /bets by uniqueRequestId to check the status if the bet was ACCEPTED.
-           
-           For more details please see [How to place a bet on live events?](https://github.com/ps3838api/ps3838api.github.io/blob/master/FAQs.md#how-to-place-a-bet-on-live-events)
+      description: |
+        Place straight bet (SPREAD, MONEYLINE, TOTAL_POINTS, TEAM_TOTAL_POINTS).
+        
+        Please note when the status is PENDING_ACCEPTANCE and if the live delay was applied, the response will not have betId. Client would have to call /bets by uniqueRequestId to check the status if the bet was ACCEPTED.
+        
+        For more details please see [How to place a bet on live events?](https://github.com/ps3838api/ps3838api.github.io/blob/master/FAQs.md#how-to-place-a-bet-on-live-events)
       operationId: Bets_StraightV2
       consumes:
         - application/json
@@ -183,7 +183,7 @@ paths:
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ErrorResponseWithErrorRef'			
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
   /v1/bets/teaser:
     post:
       tags:
@@ -238,12 +238,12 @@ paths:
           description: The SpecialBet request.
           required: true
           schema:
-            $ref: '#/definitions/MultiBetRequest[SpecialBetRequest]'
+            $ref: '#/definitions/MultiBetRequest_SpecialBetRequest'
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/MultiBetResponse[SpecialBetResponse]'
+            $ref: '#/definitions/MultiBetResponse_SpecialBetResponse'
         '400':
           description: BadRequest
           schema:
@@ -266,45 +266,45 @@ paths:
         - Get Bets
       summary: Get Bets - v1
       description: |
-          Returns bets. 
-          
-          
-          ### Get running bets by time range:
-          ```
-          https://api.ps3838.com/v2/bets?betlist=RUNNING&fromDate=2017-11-21T00:00:00Z&toDate=2017-11-29T00:00:00Z
-          ```
-          Running bets are queried by *placedAt* date time
-          
-          
-          ### Get settled bets by time range:
-            
-          ```
-          https://api.ps3838.com/v2/bets?betlist=SETTLED&fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
-          ```
-          When a bet is settled it's tagged with the settlement date and midnight time in [PST time zone](https://en.wikipedia.org/wiki/Pacific_Time_Zone).  When querying by fromDate/toDate range, date time gets converted from [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) to  [PST](https://en.wikipedia.org/wiki/Pacific_Time_Zone) and then its used to filter the settled bets, e.g. if one wants to query all settled bets between 2017-11-20 and 2017-11-22 (in PST time zone) one should issue a  call: 
-          ```
-          https://api.ps3838.com/v2/bets?betlist=SETTLED&fromDate=2017-11-20T00:00:00Z&toDate=2017-11-23T00:00:00Z
-          ```
-          Internally this will be converted to PST:
-          fromDate=2017-11-19 16:00:00
-          toDate=2017-11-22 16:00:00
-          and cover the wanted time range.
+        Returns bets. 
+        
+        
+        ### Get running bets by time range:
+        ```
+        https://api.ps3838.com/v2/bets?betlist=RUNNING&fromDate=2017-11-21T00:00:00Z&toDate=2017-11-29T00:00:00Z
+        ```
+        Running bets are queried by *placedAt* date time
+        
+        
+        ### Get settled bets by time range:
+        
+        ```
+        https://api.ps3838.com/v2/bets?betlist=SETTLED&fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
+        ```
+        When a bet is settled it's tagged with the settlement date and midnight time in [PST time zone](https://en.wikipedia.org/wiki/Pacific_Time_Zone).  When querying by fromDate/toDate range, date time gets converted from [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) to  [PST](https://en.wikipedia.org/wiki/Pacific_Time_Zone) and then its used to filter the settled bets, e.g. if one wants to query all settled bets between 2017-11-20 and 2017-11-22 (in PST time zone) one should issue a  call: 
+        ```
+        https://api.ps3838.com/v2/bets?betlist=SETTLED&fromDate=2017-11-20T00:00:00Z&toDate=2017-11-23T00:00:00Z
+        ```
+        Internally this will be converted to PST:
+        fromDate=2017-11-19 16:00:00
+        toDate=2017-11-22 16:00:00
+        and cover the wanted time range.
+        
+        
+        
+        
+        ### Get bets by bet ids:
+        
+        ```
+        https://api.ps3838.com/v1/bets?betIds=775856112,775856113,775856114
+        ```
+        
+        ### Get bets by uniqueRequestIds:
+        
+        ```
+        https://api.ps3838.com/v1/bets?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
+        ```
 
-          
-          
-             
-          ### Get bets by bet ids:
-          
-          ```
-          https://api.ps3838.com/v1/bets?betIds=775856112,775856113,775856114
-          ```
-          
-          ### Get bets by uniqueRequestIds:
-          
-          ```
-          https://api.ps3838.com/v1/bets?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
-          ```
-          
       operationId: Bets_GetBetsByType
       consumes: []
       produces:
@@ -343,20 +343,20 @@ paths:
         - name: uniqueRequestIds
           in: query
           description: |
-              A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
-              
-              1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
-              2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) 
-              for more details
-              
-              
-              Note that there is a restriction: querying by uniqueRequestIds  is supported only for straight bets and only up to 30 min from the moment the bet was place. 
+            A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
+            
+            1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
+            2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) 
+            for more details
+            
+            
+            Note that there is a restriction: querying by uniqueRequestIds  is supported only for straight bets and only up to 30 min from the moment the bet was place.
           required: false
           type: array
           items:
             type: string
           collectionFormat: csv
-      deprecated: true  
+      deprecated: true
       responses:
         '200':
           description: OK
@@ -384,44 +384,44 @@ paths:
         - Get Bets
       summary: Get Bets - v3
       description: |
-          Returns bets. 
-          
-          
-          ### Get running bets by time range:
-          ```
-          https://api.ps3838.com/v3/bets?betlist=RUNNING&fromDate=2017-11-21T00:00:00Z&toDate=2017-11-29T00:00:00Z
-          ```
-          Running bets are queried by *placedAt* date time
-          
-          
-          ### Get settled bets by time range:
-            
-          ```
-          https://api.ps3838.com/v3/bets?betlist=SETTLED&fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
-          ```
-          Settled bets are queried by *settledAt* date time
-          https://api.ps3838.com/v3/bets?betlist=SETTLED&fromDate=2017-11-20T00:00:00Z&toDate=2017-11-23T00:00:00Z
-          
-          
-          ### Get settled cancelled bets by time range:
-            
-          ```
-          https://api.ps3838.com/v3/bets?betList=SETTLED&fromDate=2018-03-01&toDate=2018-03-28&betStatuses=CANCELLED
-          ```
-          
+        Returns bets. 
+        
+        
+        ### Get running bets by time range:
+        ```
+        https://api.ps3838.com/v3/bets?betlist=RUNNING&fromDate=2017-11-21T00:00:00Z&toDate=2017-11-29T00:00:00Z
+        ```
+        Running bets are queried by *placedAt* date time
+        
+        
+        ### Get settled bets by time range:
+        
+        ```
+        https://api.ps3838.com/v3/bets?betlist=SETTLED&fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
+        ```
+        Settled bets are queried by *settledAt* date time
+        https://api.ps3838.com/v3/bets?betlist=SETTLED&fromDate=2017-11-20T00:00:00Z&toDate=2017-11-23T00:00:00Z
+        
+        
+        ### Get settled cancelled bets by time range:
+        
+        ```
+        https://api.ps3838.com/v3/bets?betList=SETTLED&fromDate=2018-03-01&toDate=2018-03-28&betStatuses=CANCELLED
+        ```
+        
+        
+        ### Get bets by bet ids:
+        
+        ```
+        https://api.ps3838.com/v3/bets?betIds=775856112,775856113,775856114
+        ```
+        
+        ### Get bets by uniqueRequestIds:
+        
+        ```
+        https://api.ps3838.com/v3/bets?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
+        ```
 
-          ### Get bets by bet ids:
-          
-          ```
-          https://api.ps3838.com/v3/bets?betIds=775856112,775856113,775856114
-          ```
-          
-          ### Get bets by uniqueRequestIds:
-          
-          ```
-          https://api.ps3838.com/v3/bets?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
-          ```
-          
       operationId: Bets_GetBetsByTypeV3
       consumes: []
       produces:
@@ -444,13 +444,13 @@ paths:
           items:
             type: string
             enum:
-            - WON
-            - LOSE 
-            - CANCELLED 
-            - REFUNDED 
-            - NOT_ACCEPTED 
-            - ACCEPTED 
-            - PENDING_ACCEPTANCE
+              - WON
+              - LOSE
+              - CANCELLED
+              - REFUNDED
+              - NOT_ACCEPTED
+              - ACCEPTED
+              - PENDING_ACCEPTANCE
           collectionFormat: csv
         - name: fromDate
           in: query
@@ -478,13 +478,13 @@ paths:
           description: 'Page size in case. Max is 1000. Respected only when querying by date range.'
           required: false
           type: integer
-          default: 1000 
+          default: 1000
         - name: fromRecord
           in: query
           description: 'Starting record (inclusive) of the result. Respected only when querying by date range. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
         - name: betids
           in: query
           description: 'A comma separated list of bet ids. When betids is submitted, no other parameter is necessary. Maximum is 100 ids. Works for all non settled bets and all bets settled in the last 30 days.'
@@ -497,13 +497,13 @@ paths:
         - name: uniqueRequestIds
           in: query
           description: |
-              A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
-              
-              1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
-              2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) for more details
-              
-              
-              Note that there is a restriction: querying by uniqueRequestIds  is supported for straight and special bets and only up to 30 min from the moment the bet was place. 
+            A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
+            
+            1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
+            2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) for more details
+            
+            
+            Note that there is a restriction: querying by uniqueRequestIds  is supported for straight and special bets and only up to 30 min from the moment the bet was place.
           required: false
           type: array
           items:
@@ -517,15 +517,15 @@ paths:
           items:
             type: string
             enum:
-            - SPREAD
-            - MONEYLINE 
-            - TOTAL_POINTS 
-            - TEAM_TOTAL_POINTS 
-            - SPECIAL 
-            - PARLAY 
-            - TEASER
-            - MANUAL
-          collectionFormat: csv          
+              - SPREAD
+              - MONEYLINE
+              - TOTAL_POINTS
+              - TEAM_TOTAL_POINTS
+              - SPECIAL
+              - PARLAY
+              - TEASER
+              - MANUAL
+          collectionFormat: csv
       responses:
         '200':
           description: OK
@@ -547,23 +547,23 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
-            
+
   /v1/bets/settled:
     get:
       tags:
         - Get Bets
       summary: Get Bets Settled - v1
       description: |
-          Returns bets settled.
-          
-          
-          ### Get settled bets settled by time range:
-            
-          ```
-          https://api.ps3838.com/v1/bets/settled?fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
-          ```
-          
-          
+        Returns bets settled.
+        
+        
+        ### Get settled bets settled by time range:
+        
+        ```
+        https://api.ps3838.com/v1/bets/settled?fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
+        ```
+      
+
       operationId: Bets_GetBetsSettledV1
       consumes: []
       produces:
@@ -609,29 +609,29 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
-   
+
   /v3/bets/settled:
     get:
       tags:
         - Get Bets
       summary: Get Bets Settled - v3
       description: |
-          Returns bets settled.
-          
-          
-          ### Get settled bets settled by time range:
-            
-          ```
-          https://api.ps3838.com/v3/bets/settled?fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
-          ```
-          
-          
-          ### Get bets settled by uniqueRequestIds:
-          
-          ```
-          https://api.ps3838.com/v3/bets/settled?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
-          ```
-          
+        Returns bets settled.
+        
+        
+        ### Get settled bets settled by time range:
+        
+        ```
+        https://api.ps3838.com/v3/bets/settled?fromDate=2015-12-28T00:00:00Z&toDate=2015-12-29T00:00:00Z
+        ```
+        
+        
+        ### Get bets settled by uniqueRequestIds:
+        
+        ```
+        https://api.ps3838.com/v3/bets/settled?uniqueRequestIds=62335222-dae4-479a-8c05-46440ccdd3bb,42335222-dae4-479a-8c05-46440ccdd3bb
+        ```
+
       operationId: Bets_GetBetsSettledV3
       consumes: []
       produces:
@@ -675,23 +675,23 @@ paths:
           description: 'Page size in case. Max is 1000. Respected only when querying by date range.'
           required: false
           type: integer
-          default: 1000 
+          default: 1000
         - name: fromRecord
           in: query
           description: 'Starting record (inclusive) of the result. Respected only when querying by date range. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
         - name: uniqueRequestIds
           in: query
           description: |
-              A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
-              
-              1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
-              2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) for more details
-              
-              
-              Note that there is a restriction: querying by uniqueRequestIds  is supported only for straight bets and only up to 30 min from the moment the bet was place. 
+            A comma separated list of uniqueRequestIds to query earlier  placed straight bets. If specified, is treated with highest priority, all other parameters are ignored. Maximum is 10 ids. If client has bet id, preferred way is to use betIds query parameter to check the get the bets. You can use uniqueRequestIds when you do not  have bet id. That’s pretty much in just 2 cases\:
+            
+            1. When you bet on live event with live delay, place bet response in that case does not return bet id, so client can query bet status by uniqueRequestIds.
+            2. In case of any network issues when client is not sure what happened with his place bet request. Empty response means that the bet was not placed. Please check [Deduplication section](https://www.pinnacle.com/de/api/manual#overview) for more details
+            
+            
+            Note that there is a restriction: querying by uniqueRequestIds  is supported only for straight bets and only up to 30 min from the moment the bet was place.
           required: false
           type: array
           items:
@@ -718,7 +718,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
-            
+
   /v1/bets/betting-status:
     get:
       tags:
@@ -878,15 +878,15 @@ definitions:
       fillType:
         type: string
         description: |
-            NORMAL - bet will be placed on specified stake.  
-            FILLANDKILL - If the stake is over the max limit, bet will be placed on max limit, otherwise it will be placed on specified stake.  
-            FILLMAXLIMIT - bet will be places on max limit, stake amount will be ignored. Please note that maximum limits can change at any moment, which may result in risking more than anticipated. This option is replacement of isMaxStakeBet from v1/bets/place'
+          NORMAL - bet will be placed on specified stake.  
+          FILLANDKILL - If the stake is over the max limit, bet will be placed on max limit, otherwise it will be placed on specified stake.  
+          FILLMAXLIMIT - bet will be places on max limit, stake amount will be ignored. Please note that maximum limits can change at any moment, which may result in risking more than anticipated. This option is replacement of isMaxStakeBet from v1/bets/place'
         enum:
           - NORMAL
           - FILLANDKILL
           - FILLMAXLIMIT
         example: NORMAL
-        default: NORMAL        
+        default: NORMAL
       sportId:
         type: integer
         format: int32
@@ -928,8 +928,8 @@ definitions:
         type: number
         format: double
         example: 1.0
-        description: This is optional parameter for SPREAD, TOTAL_POINTS and TEAM_TOTAL_POINTS bet types.          
-    description: Request to place a bet.        
+        description: This is optional parameter for SPREAD, TOTAL_POINTS and TEAM_TOTAL_POINTS bet types.
+    description: Request to place a bet.
   PlaceBetResponse:
     type: object
     properties:
@@ -971,7 +971,7 @@ definitions:
           RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Client has reached his total loss limit,  
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           RESUBMIT_REQUEST = Unable to process the request but the request itself is valid. This happens more often on the live betting in situations when there is more than one place bet request at the same on the same line. When this happens, we don't keep the place bet request on the server until we know if we can accept or reject the bet, but instead we return the error. It's very likely that the line will change after that. To reduce a chance of getting RESUBMIT_REQUEST client can try to place a bet as fast as possible,  
-          SYSTEM_ERROR_3 = Unexpected error,  
+          SYSTEM_ERROR_3 = Unexpected error,
         enum:
           - ALL_BETTING_CLOSED
           - ALL_LIVE_BETTING_CLOSED
@@ -989,7 +989,7 @@ definitions:
           - OFFLINE_EVENT
           - PAST_CUTOFFTIME
           - RED_CARDS_CHANGED
-          - SCORE_CHANGED         
+          - SCORE_CHANGED
           - DUPLICATE_UNIQUE_REQUEST_ID
           - INCOMPLETE_CUSTOMER_BETTING_PROFILE
           - INVALID_CUSTOMER_PROFILE
@@ -1027,7 +1027,7 @@ definitions:
           INVALID_CREDENTIALS = Authorization failed, invalid credentials (http status 401)  
           INVALID_AUTHORIZATION_HEADER = HTTP Authorization header is missing (http status 401) 
           ACCOUNT_INACTIVE = Client's account is not active  (http status 403)  
-          NO_API_ACCESS = Account not permitted to access the API  (http status 403) 
+          NO_API_ACCESS = Account not permitted to access the API  (http status 403)
         enum:
           - INVALID_REQUEST_DATA
           - SELF_EXCLUSION
@@ -1100,7 +1100,7 @@ definitions:
           - OFFLINE_EVENT
           - PAST_CUTOFFTIME
           - RED_CARDS_CHANGED
-          - SCORE_CHANGED          
+          - SCORE_CHANGED
           - DUPLICATE_UNIQUE_REQUEST_ID
           - INCOMPLETE_CUSTOMER_BETTING_PROFILE
           - INVALID_CUSTOMER_PROFILE
@@ -1158,7 +1158,7 @@ definitions:
           PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
           REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
           NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
-          WON = The bet is settled as won 
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -1333,249 +1333,249 @@ definitions:
         description: Whether the bet is on live event
     description: ''
   StraightBetV3:
-      type: object
-      required:
-        - betId
-        - betStatus
-        - betStatus2
-        - betType
-        - oddsFormat
-        - placedAt
-        - risk
-        - updateSequence
-        - wagerNumber
-        - win
-      properties:
-        betId:
-          type: integer
-          format: int64
-          example: 759629245
-          description: Bet identification
-        wagerNumber:
-          type: integer
-          format: int32
-          example: 1
-          description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
-        placedAt:
-          type: string
-          format: date-time
-          example: '2017-09-05T01:32:59Z'
-          description: Date time when the bet was placed.
-        betStatus:
-          type: string
-          example: ACCEPTED
-          description: |
-            Bet Status.  
-            
-            ACCEPTED = Bet was accepted,  
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
-            LOSE = The bet is settled as lose,  
-            PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
-            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
-            NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
-            WON = The bet is settled as won,  
-            REJECTED = Bet is rejected
-          enum:
-            - ACCEPTED
-            - CANCELLED
-            - LOSE
-            - PENDING_ACCEPTANCE
-            - REFUNDED
-            - NOT_ACCEPTED
-            - WON
-            - REJECTED
-        betStatus2:
-          type: string
-          example: ACCEPTED
-          description: |
-            Bet Status.  
-            
-            ACCEPTED = Bet was accepted,  
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
-            LOST = The bet is settled as lose,  
-            PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
-            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
-            NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
-            WON = The bet is settled as won,  
-            REJECTED = Bet is rejected,  
-            HALF_WON_HALF_PUSHED = The bet is settled as half won half pushed. Only for asian handicap bets,  
-            HALF_LOST_HALF_PUSHED = The bet is settled as half lost half pushed. Only for asian handicap bets
-          enum:
-            - ACCEPTED
-            - CANCELLED
-            - LOST
-            - PENDING_ACCEPTANCE
-            - REFUNDED
-            - NOT_ACCEPTED
-            - WON
-            - REJECTED
-            - HALF_WON_HALF_PUSHED
-            - HALF_LOST_HALF_PUSHED
-        betType:
-          type: string
-          example: MONEYLINE
-          description: 'Bet type.'
-          enum:
-            - MONEYLINE
-            - TEAM_TOTAL_POINTS
-            - SPREAD
-            - TOTAL_POINTS
-            - SPECIAL
-            - PARLAY
-            - TEASER
-            - MANUAL
-        win:
-          type: number
-          format: double
-          example: 1
-          description: Win amount.
-        risk:
-          type: number
-          format: double
-          example: 1.5
-          description: Risk amount.
-        winLoss:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: Win-Loss for settled bets.
-        oddsFormat:
-          $ref: '#/definitions/OddsFormat'
-        customerCommission:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: Client’s commission on the bet.
-        cancellationReason:
-          $ref: '#/definitions/CancellationReason'
-        updateSequence:
-          type: integer
-          format: int64
-          example: 111548915
-          description: Update Sequence
-        sportId:
-          type: integer
-          format: int32
-          example: 29
-          description: ''
-        leagueId:
-          type: integer
-          format: int32
-          example: 2462
-          description: ''
-        eventId:
-          type: integer
-          format: int64
-          example: 757064557
-          description: ''
-        handicap:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: ''
-        price:
-          type: number
-          format: double
-          example: -155
-          description: ''
-        teamName:
-          type: string
-          example: Crvena Zvezda
-          description: ''
-        side:
-          type: string
-          example: null
-          x-nullable: true
-          description: 'Side type.'
-          enum:
-            - OVER
-            - UNDER
-        pitcher1:
-          type: string
-          example: null
-          x-nullable: true
-          description: 'Pitcher name of team1. Only for bets on baseball.'
-        pitcher2:
-          type: string
-          example: null
-          x-nullable: true
-          description: 'Pitcher name of team2. Only for bets on baseball.'
-        pitcher1MustStart:
-          type: boolean
-          example: false
-          description: 'Baseball only. Refers to the pitcher for Team1.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'  
-          x-nullable: true
-        pitcher2MustStart:
-          type: boolean
-          example: false
-          description: 'Baseball only. Refers to the pitcher for Team2.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'  
-          x-nullable: true  
-        team1:
-          type: string
-          example: Crvena Zvezda
-          description: ''
-        team2:
-          type: string
-          example: Partizan
-          description: ''
-        periodNumber:
-          type: integer
-          format: int32
-          example: 0
-          description: ''
-        team1Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: 'Team 1 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
-        team2Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: 'Team 2 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
-        ftTeam1Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: 'Full time team 1 score, only for settled bets.'
-        ftTeam2Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: 'Full time team 2 score, only for settled bets.'
-        pTeam1Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: '.End of period team 1 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null . '
-        pTeam2Score:
-          type: number
-          format: double
-          example: null
-          x-nullable: true
-          description: 'End of period team 2 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null'
-        isLive:
-          type: boolean
-          example: false
-          description: Whether the bet is on live event
-        eventStartTime:
-          type: string 
-          format: date-time
-          example: 2017-10-05T01:32:59Z
-          x-nullable: false
-          description: 'Date time when the event starts.'
-        resultingUnit:
-          type: string
-          description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'          
-      description: ''    
+    type: object
+    required:
+      - betId
+      - betStatus
+      - betStatus2
+      - betType
+      - oddsFormat
+      - placedAt
+      - risk
+      - updateSequence
+      - wagerNumber
+      - win
+    properties:
+      betId:
+        type: integer
+        format: int64
+        example: 759629245
+        description: Bet identification
+      wagerNumber:
+        type: integer
+        format: int32
+        example: 1
+        description: 'Wager identification. All bets placed thru the API will have value 1. Website Classic view supports multiple contest(special) bets placement in the same bet slip in that case the bet would have appropriate wager number, as well as all round robin parlay bets.'
+      placedAt:
+        type: string
+        format: date-time
+        example: '2017-09-05T01:32:59Z'
+        description: Date time when the bet was placed.
+      betStatus:
+        type: string
+        example: ACCEPTED
+        description: |
+          Bet Status.  
+          
+          ACCEPTED = Bet was accepted,  
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+          LOSE = The bet is settled as lose,  
+          PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+          NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
+          WON = The bet is settled as won,  
+          REJECTED = Bet is rejected
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOSE
+          - PENDING_ACCEPTANCE
+          - REFUNDED
+          - NOT_ACCEPTED
+          - WON
+          - REJECTED
+      betStatus2:
+        type: string
+        example: ACCEPTED
+        description: |
+          Bet Status.  
+          
+          ACCEPTED = Bet was accepted,  
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+          LOST = The bet is settled as lose,  
+          PENDING_ACCEPTANCE = This status is reserved only for live bets. If a live bet is placed during danger zone or live delay is applied, it will be in PENDING_ACCEPTANCE , otherwise in ACCEPTED status. From this status bet can go to ACCEPTED or NOT_ACCEPTED status,  
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+          NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
+          WON = The bet is settled as won,  
+          REJECTED = Bet is rejected,  
+          HALF_WON_HALF_PUSHED = The bet is settled as half won half pushed. Only for asian handicap bets,  
+          HALF_LOST_HALF_PUSHED = The bet is settled as half lost half pushed. Only for asian handicap bets
+        enum:
+          - ACCEPTED
+          - CANCELLED
+          - LOST
+          - PENDING_ACCEPTANCE
+          - REFUNDED
+          - NOT_ACCEPTED
+          - WON
+          - REJECTED
+          - HALF_WON_HALF_PUSHED
+          - HALF_LOST_HALF_PUSHED
+      betType:
+        type: string
+        example: MONEYLINE
+        description: 'Bet type.'
+        enum:
+          - MONEYLINE
+          - TEAM_TOTAL_POINTS
+          - SPREAD
+          - TOTAL_POINTS
+          - SPECIAL
+          - PARLAY
+          - TEASER
+          - MANUAL
+      win:
+        type: number
+        format: double
+        example: 1
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 1.5
+        description: Risk amount.
+      winLoss:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Win-Loss for settled bets.
+      oddsFormat:
+        $ref: '#/definitions/OddsFormat'
+      customerCommission:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: Client’s commission on the bet.
+      cancellationReason:
+        $ref: '#/definitions/CancellationReason'
+      updateSequence:
+        type: integer
+        format: int64
+        example: 111548915
+        description: Update Sequence
+      sportId:
+        type: integer
+        format: int32
+        example: 29
+        description: ''
+      leagueId:
+        type: integer
+        format: int32
+        example: 2462
+        description: ''
+      eventId:
+        type: integer
+        format: int64
+        example: 757064557
+        description: ''
+      handicap:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: ''
+      price:
+        type: number
+        format: double
+        example: -155
+        description: ''
+      teamName:
+        type: string
+        example: Crvena Zvezda
+        description: ''
+      side:
+        type: string
+        example: null
+        x-nullable: true
+        description: 'Side type.'
+        enum:
+          - OVER
+          - UNDER
+      pitcher1:
+        type: string
+        example: null
+        x-nullable: true
+        description: 'Pitcher name of team1. Only for bets on baseball.'
+      pitcher2:
+        type: string
+        example: null
+        x-nullable: true
+        description: 'Pitcher name of team2. Only for bets on baseball.'
+      pitcher1MustStart:
+        type: boolean
+        example: false
+        description: 'Baseball only. Refers to the pitcher for Team1.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'
+        x-nullable: true
+      pitcher2MustStart:
+        type: boolean
+        example: false
+        description: 'Baseball only. Refers to the pitcher for Team2.  This applicable only for MONEYLINE bet type, for all other bet types this has to be TRUE.'
+        x-nullable: true
+      team1:
+        type: string
+        example: Crvena Zvezda
+        description: ''
+      team2:
+        type: string
+        example: Partizan
+        description: ''
+      periodNumber:
+        type: integer
+        format: int32
+        example: 0
+        description: ''
+      team1Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'Team 1 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
+      team2Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'Team 2 on the period that the bet was placed on at the moment of placing a bet, only for live bets.'
+      ftTeam1Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'Full time team 1 score, only for settled bets.'
+      ftTeam2Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'Full time team 2 score, only for settled bets.'
+      pTeam1Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: '.End of period team 1 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null . '
+      pTeam2Score:
+        type: number
+        format: double
+        example: null
+        x-nullable: true
+        description: 'End of period team 2 score, only for settled bets. If the bet was placed on Game period (periodNumber =0), this will be null'
+      isLive:
+        type: boolean
+        example: false
+        description: Whether the bet is on live event
+      eventStartTime:
+        type: string
+        format: date-time
+        example: 2017-10-05T01:32:59Z
+        x-nullable: false
+        description: 'Date time when the event starts.'
+      resultingUnit:
+        type: string
+        description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'
+    description: ''
   CancellationReason:
     type: object
     required:
@@ -1585,40 +1585,40 @@ definitions:
         type: string
         example: FBS_CW_227
       details:
-          $ref: '#/definitions/CancellationDetails'
-    description: |  
-                Possible keys \:  
-                * correctTeam1Id
-                * correctTeam2Id
-                * correctListedPitcher1
-                * correctListedPitcher2
-                * correctSpread
-                * correctTotalPoints
-                * correctTeam1TotalPoints
-                * correctTeam2TotalPoints
-                * correctTeam1Score
-                * correctTeam2Score
-                * correctTeam1TennisSetsScore
-                * correctTeam2TennisSetsScore
+        $ref: '#/definitions/CancellationDetails'
+    description: |
+      Possible keys \:  
+      * correctTeam1Id
+      * correctTeam2Id
+      * correctListedPitcher1
+      * correctListedPitcher2
+      * correctSpread
+      * correctTotalPoints
+      * correctTeam1TotalPoints
+      * correctTeam2TotalPoints
+      * correctTeam1Score
+      * correctTeam2Score
+      * correctTeam1TennisSetsScore
+      * correctTeam2TennisSetsScore
   CancellationDetails:
     type: array
     items:
-      - $ref: "#/definitions/CancellationDetailsItem"
+      type: object
     example:  [
-                    {
-                        "key": "correctSpread",
-                        "value": "-1.5"
-                    }
-                ]
+      {
+        "key": "correctSpread",
+        "value": "-1.5"
+      }
+    ]
   CancellationDetailsItem:
     type: object
     properties:
       key:
         type: string
-        example: correctSpread  
+        example: correctSpread
       value:
-        type: string  
-        example: "1.5"    
+        type: string
+        example: "1.5"
   ErrorResponseWithErrorRef:
     type: object
     properties:
@@ -1746,7 +1746,7 @@ definitions:
         type: string
         example: null
         x-nullable: true
-        description: | 
+        description: |
           When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
           
           
@@ -1767,7 +1767,7 @@ definitions:
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           INVALID_REQUEST = Request has invalid parameters,  
           DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
-          SYSTEM_ERROR_3 = Unexpected error 
+          SYSTEM_ERROR_3 = Unexpected error
         enum:
           - ABOVE_MAX_BET_AMOUNT
           - ALL_BETTING_CLOSED
@@ -1835,7 +1835,7 @@ definitions:
         type: string
         example: null
         x-nullable: true
-        description: | 
+        description: |
           When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
           
           
@@ -1856,7 +1856,7 @@ definitions:
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           INVALID_REQUEST = Request has invalid parameters,  
           DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
-          SYSTEM_ERROR_3 = Unexpected error 
+          SYSTEM_ERROR_3 = Unexpected error
         enum:
           - ABOVE_MAX_BET_AMOUNT
           - ALL_BETTING_CLOSED
@@ -1910,8 +1910,8 @@ definitions:
         items:
           $ref: '#/definitions/ParlayLegResponse'
       parlayBet:
-        $ref: '#/definitions/ParlayBetV2'		
-    description: ''	
+        $ref: '#/definitions/ParlayBetV2'
+    description: ''
   RoundRobinOptionWithOdds:
     type: object
     properties:
@@ -1954,28 +1954,28 @@ definitions:
         example: null
         x-nullable: true
         description: |
-            When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
-            
-            CANNOT_PARLAY_LIVE_GAME = The wager is placed on Live game,  
-            CORRELATED = The leg is correlated with another one,  
-            EVENT_NO_LONGER_AVAILABLE_FOR_BETTING = The event is no longer offered,  
-            EVENT_NOT_OFFERED_FOR_PARLAY = The event is not offered for parlaying,  
-            INVALID_EVENT = Live betting is not allowed at this moment,  
-            INVALID_LEG_BET_TYPE = Leg bet type is not accepted for parlaying. Accepted values are SPREAD, MONEYLINE, TOTAL_POINTS,  
-            INVALID_PARLAY_BET = The leg did not validated due to error on Parlay Bet. Check the error PlaceParlayBet response for error details,  
-            LINE_CHANGED = Bet is submitted on a line that has changed,  
-            LINE_DOES_NOT_BELONG_TO_EVENT = LineId does not match the EventId specified in the request,  
-            LISTED_PITCHERS_SELECTION_ERROR = If bet was submitted with pitcher1MustStart and/or pitcher2MustStart parameters with values that are not allowed,  
-            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_1 = Due to line change odds are not offered for parlaying,   
-            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_2 = Due to line change odds are not offered for parlaying,   
-            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_3 = Due to line change odds are not offered for parlaying,   
-            OFFLINE_EVENT = Bet is submitted on an event that is offline or with incorrect lineId,  
-            PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,   
-            SYSTEM_ERROR_1 = Unexpected error,  
-            SYSTEM_ERROR_2 = Unexpected error,  
-            SYSTEM_ERROR_3 = Unexpected error,  
-            LINE_IS_NOT_AVAILABLE = Line is not available for the specified Parlay Leg.
-            
+          When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+          
+          CANNOT_PARLAY_LIVE_GAME = The wager is placed on Live game,  
+          CORRELATED = The leg is correlated with another one,  
+          EVENT_NO_LONGER_AVAILABLE_FOR_BETTING = The event is no longer offered,  
+          EVENT_NOT_OFFERED_FOR_PARLAY = The event is not offered for parlaying,  
+          INVALID_EVENT = Live betting is not allowed at this moment,  
+          INVALID_LEG_BET_TYPE = Leg bet type is not accepted for parlaying. Accepted values are SPREAD, MONEYLINE, TOTAL_POINTS,  
+          INVALID_PARLAY_BET = The leg did not validated due to error on Parlay Bet. Check the error PlaceParlayBet response for error details,  
+          LINE_CHANGED = Bet is submitted on a line that has changed,  
+          LINE_DOES_NOT_BELONG_TO_EVENT = LineId does not match the EventId specified in the request,  
+          LISTED_PITCHERS_SELECTION_ERROR = If bet was submitted with pitcher1MustStart and/or pitcher2MustStart parameters with values that are not allowed,  
+          ODDS_NO_LONGER_OFFERED_FOR_PARLAY_1 = Due to line change odds are not offered for parlaying,   
+          ODDS_NO_LONGER_OFFERED_FOR_PARLAY_2 = Due to line change odds are not offered for parlaying,   
+          ODDS_NO_LONGER_OFFERED_FOR_PARLAY_3 = Due to line change odds are not offered for parlaying,   
+          OFFLINE_EVENT = Bet is submitted on an event that is offline or with incorrect lineId,  
+          PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,   
+          SYSTEM_ERROR_1 = Unexpected error,  
+          SYSTEM_ERROR_2 = Unexpected error,  
+          SYSTEM_ERROR_3 = Unexpected error,  
+          LINE_IS_NOT_AVAILABLE = Line is not available for the specified Parlay Leg.
+
         enum:
           - CANNOT_PARLAY_LIVE_GAME
           - CORRELATED
@@ -2206,7 +2206,7 @@ definitions:
           NOT_ACCEPTED = Bet was not accepted. Bet can be in this status only if it was previously in PENDING_ACCEPTANCE status,  
           WON = The bet is settled as won,  
           PARTIAL_WON  - If gross payout is greater than the  stake. Only for parlays with the asian handicap legs,  
-          PARTIAL_LOST  - If gross payout is less or equal to the stake. Only for parlays with the asian handicap legs                    
+          PARTIAL_LOST  - If gross payout is less or equal to the stake. Only for parlays with the asian handicap legs
         enum:
           - ACCEPTED
           - CANCELLED
@@ -2214,9 +2214,9 @@ definitions:
           - PENDING_ACCEPTANCE
           - REFUNDED
           - NOT_ACCEPTED
-          - WON          
+          - WON
           - PARTIAL_WON
-          - PARTIAL_LOST          
+          - PARTIAL_LOST
       betType:
         type: string
         default: PARLAY
@@ -2267,7 +2267,7 @@ definitions:
         format: double
         example: 0
         description: Only for settled parlay. Final price may differ in case leg was cancelled or half won
-    description: ''    
+    description: ''
   ParlayLeg:
     type: object
     properties:
@@ -2286,13 +2286,13 @@ definitions:
           - TOTAL_POINTS
       legBetStatus:
         type: string
-        description: | 
+        description: |
           Parlay Leg status.
           CANCELLED = The leg is canceled- the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           LOSE = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
           PUSH = The leg is a push - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           REFUNDED = The leg is refunded - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
-          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap 
+          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap
         enum:
           - CANCELLED
           - LOSE
@@ -2412,13 +2412,13 @@ definitions:
           - TOTAL_POINTS
       legBetStatus:
         type: string
-        description: | 
+        description: |
           Parlay Leg status.
           CANCELLED = The leg is canceled- the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           LOSE = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
           PUSH = The leg is a push - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           REFUNDED = The leg is refunded - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
-          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap 
+          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap
         enum:
           - CANCELLED
           - LOSE
@@ -2428,7 +2428,7 @@ definitions:
           - ACCEPTED
       legBetStatus2:
         type: string
-        description: | 
+        description: |
           Parlay Leg status.
           CANCELLED = The leg is canceled- the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           LOST = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
@@ -2541,8 +2541,8 @@ definitions:
         $ref: '#/definitions/CancellationReason'
       resultingUnit:
         type: string
-        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular        
-    description: ''    
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular
+    description: ''
   PlaceTeaserBetRequest:
     type: object
     properties:
@@ -2757,7 +2757,7 @@ definitions:
         format: double
         description: Number of points.
     description: ''
-  'MultiBetRequest[SpecialBetRequest]':
+  'MultiBetRequest_SpecialBetRequest':
     type: object
     properties:
       bets:
@@ -2808,7 +2808,7 @@ definitions:
         example: 726394411
         description: Contestant identification.
     description: ''
-  'MultiBetResponse[SpecialBetResponse]':
+  'MultiBetResponse_SpecialBetResponse':
     type: object
     properties:
       bets:
@@ -2940,13 +2940,13 @@ definitions:
       betStatus:
         type: string
         example: ACCEPTED
-        description: | 
+        description: |
           Bet Status. 
           ACCEPTED = Bet was accepted, 
           CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
           LOSE = The bet is settled as lose,
           REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
-          WON = The bet is settled as won 
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -3096,13 +3096,13 @@ definitions:
       betStatus:
         type: string
         example: ACCEPTED
-        description: | 
+        description: |
           Bet Status. 
           ACCEPTED = Bet was accepted, 
           CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
           LOSE = The bet is settled as lose,
           REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
-          WON = The bet is settled as won 
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -3214,8 +3214,8 @@ definitions:
         description: Date time when the event starts.
       resultingUnit:
         type: string
-        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.                
-    description: ''    
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.
+    description: ''
   SpecialBetV3:
     type: object
     required:
@@ -3259,13 +3259,13 @@ definitions:
       betStatus:
         type: string
         example: ACCEPTED
-        description: | 
+        description: |
           Bet Status. 
           ACCEPTED = Bet was accepted, 
           CANCELLED = Bet is cancelled as per Pinnacle betting rules, 
           LOSE = The bet is settled as lose,
           REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status, 
-          WON = The bet is settled as won 
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -3372,16 +3372,16 @@ definitions:
         x-nullable: true
         description: Populated if bet was placed on a special linked to the event.
       eventStartTime:
-        type: string 
+        type: string
         format: date-time
         example: 2017-10-05T01:32:59Z
         x-nullable: false
         description: Date time when the event starts.
       resultingUnit:
-        type: string 
+        type: string
         x-nullable: false
-        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.        
-    description: ''    
+        description: Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular.
+    description: ''
   GetBetsByTypeResponse:
     type: object
     properties:
@@ -3415,18 +3415,18 @@ definitions:
     type: object
     properties:
       moreAvailable:
-        type: boolean 
+        type: boolean
         description: Whether there are more pages available.
       pageSize:
-        type: integer 
+        type: integer
         description: Page size. Default is 1000.
         example: 1000
       fromRecord:
-        type: integer 
+        type: integer
         description: Starting record number of the result set. Records start at zero
       toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
+        type: integer
+        description: Ending record number of the result set.
       straightBets:
         type: array
         description: A collection of placed straight bets.
@@ -3452,7 +3452,7 @@ definitions:
         description: A collection of placed manual bets.
         items:
           $ref: '#/definitions/ManualBet'
-    description: ''  
+    description: ''
   TeaserBet:
     type: object
     required:
@@ -3490,14 +3490,14 @@ definitions:
         description: Date time when the bet was placed.
       betStatus:
         type: string
-        description: | 
-            Bet Status. 
-            
-            ACCEPTED = Bet was accepted,  
-            CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
-            LOSE = The bet is settled as lose,  
-            REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
-            WON = The bet is settled as won 
+        description: |
+          Bet Status. 
+          
+          ACCEPTED = Bet was accepted,  
+          CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
+          LOSE = The bet is settled as lose,  
+          REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -3555,17 +3555,17 @@ definitions:
         type: number
         format: double
         example: 0
-        description: Only for settled parlay. Final price may differ in case leg was cancelled or half won. 
+        description: Only for settled parlay. Final price may differ in case leg was cancelled or half won.
       teaserId:
         type: number
         format: int32
         example: 0
-        description: Reference to the teaser id. 
+        description: Reference to the teaser id.
       teaserGroupId:
         type: number
         format: int32
         example: 0
-        description: Reference to the teaser group id.         
+        description: Reference to the teaser group id.
       legs:
         type: array
         description: ''
@@ -3609,7 +3609,7 @@ definitions:
           CANCELLED = Bet is cancelled as per Pinnacle betting rules,  
           LOSE = The bet is settled as lose,  
           REFUNDED = When an event is cancelled or when the bet is settled as push, the bet will have REFUNDED status,  
-          WON = The bet is settled as won 
+          WON = The bet is settled as won
         enum:
           - ACCEPTED
           - CANCELLED
@@ -3670,7 +3670,7 @@ definitions:
           LOSE = The leg is a loss or a push-lose. When Push-lose happens, the half of the stake on the leg will be pushed to the next leg, and the other half will be a lose. This can happen only when the leg is placed on a quarter points handicap,  
           PUSH = The leg is a push - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
           REFUNDED = The leg is refunded - the stake on this leg will be transferred to the next one. In this case the leg will be ignored when calculating the winLoss,  
-          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap  
+          WON = The leg is a won or a push-won. When Push-won happens, the half of the stake on the leg will be pushed to the next leg, and the other half is won. This can happen only when the leg is placed on a quarter points handicap
         enum:
           - CANCELLED
           - LOSE
@@ -3715,7 +3715,7 @@ definitions:
         description: ''
       resultingUnit:
         type: string
-        description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'        
+        description: 'Specifies based on what the event is being resulted, e.g. Corners, Bookings , Regular'
     description: ''
   OddsFormat:
     type: string
@@ -3725,13 +3725,13 @@ definitions:
       DECIMAL = Decimal (European) odds format,  
       HONGKONG = Hong Kong odds format,  
       INDONESIAN = Indonesian odds format,  
-      MALAY = Malaysian odds format 
+      MALAY = Malaysian odds format
     enum:
       - AMERICAN
       - DECIMAL
       - HONGKONG
       - INDONESIAN
-      - MALAY  
+      - MALAY
     example: DECIMAL
   BettingStatusResponse:
     type: object
