@@ -50,7 +50,7 @@ host: api.ps3838.com
 schemes:
   - https
 security:
-  - apiKeyAuth: []
+  - apiKey: []
 paths:
   /partner/v1/balance:
     get:
@@ -338,7 +338,7 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
 securityDefinitions:
-  apiKeyAuth:
+  apiKey:
     type: Bearer  
 definitions:
   ErrorResponse:
