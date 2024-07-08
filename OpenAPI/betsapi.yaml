@@ -758,13 +758,13 @@ paths:
         - name: fromDate
           in: query
           description: |
-            Start date of the requested period. Start date can be up to 30 days in the past. Expected format is ISO8601 - can be set to just date or date and time.
+            Start date of the requested period. Start date can be up to 30 days in the past. Required when betIds parameter is not submitted. Expected format is ISO8601 - can be set to just date or date and time.
           required: false
           type: string
         - name: toDate
           in: query
           description: |
-            End date of the requested period. Expected format is ISO8601 - can be set to just date or date and time. toDate value is exclusive, meaning it cannot be equal to fromDate.
+            End date of the requested period. Required when betIds parameter is not submitted. Expected format is ISO8601 - can be set to just date or date and time. toDate value is exclusive, meaning it cannot be equal to fromDate.
             
           required: false
           type: string
