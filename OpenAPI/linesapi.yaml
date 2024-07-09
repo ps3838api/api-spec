@@ -1497,7 +1497,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SpecialOddsResponse'
+            $ref: '#/definitions/SpecialOddsResponseV2'
           examples:
             application/json:
               sportId: 4
@@ -1512,10 +1512,12 @@ paths:
                           lineId: 1001
                           price: -199
                           handicap: null
+                          max: 100
                         - id: 2
                           lineId: 1002
                           price: -198
                           handicap: null
+                          max: 100
                     - id: 7
                       maxBet: 100
                       contestantLines:
@@ -1523,10 +1525,12 @@ paths:
                           lineId: 1013
                           price: -187
                           handicap: null
+                          max: 100
                         - id: 14
                           lineId: 1014
                           price: -186
                           handicap: null
+                          max: 100
                 - id: 578
                   specials:
                     - id: 10
@@ -1536,18 +1540,22 @@ paths:
                           lineId: 1021
                           price: -179
                           handicap: null
+                          max: 100
                         - id: 22
                           lineId: 1022
                           price: -178
                           handicap: null
+                          max: 100
                         - id: 23
                           lineId: 1023
                           price: -177
                           handicap: null
+                          max: 100
                         - id: 24
                           lineId: 1024
                           price: -176
                           handicap: null
+                          max: 100
         '400':
           description: BadRequest
           schema:
@@ -5132,6 +5140,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsLeague'
+  SpecialOddsResponseV2:
+    type: object
+    properties:
+      sportId:
+        format: int32
+        description: Id of a sport for which to retrieve the odds.
+        type: integer
+      last:
+        format: int64
+        description: Used for retrieving changes only on subsequent requests. Provide this value as the Since paramter in subsequent calls to only retrieve changes.
+        type: integer
+      leagues:
+        description: Contains a list of Leagues.
+        type: array
+        items:
+          $ref: '#/definitions/SpecialOddsLeagueV2'
   SpecialOddsLeague:
     type: object
     properties:
@@ -5144,6 +5168,18 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsSpecial'
+  SpecialOddsLeagueV2:
+    type: object
+    properties:
+      id:
+        format: int32
+        description: League id.
+        type: integer
+      specials:
+        description: A collection of FixturesSpecial.
+        type: array
+        items:
+          $ref: '#/definitions/SpecialOddsSpecialV2'
   SpecialOddsSpecial:
     type: object
     properties:
@@ -5160,6 +5196,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsContestantLine'
+  SpecialOddsSpecialV2:
+    type: object
+    properties:
+      id:
+        format: int64
+        description: Special Id.
+        type: integer
+      maxRisk:
+        format: double
+        description: Maximum risk amount.
+        type: number
+      contestantLines:
+        description: ContestantLines available for wagering on.
+        type: array
+        items:
+          $ref: '#/definitions/SpecialOddsContestantLineV2'
   SpecialOddsContestantLine:
     type: object
     properties:
@@ -5178,4 +5230,27 @@ definitions:
       handicap:
         format: double
         description: 'A number indicating the spread, over/under etc.'
+        type: number
+  SpecialOddsContestantLineV2:
+    type: object
+    properties:
+      id:
+        format: int64
+        description: ContestantLine Id.
+        type: integer
+      lineId:
+        format: int64
+        description: Line identifier required for placing a bet.
+        type: integer
+      price:
+        format: double
+        description: Price of the line.
+        type: number
+      handicap:
+        format: double
+        description: 'A number indicating the spread, over/under etc.'
+        type: number
+      max:
+        format: double
+        description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/ps3838api/ps3838api.github.io/blob/master/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
         type: number
