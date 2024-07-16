@@ -6,15 +6,17 @@ info:
     
     # Authentication 
     
-    The API uses HTTP Basic access authentication. Always use HTTPS to access the API.
+    The API uses API Key to access the API. Always use HTTPS to access the API.
+
+    To get API Key, the user must access to Agent Site and register key in Agent API Access at My Account menu.
     
     You need to send HTTP Request header like this:    
     
-    `Authorization: Basic <Base64 value of UTF-8 encoded "username:password">`
+    `Authorization: Bearer <API Key>`
     
     Example:
     
-    `Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=`
+    `Authorization: Bearer 2e4d7d04-2c86-11ef-a458-005056904f90=`
     
     # Data Formats 
     
@@ -48,7 +50,7 @@ host: api.ps3838.com
 schemes:
   - https
 security:
-  - basicAuth: []
+  - apiKey: []
 paths:
   /partner/v1/balance:
     get:
@@ -336,8 +338,8 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
 securityDefinitions:
-  basicAuth:
-    type: basic  
+  apiKey:
+    type: Bearer  
 definitions:
   ErrorResponse:
     type: object
