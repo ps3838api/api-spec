@@ -699,8 +699,6 @@ definitions:
           - INACTIVE
           - SUSPENDED
           - CLOSED
-          - COSUSP
-          - COINACT
         example: 'INACTIVE'
     description: ''
   UpdateAccountStatusV1Response:
