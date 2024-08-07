@@ -2176,6 +2176,7 @@ definitions:
         description: Status of the response.
         enum:
           - ACCEPTED
+          - PENDING_ACCEPTANCE
           - PROCESSED_WITH_ERROR
       errorCode:
         type: string
