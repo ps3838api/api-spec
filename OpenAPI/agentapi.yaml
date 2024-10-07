@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: '3.0'
 info:
   version: 1.0.0
   title: PS3838 API - Agent API Reference
