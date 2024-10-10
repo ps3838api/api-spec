@@ -498,6 +498,10 @@ definitions:
         type: string 
         description: Username.
         example: 'ABC123'
+      nickname:
+        type: string 
+        description: Nickname.
+        example: null
       level:
         type: string 
         description: Username level.
@@ -569,6 +573,10 @@ definitions:
         type: string 
         description: Account username.
         example: 'ABC123'
+      nickname:
+        type: string 
+        description: Nickname.
+        example: null
       level:
         type: string 
         description: Agent Level.
@@ -885,6 +893,10 @@ definitions:
         type: string
         description: Account Username.
         example: 'MGZ10'
+      nickname:
+        type: string 
+        description: Nickname.
+        example: null
       currency:
         type: string
         description: Account Currency.
