@@ -386,7 +386,7 @@ paths:
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            $ref: '#/definitions/ErrorGetTransferConditionResponse'
         '401':
           description: Unauthorized
           schema:
@@ -1068,6 +1068,30 @@ definitions:
           - SAT
           - SUN
         example: ['MON','TUE','WED']
+  ErrorGetTransferConditionResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        example: PERMISSION_DENIED
+        description: |
+          
+          PERMISSION_DENIED = User does not have permission to perform this action,  
+        enum:
+          - PERMISSION_DENIED
+      errorCode:
+        type: string
+        example: INVALID_REQUEST_DATA
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
   UpdateTransferConditionV1Request:
     type: object
     properties:
