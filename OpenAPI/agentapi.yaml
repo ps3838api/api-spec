@@ -1139,9 +1139,9 @@ definitions:
       rejectCode:
         type: string
         description: |
-          INVALID_REQUEST = When data entered is in an invalid format
+          INVALID_REQUEST = When data entered is in an invalid format,
           USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,
-          PERMISSION_DENIED = User does not have permission to perform this action
+          PERMISSION_DENIED = User does not have permission to perform this action,
         enum:
           - INVALID_REQUEST
           - USER_NOT_FOUND
