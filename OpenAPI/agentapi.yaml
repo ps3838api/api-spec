@@ -337,6 +337,111 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+  ##### START API BET SETTING #####
+  /partner/v1/bet-setting:
+    get:
+      tags:
+        - Bet Setting
+      summary: Get Bet Setting – v1
+      description: Gets bet setting for the account(s) requested.
+      operationId: BetSetting_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
+          required: false
+          type: boolean
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0  
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GetBetSettingV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/GetBetSettingBadRequestResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/BetSettingInternalErrorResponse'
+    post:
+      tags:
+        - Bet Setting
+      summary: Set Bet Setting - v1
+      operationId: BetSetting_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Set Bet Setting.
+          required: true
+          schema:
+            $ref: '#/definitions/SetBetSettingV1Request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SetCreditV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/SetBetSettingBadRequestResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/BetSettingInternalErrorResponse'	
+  ##### END API BET SETTING #####
 securityDefinitions:
   apiKey:
     type: Bearer  
@@ -857,3 +962,317 @@ definitions:
         enum:
           - INVALID_REQUEST_DATA
     description: ''
+   ##### START DEFINITION BET SETTING  #####
+  GetBetSettingV1Response:
+    type: object
+    properties:
+      moreAvailable:
+        type: boolean 
+        description: Indicates whether more pages are available.
+        example: true
+      pageSize:
+        type: integer 
+        description: The requested page size. Default is 1000.
+        example: 1000
+      fromRecord:
+        type: integer 
+        description: Starting record number of the result set. Records start at zero
+        example: 0
+      toRecord:
+        type: integer 
+        description: Ending record number of the result set. 
+        example: 999
+      reportDateTime:
+        type: string
+        format: date-time
+        example: '2024-06-13T15:24:48Z'
+        description: Date and time of the response.
+      agent:
+        type: array
+        description: Contains a list of Agents.
+        items:
+          $ref: '#/definitions/BetSettingAgentObject'
+  BetSettingAgentObject:
+    type: object
+    properties:
+      username:
+        type: string 
+        description: Account username.
+        example: 'ABC123'
+      nickname:
+        type: string 
+        description: Account nickname (return null if not set).
+        example: 'ABC123'  
+      level:
+        type: string 
+        description: Agent Level.
+        enum:
+          - PART
+          - CORP
+          - SMA
+          - MA
+          - AG
+          - PL
+        example: 'SMA'
+      status:
+        type: string 
+        description: Account Status.
+        enum:
+          - ACTIVE
+          - INACTIVE
+          - SUSPENDED
+          - CLOSED
+          - COSUSP
+          - COINACT
+          - FAILED_LOGINS
+        example: 'ACTIVE'
+      currency:
+        type: string 
+        description: Account Currency.
+        example: 'USD'
+      maxBetPreference:
+        type: string 
+        description: Max Bet Preference.
+        enum:
+          - TOWIN
+          - TORISK
+          - BASE
+        example: 'TOWIN'
+      newAccountMaxBet:
+        type: number
+        format: double
+        example: 500.00
+        description: Maximum Bet setting for new accounts.
+      newAccountMaxPerMatch:
+        type: number
+        format: double
+        example: 2000.00
+        description: Maximum Bet Per Match setting for new accounts.
+      inplayNewAccountMaxBet:
+        type: number
+        format: double
+        example: 300.00
+        description: Maximum inplay Bet setting for new accounts.
+      settings:
+        type: array
+        description: Sport Setting Data.
+        items:
+          $ref: '#/definitions/BetSettingObject'
+
+  BetSettingObject:
+    type: object
+    properties:
+      sport:
+        type: string 
+        description: Sport Setting Name.
+        example: 'Soccer'
+      league:
+        type: string 
+        description: League Setting Name.
+        example: 'AFF ChampU20'  
+      minBet:
+        type: number
+        format: double
+        example: 1.25
+        description: Pregame Minimum Bet Setting.
+      maxBet:
+        type: number
+        format: double
+        example: 500.00
+        description: Pregame Maximum Bet Setting.
+      maxPerMatch:
+        type: number
+        format: double
+        example: 2000.00
+        description: Pregame and Inplay Maximum Per Match Bet Setting.
+      inplayMinBet:
+        type: number
+        format: double
+        example: 1.50
+        description: Inplay Minimum Bet Setting.
+      inplayMaxBet:
+        type: number
+        format: double
+        example: 300.00
+        description: Inplay Maximum Bet Setting.
+      directBetSetting:
+        type: object
+        description: Direct Bet Settings.
+        $ref: '#/definitions/BetDirectObject'
+  BetDirectObject:
+    type: object
+    properties:
+      minBet:
+        type: number
+        format: double
+        example: 5
+        description: Pregame Minimum Bet Setting.
+      maxBet:
+        type: number
+        format: double
+        example: 250.00
+        description: Pregame Maximum Bet Setting.
+      maxPerMatch:
+        type: number
+        format: double
+        example: 1500.00
+        description: Pregame and Inplay Maximum Per Match Bet Setting.
+      inplayMinBet:
+        type: number
+        format: double
+        example: 10
+        description: Inplay Minimum Bet Setting.
+      inplayMaxBet:
+        type: number
+        format: double
+        example: 180.00
+        description: Inplay Maximum Bet Setting.
+  GetBetSettingBadRequestResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        description: |
+          INVALID_REQUEST = When data entered is in an invalid format
+          USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,
+          PERMISSION_DENIED = User does not have permission to perform this action
+        enum:
+          - INVALID_REQUEST
+          - USER_NOT_FOUND
+          - PERMISSION_DENIED
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''      
+  SetBetSettingBadRequestResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        example: MIN_BET_EXCEEDS_MAX_BET
+        description: |
+          
+          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,  
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline, Does not apply when updating Member (PL) accounts.  
+          INVALID_CURRENCY = Currency must be currency of authenticated account.
+          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+          MIN_BET_EXCEEDS_MAX_BET = Min Bet is greater than the Max Bet,
+          MIN_BET_EXCEEDS_MAX_PER_MATCH = Min Bet is greater than the Max Per Match Bet,
+          MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Bet is greater than the Max Per Match Bet,
+          MIN_BET_LESS_THAN_UPLINE = Min Bet is less than upline Min Bet,
+          MAX_BET_EXCEEDS_UPLINE = Max Bet is greater than upline Max Bet,
+          MAX_PER_MATCH_EXCEEDS_UPLINE = Max Per Match Bet is greater than upline Max Per Match Bet,
+          PERMISSION_DENIED = SUB User does not have permission
+          NEW_ACCOUNT_BOTH_FIELDS_REQUIRED = Max Bet and Max Per Match must both have a value,
+          NEW_ACCOUNT_VALUE_TOO_LONG = New Account Max Bet or New Account Max Per Match exceed 18 characters,
+          NA_MAX_BET_EXCEEDS_MAX_PER_MATCH = New Account Max Bet is greater than New Account Max Per Match,
+          NEW_ACCOUNT_MAX_BET_INVALID = New Account Max Bet must be between Min Bet and Max Bet ,
+          NEW_ACCOUNT_MAX_PER_MATCH_INVALID = New Account Max Per Match must be between Min Bet and Max Per Match,
+          INPLAY_MAX_BET_INVALID = Inplay Max Bet must be equal to or less than Max Per Match
+        enum:
+          - USER_NOT_FOUND
+          - ACCOUNT_NOT_DIRECT
+          - INVALID_CURRENCY
+          - ACCOUNT_CLOSED
+          - MIN_BET_EXCEEDS_MAX_BET
+          - MIN_BET_EXCEEDS_MAX_PER_MATCH
+          - MAX_BET_EXCEEDS_MAX_PER_MATCH
+          - MIN_BET_LESS_THAN_UPLINE
+          - MAX_BET_EXCEEDS_UPLINE
+          - MAX_PER_MATCH_EXCEEDS_UPLINE
+          - PERMISSION_DENIED
+          - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
+          - NEW_ACCOUNT_VALUE_TOO_LONG
+          - NA_MAX_BET_EXCEEDS_MAX_PER_MATCH
+          - NEW_ACCOUNT_MAX_BET_INVALID
+          - NEW_ACCOUNT_MAX_PER_MATCH_INVALID
+          - INPLAY_MAX_BET_INVALID
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
+    description: ''
+  BetSettingInternalErrorResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ERROR
+        description: If processing catch exception, the status must be reported as ERROR.
+        enum:
+          - ERROR
+  SetBetSettingV1Request:
+    type: object
+    properties:
+      betsetting:
+        $ref: '#/definitions/SetBetSettingObject'
+    description: ''
+  SetBetSettingObject:
+    type: object
+    properties:
+      usercode:
+        type: string
+        example: 00A
+        description: Usercode of account to be updated.
+      currency:
+        type: string
+        example: USD
+        description: Currency of the update. Destination Currency (currency of account being updated). 
+      newAccountMaxBet:
+        type: number
+        format: double
+        example: 140
+        description: Maximum Bet setting for new accounts. NULL value for unchanged value.
+      newAccountMaxPerMatch:
+        type: number
+        format: double
+        example: 8250000
+        description: Maximum Bet Per Match setting for new accounts. NULL value for unchanged value.
+      inplayNewAccountMaxBet:
+        type: number
+        format: double
+        example: 4250000
+        description: Maximum inplay Bet setting for new accounts. NULL value for unchanged value.
+      minBet:
+        type: number
+        format: double
+        example: 12
+        description: Pregame Minimum Bet Setting. NULL value for unchanged value.
+      maxBet:
+        type: number
+        format: double
+        example: 8500000
+        description: Pregame Maximum Bet Setting. NULL value for unchanged value.
+      maxPerMatch:
+        type: number
+        format: double
+        example: 9500000
+        description: Pregame and Inplay Maximum Per Match Bet Setting. NULL value for unchanged value.
+      inplayMinBet:
+        type: number
+        format: double
+        example: 15
+        description: Inplay Minimum Bet Setting. NULL value for unchanged value.
+      inplayMaxBet:
+        type: number
+        format: double
+        example: 9500000
+        description: Inplay Maximum Bet Setting. NULL value for unchanged value.
+    description: ''
+##### END DEFINITION BET SETTING  #####
+  
