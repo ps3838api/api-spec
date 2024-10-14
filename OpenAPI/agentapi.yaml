@@ -1166,10 +1166,10 @@ definitions:
         example: MIN_BET_EXCEEDS_MAX_BET
         description: |
           
-          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,  
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline, Does not apply when updating Member (PL) accounts,
+          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts,
           INVALID_CURRENCY = Currency must be currency of authenticated account,
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+          ACCOUNT_CLOSED = Account to be updated is CLOSED,
           MIN_BET_EXCEEDS_MAX_BET = Min Bet is greater than the Max Bet,
           MIN_BET_EXCEEDS_MAX_PER_MATCH = Min Bet is greater than the Max Per Match Bet,
           MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Bet is greater than the Max Per Match Bet,
@@ -1182,7 +1182,7 @@ definitions:
           NA_MAX_BET_EXCEEDS_MAX_PER_MATCH = New Account Max Bet is greater than New Account Max Per Match,
           NEW_ACCOUNT_MAX_BET_INVALID = New Account Max Bet must be between Min Bet and Max Bet,
           NEW_ACCOUNT_MAX_PER_MATCH_INVALID = New Account Max Per Match must be between Min Bet and Max Per Match,
-          INPLAY_MAX_BET_INVALID = Inplay Max Bet must be equal to or less than Max Per Match
+          INPLAY_MAX_BET_INVALID = Inplay Max Bet must be equal to or less than Max Per Match,
         enum:
           - USER_NOT_FOUND
           - ACCOUNT_NOT_DIRECT
