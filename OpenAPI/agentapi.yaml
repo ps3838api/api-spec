@@ -1059,15 +1059,20 @@ definitions:
       transferDays:
         type: array 
         description: Days on which transfers take place. Only returned if transferType is WEEKLY.
-        enum:
-          - MON
-          - TUE
-          - WED
-          - THU
-          - FRI
-          - SAT
-          - SUN
+        items:
+          $ref: '#/definitions/EnumTransferDays'
         example: ['MON','TUE','WED']
+  EnumTransferDays:
+    type: string
+    enum:
+      - MON
+      - TUE
+      - WED
+      - THU
+      - FRI
+      - SAT
+      - SUN
+    description: ''
   ErrorGetTransferConditionResponse:
     type: object
     properties:
@@ -1082,7 +1087,7 @@ definitions:
         example: PERMISSION_DENIED
         description: |
           
-          PERMISSION_DENIED = User does not have permission to perform this action,  
+          PERMISSION_DENIED = User does not have permission to perform this action.  
         enum:
           - PERMISSION_DENIED
       errorCode:
@@ -1115,14 +1120,8 @@ definitions:
       transferDays:
         type: array 
         description: Days on which transfers take place. Will be ignored if transferType is DAILY.
-        enum:
-          - MON
-          - TUE
-          - WED
-          - THU
-          - FRI
-          - SAT
-          - SUN
+        items:
+          $ref: '#/definitions/EnumTransferDays'
         example: ['MON','TUE','WED']
     description: ''
   UpdateTransferConditionV1ErrorResponse:
@@ -1139,10 +1138,10 @@ definitions:
         description: |
           
           USER_NOT_FOUND = Account to be updated is a player level account and is or in the same downline as the authenticated user,  
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline of the authenticated user,  
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           PERMISSION_DENIED = User does not have permission to perform this action,  
-          DAYS_NOT_SPECIFIED = transferType is WEEKLY and transferDays is NULL,  
+          DAYS_NOT_SPECIFIED = transferType is WEEKLY and transferDays is NULL.  
         enum:
           - USER_NOT_FOUND
           - ACCOUNT_NOT_DIRECT
