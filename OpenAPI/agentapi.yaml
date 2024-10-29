@@ -1109,14 +1109,8 @@ definitions:
       transferDays:
         type: array 
         description: Days on which transfers take place. Will be ignored if transferType is DAILY.
-        enum:
-          - MON
-          - TUE
-          - WED
-          - THU
-          - FRI
-          - SAT
-          - SUN
+        items:
+          $ref: '#/definitions/EnumTransferDays'
         example: ['MON','TUE','WED']
     description: ''
   UpdateTransferConditionV1ErrorResponse:
