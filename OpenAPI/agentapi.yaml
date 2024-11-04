@@ -412,7 +412,7 @@ paths:
       parameters:
         - in: body
           name: request
-          description: Set Credit request.
+          description: Update transfer condition.
           required: true
           schema:
             $ref: '#/definitions/UpdateTransferConditionV1Request'
