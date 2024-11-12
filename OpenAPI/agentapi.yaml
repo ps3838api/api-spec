@@ -1313,7 +1313,7 @@ definitions:
           - MA
           - AG
           - PL
-        example: 'SMA'
+        example: 'PL'
       status:
         type: string 
         description: Account Status.
