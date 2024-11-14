@@ -1519,7 +1519,7 @@ definitions:
   SetBetSettingV1Request:
     type: object
     properties:
-      betsetting:
+      betSetting:
         $ref: '#/definitions/SetBetSettingObject'
     description: ''
   SetBetSettingObject:
