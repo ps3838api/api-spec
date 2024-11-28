@@ -1521,6 +1521,10 @@ definitions:
     properties:
       betSetting:
         $ref: '#/definitions/SetBetSettingObject'
+        description: 'Optional'
+      newAccountSetting:
+        $ref: '#/definitions/SetNewAccountSettingObject'
+        description: 'Optional'
     description: ''
   SetBetSettingObject:
     type: object
@@ -1532,7 +1536,35 @@ definitions:
       currency:
         type: string
         example: USD
-        description: Currency of the update. Destination Currency (currency of account being updated). 
+        description: Currency of the update. Expected value Authenticated User Currency (currency of account performing the update).
+      minBet:
+        type: number
+        format: double
+        example: 12
+        description: Pregame Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+      maxBet:
+        type: number
+        format: double
+        example: 8500000
+        description: Pregame Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+      maxPerMatch:
+        type: number
+        format: double
+        example: 9500000
+        description: Pregame and Inplay Maximum Per Match Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+      inplayMinBet:
+        type: number
+        format: double
+        example: 15
+        description: Inplay Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+      inplayMaxBet:
+        type: number
+        format: double
+        example: 9500000
+        description: Inplay Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+  SetNewAccountSettingObject:
+    type: object
+    properties:
       newAccountMaxBet:
         type: number
         format: double
@@ -1548,30 +1580,5 @@ definitions:
         format: double
         example: 4250000
         description: Maximum inplay Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
-      minBet:
-        type: number
-        format: double
-        example: 12
-        description: Pregame Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account unless it is their own usercode in which case this value will be ignored.
-      maxBet:
-        type: number
-        format: double
-        example: 8500000
-        description: Pregame Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account unless it is their own usercode in which case this value will be ignored.
-      maxPerMatch:
-        type: number
-        format: double
-        example: 9500000
-        description: Pregame and Inplay Maximum Per Match Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account unless it is their own usercode in which case this value will be ignored
-      inplayMinBet:
-        type: number
-        format: double
-        example: 15
-        description: Inplay Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account unless it is their own usercode in which case this value will be ignored
-      inplayMaxBet:
-        type: number
-        format: double
-        example: 9500000
-        description: Inplay Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account unless it is their own usercode in which case this value will be ignored
     description: ''
 ##### END DEFINITION BET SETTING  #####
