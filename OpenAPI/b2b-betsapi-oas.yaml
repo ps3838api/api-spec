@@ -77,8 +77,52 @@ paths:
             schema:
               $ref: '#/components/schemas/MultiBetStraightRequest'
         description: The Place Straight Bet request.
-        required: true      
-
+        required: true
+  /b2b/v2/bets/straight:
+    post:
+      tags:
+        - Place Bets      
+      summary: Place straight bets.
+      operationId: Bets_Straight_v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiBetStraightResponse'
+        '400':
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseWithErrorRef'      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultiBetStraightRequest'
+        description: The Place Straight Bet request.
+        required: true
+        
   /b2b/v1/bets/special:
     post:
       tags:
