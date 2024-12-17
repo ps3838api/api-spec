@@ -1287,6 +1287,21 @@ definitions:
         format: date-time
         example: '2024-06-13T15:24:48Z'
         description: Date and time of the response.
+      newAccountMaxBet:
+        type: number
+        format: double
+        example: 500.00
+        description: Maximum Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
+      newAccountMaxPerMatch:
+        type: number
+        format: double
+        example: 2000.00
+        description: Maximum Bet Per Match setting for new accounts. NOTE Refers to the account of the authenticated user.
+      inplayNewAccountMaxBet:
+        type: number
+        format: double
+        example: 300.00
+        description: Maximum inplay Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
       agent:
         type: array
         description: Contains a list of Agents.
@@ -1338,21 +1353,6 @@ definitions:
           - TORISK
           - BASE
         example: 'TOWIN'
-      newAccountMaxBet:
-        type: number
-        format: double
-        example: 500.00
-        description: Maximum Bet setting for new accounts.
-      newAccountMaxPerMatch:
-        type: number
-        format: double
-        example: 2000.00
-        description: Maximum Bet Per Match setting for new accounts.
-      inplayNewAccountMaxBet:
-        type: number
-        format: double
-        example: 300.00
-        description: Maximum inplay Bet setting for new accounts.
       settings:
         type: array
         description: Sport Setting Data.
