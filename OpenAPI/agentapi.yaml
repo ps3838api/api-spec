@@ -1387,7 +1387,11 @@ definitions:
         format: double
         example: 300.00
         description: Inplay Maximum Bet Setting.
-       sport:
+      directBetSetting:
+        type: object
+        description: Direct Bet Settings.
+        $ref: '#/definitions/BetDirectObject'
+      sport:
         type: string 
         description: Sport Setting Name.
         example: 'Soccer'
@@ -1395,10 +1399,6 @@ definitions:
         type: string 
         description: League Setting Name.
         example: 'AFF ChampU20'  
-      directBetSetting:
-        type: object
-        description: Direct Bet Settings.
-        $ref: '#/definitions/BetDirectObject'
   BetDirectObject:
     type: object
     properties:
