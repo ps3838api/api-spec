@@ -806,32 +806,30 @@ definitions:
         description: |
           
           SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
-          CREDIT_EXCEEDS_USED = Credit Given exceeds current credit used,  
+          USED_EXCEEDS_CREDIT = Credit Given exceeds current credit used,  
           CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
-          CREDIT_EXCEEDS_DOWNLINE = Credit Given exceeds new Downline Max Credit (or old if no new value specified). Not applicable for Member updates,  
           CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
           DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
-          DOWNLINE_EXCEEDS_USED = Downline Max Credit reduction exceeds current credit used,  
+          USED_EXCEEDS_DOWNLINE = Downline Max Credit reduction exceeds current credit used,  
           MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
           MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
-          MEMBER_EXCEEDS_USED = Member Max Credit exceeds current credit used,  
+          USED_EXCEEDS_MEMBER = Member Max Credit exceeds current credit used,  
           INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
-          USER_NOT_FOUND = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
+          ACCOUNT_CLOSED = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
           MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
           PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
           - SYSTEM_SECURITY_BLOCK_BALANCE
-          - CREDIT_EXCEEDS_USED
+          - USED_EXCEEDS_CREDIT
           - CREDIT_EXCEEDS_PARENT_DOWNLINE
-          - CREDIT_EXCEEDS_DOWNLINE
           - CREDIT_EXCEEDS_MEMBER
           - DOWNLINE_EXCEEDS_CREDIT
-          - DOWNLINE_EXCEEDS_USED
+          - USED_EXCEEDS_DOWNLINE
           - MEMBER_EXCEEDS_CREDIT
           - MEMBER_EXCEEDS_DOWNLINE
-          - MEMBER_EXCEEDS_USED
+          - USED_EXCEEDS_MEMBER
           - INVALID_CURRENCY
-          - USER_NOT_FOUND
+          - ACCOUNT_CLOSED
           - MEMBER_EXCEEDS_GIVEN
           - PERMISSION_DENIED
       errorCode:
@@ -879,7 +877,6 @@ definitions:
         type: string
         description: |
           
-          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,  
           ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           PASSWORD_MISMATCH = Password and Confirm Password do not match,  
@@ -887,7 +884,6 @@ definitions:
           PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
           PERMISSION_DENIED = User does not have permission to perform this action,  
         enum:
-          - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
           - ACCOUNT_CLOSED
           - PASSWORD_MISMATCH
@@ -940,19 +936,15 @@ definitions:
         type: string
         description: |
           
-          ACCOUNT_NOT_DOWNLINE = Account to be updated is not in your downline,  
           ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          PARENT_ACCOUNT_NOT_ACTIVE = Parent account of account to be updated is not ACTIVE,  
           INVALID_STATUS = Invalid account status,  
           INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
           PERMISSION_DENIED = User does not have permission to perform this action,  
           OUTSTANDING_BETS = Account cannot be closed because at least one player has outstanding bets,  
         enum:
-          - ACCOUNT_NOT_DOWNLINE
           - ACCOUNT_NOT_DIRECT
           - ACCOUNT_CLOSED
-          - PARENT_ACCOUNT_NOT_ACTIVE
           - INVALID_STATUS
           - INVALID_STATUS_UPDATE
           - PERMISSION_DENIED
@@ -1045,7 +1037,8 @@ definitions:
       rejectCode:
         type: string
         description: |
-          
+
+          USER_NOT_FOUND = Account to be updated is not in user's downline,  
           ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
           INVALID_AMOUNT = Transfer amount must be numeric,  
           TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,  
@@ -1059,6 +1052,7 @@ definitions:
           COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,  
           COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,  
         enum:
+          - USER_NOT_FOUND
           - ACCOUNT_NOT_DIRECT
           - INVALID_AMOUNT
           - TRANSFER_AMOUNT_ZERO
