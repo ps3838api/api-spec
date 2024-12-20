@@ -1349,10 +1349,10 @@ definitions:
         type: string 
         description: Max Bet Preference.
         enum:
-          - TOWIN
-          - TORISK
+          - WIN
+          - RISK
           - BASE
-        example: 'TOWIN'
+        example: 'WIN'
       settings:
         type: array
         description: Sport Setting Data.
