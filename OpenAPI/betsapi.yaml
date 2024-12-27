@@ -2061,7 +2061,7 @@ definitions:
         description: 'This represents the period of the match. For example, for soccer we have: 0 -  Game, 1 - 1st Half and 2 - 2nd Half'
       legBetType:
         type: string
-        example: MONELYLINE
+        example: MONEYLINE
         description: 'Only SPREAD, MONEYLINE and TOTAL_POINTS are supported.'
         enum:
           - MONEYLINE
