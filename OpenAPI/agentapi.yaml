@@ -806,14 +806,14 @@ definitions:
         description: |
           
           SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
-          USED_EXCEEDS_CREDIT = Credit Given exceeds current credit used,  
+          USED_EXCEEDS_CREDIT = Credit Used exceeds Credit Given,  
           CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
           CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
           DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
-          USED_EXCEEDS_DOWNLINE = Downline Max Credit reduction exceeds current credit used,  
+          USED_EXCEEDS_DOWNLINE = Credit Used exceeds Downline Max Credit,  
           MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
           MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
-          USED_EXCEEDS_MEMBER = Member Max Credit exceeds current credit used,  
+          USED_EXCEEDS_MEMBER = Credit Used exceeds Member Max Credit,  
           INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
           ACCOUNT_CLOSED = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
           MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
