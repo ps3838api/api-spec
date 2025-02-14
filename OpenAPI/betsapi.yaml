@@ -3049,6 +3049,7 @@ definitions:
           - MONEYLINE
           - SPREAD
           - TOTAL_POINTS
+          - TEAM_TOTAL_POINTS
       legBetStatus:
         type: string
         description: | 
