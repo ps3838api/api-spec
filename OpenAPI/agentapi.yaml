@@ -1472,7 +1472,6 @@ definitions:
           MAX_BET_EXCEEDS_UPLINE = Max Bet is greater than upline Max Bet,  
           INPLAY_MAX_BET_EXCEEDS_UPLINE = Inplay Max Bet is greater than upline Inplay Max Bet,  
           MAX_PER_MATCH_EXCEEDS_UPLINE = Max Per Match Bet is greater than upline Max Per Match Bet,  
-          INPLAY_MAX_PER_MATCH_EXCEEDS_UPLINE = Inplay Max Per Match Bet is greater than upline Inplay Max Per Match Bet,  
           PERMISSION_DENIED = SUB User does not have permission,  
           NEW_ACCOUNT_BOTH_FIELDS_REQUIRED = Max Bet and Max Per Match must both have a value,  
           NEW_ACCOUNT_VALUE_TOO_LONG = New Account Max Bet or New Account Max Per Match exceed 18 characters,  
@@ -1494,7 +1493,6 @@ definitions:
           - MAX_BET_EXCEEDS_UPLINE
           - INPLAY_MAX_BET_EXCEEDS_UPLINE
           - MAX_PER_MATCH_EXCEEDS_UPLINE
-          - INPLAY_MAX_PER_MATCH_EXCEEDS_UPLINE
           - PERMISSION_DENIED
           - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
           - NEW_ACCOUNT_VALUE_TOO_LONG
