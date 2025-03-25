@@ -1465,10 +1465,11 @@ definitions:
           INVALID_CURRENCY = Currency must be currency of authenticated account,  
           ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           MIN_BET_EXCEEDS_MAX_BET = Min Bet is greater than the Max Bet,  
-          MIN_BET_EXCEEDS_MAX_PER_MATCH = Min Bet is greater than the Max Per Match Bet,  
           MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Bet is greater than the Max Per Match Bet,  
-          MIN_BET_LESS_THAN_UPLINE = Min Bet is less than upline Min Bet,  
+          MIN_BET_LESS_THAN_UPLINE = Min Bet is less than upline Min Bet,
+          INPLAY_MIN_BET_LESS_THAN_UPLINE = Inplay Min Bet is less than upline Inplay Min Bet,
           MAX_BET_EXCEEDS_UPLINE = Max Bet is greater than upline Max Bet,  
+          INPLAY_MAX_BET_EXCEEDS_UPLINE = Inplay Max Bet is greater than upline Inplay Max Bet,  
           MAX_PER_MATCH_EXCEEDS_UPLINE = Max Per Match Bet is greater than upline Max Per Match Bet,  
           PERMISSION_DENIED = SUB User does not have permission,  
           NEW_ACCOUNT_BOTH_FIELDS_REQUIRED = Max Bet and Max Per Match must both have a value,  
@@ -1476,17 +1477,20 @@ definitions:
           NA_MAX_BET_EXCEEDS_MAX_PER_MATCH = New Account Max Bet is greater than New Account Max Per Match,  
           NEW_ACCOUNT_MAX_BET_INVALID = New Account Max Bet must be between Min Bet and Max Bet,  
           NEW_ACCOUNT_MAX_PER_MATCH_INVALID = New Account Max Per Match must be between Min Bet and Max Per Match,  
-          INPLAY_MAX_BET_INVALID = Inplay Max Bet must be equal to or less than Max Per Match,  
+          INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Inplay Max Bet must be equal to or less than Max Per Match,  
+          NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Per Match amount is less than New Account Inplay Max Bet amount,  
+          INPLAY_MIN_BET_EXCEEDS_MAX_BET = Inplay Min Bet amount is greater than the Inplay Max Bet amount,  
         enum:
           - USER_NOT_FOUND
           - ACCOUNT_NOT_DIRECT
           - INVALID_CURRENCY
           - ACCOUNT_CLOSED
           - MIN_BET_EXCEEDS_MAX_BET
-          - MIN_BET_EXCEEDS_MAX_PER_MATCH
           - MAX_BET_EXCEEDS_MAX_PER_MATCH
           - MIN_BET_LESS_THAN_UPLINE
+          - INPLAY_MIN_BET_LESS_THAN_UPLINE
           - MAX_BET_EXCEEDS_UPLINE
+          - INPLAY_MAX_BET_EXCEEDS_UPLINE
           - MAX_PER_MATCH_EXCEEDS_UPLINE
           - PERMISSION_DENIED
           - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
@@ -1494,7 +1498,9 @@ definitions:
           - NA_MAX_BET_EXCEEDS_MAX_PER_MATCH
           - NEW_ACCOUNT_MAX_BET_INVALID
           - NEW_ACCOUNT_MAX_PER_MATCH_INVALID
-          - INPLAY_MAX_BET_INVALID
+          - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+          - NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+          - INPLAY_MIN_BET_EXCEEDS_MAX_BET 
       errorCode:
         type: string
         description: Error code.
