@@ -548,6 +548,10 @@ paths:
         - Bet Setting
       summary: Delete Direct Bet Setting - v1
       operationId: BetSetting_V1_Delete
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - name: username
           in: query
