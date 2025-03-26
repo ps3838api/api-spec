@@ -543,6 +543,42 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/BetSettingInternalErrorResponse'	
+    delete:
+      tags:
+        - Bet Setting
+      summary: Delete Direct Bet Setting - v1
+      operationId: BetSetting_V1_Delete
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The username of the account to delete direct bet setting.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SetCreditV1Response'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/DeleteDirectBetBadResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/BetSettingInternalErrorResponse'
   ##### END API BET SETTING #####
   
 securityDefinitions:
@@ -1580,5 +1616,29 @@ definitions:
         format: double
         example: 4250000
         description: Maximum inplay Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
+    description: ''
+  DeleteDirectBetBadResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: REJECTED
+        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
+        enum:
+          - REJECTED
+      rejectCode:
+        type: string
+        example: NOT_PLAYER
+        description: |
+          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
+          NOT_PLAYER = Account entered is not a player level account.,    
+        enum:
+          - USER_NOT_FOUND
+          - NOT_PLAYER
+      errorCode:
+        type: string
+        description: Error code.
+        enum:
+          - INVALID_REQUEST_DATA
     description: ''
 ##### END DEFINITION BET SETTING  #####
