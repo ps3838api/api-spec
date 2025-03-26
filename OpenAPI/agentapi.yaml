@@ -1630,10 +1630,14 @@ definitions:
         type: string
         example: NOT_PLAYER
         description: |
+          PERMISSION_DENIED = User does not have permission to perform this action,  
           USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
+          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
           NOT_PLAYER = Account entered is not a player level account.,    
         enum:
+          - PERMISSION_DENIED
           - USER_NOT_FOUND
+          - ACCOUNT_CLOSED
           - NOT_PLAYER
       errorCode:
         type: string
