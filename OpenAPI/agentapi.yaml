@@ -1,14 +1,14 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: PS3838 API - Agent API Reference
+  title: PS3838 API - Partner API Reference
   description:  |
     
     # Authentication 
     
     The API uses API Key to access the API. Always use HTTPS to access the API.
 
-    To get API Key, the user must access to Agent Site and register key in Agent API Access at My Account menu.
+    To get API Key, the user must access to Partner Site and register key in Partner API Access at My Account menu.
     
     You need to send HTTP Request header like this:    
     
