@@ -492,7 +492,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
                   USED_EXCEEDS_CREDIT = Credit Used exceeds Credit Given,  
                   CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
@@ -621,7 +620,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
                   ACCOUNT_CLOSED = Account to be updated is CLOSED,  
                   INVALID_STATUS = Invalid account status,  
@@ -735,7 +733,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
                   ACCOUNT_CLOSED = Account to be updated is CLOSED,  
                   PASSWORD_MISMATCH = Password and Confirm Password do not match,  
@@ -890,7 +887,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   USER_NOT_FOUND = Account to be updated is not in user's downline,  
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
                   INVALID_AMOUNT = Transfer amount must be numeric,  
@@ -1105,7 +1101,6 @@ paths:
                 type: string
                 example: PERMISSION_DENIED
                 description: |
-
                   PERMISSION_DENIED = User does not have permission to perform this action.  
                 enum:
                   - PERMISSION_DENIED
@@ -1228,7 +1223,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   USER_NOT_FOUND = Account to be updated is a player level account and is or in the same downline as the authenticated user,  
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline of the authenticated user,  
                   ACCOUNT_CLOSED = Account to be updated is CLOSED,  
@@ -1499,7 +1493,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   INVALID_REQUEST = When data entered is in an invalid format,  
                   USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
                   PERMISSION_DENIED = User does not have permission to perform this action,  
@@ -1650,7 +1643,6 @@ paths:
                 type: string
                 example: MIN_BET_EXCEEDS_MAX_BET
                 description: |
-
                   USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts. Or Usercode is authenticated user in Bet Setting Object,    
                   INVALID_CURRENCY = Currency must be currency of authenticated account,  
@@ -1776,7 +1768,6 @@ paths:
                 type: string
                 example: NOT_PLAYER
                 description: |
-
                   PERMISSION_DENIED = User does not have permission to perform this action,  
                   USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
                   ACCOUNT_CLOSED = Account to be updated is CLOSED,  
@@ -2381,7 +2372,6 @@ paths:
               rejectCode:
                 type: string
                 description: |
-
                   INVALID_REQUEST = When data entered is in an invalid format,  
                   USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
                   PERMISSION_DENIED = User does not have permission to perform this action,  
@@ -2503,7 +2493,6 @@ paths:
                 type: string
                 example: MIN_POS_EXCEEDS_MAX_PT
                 description: |
-
                   USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
                   ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts. Or Usercode is authenticated user in Bet Setting Object,    
                   ACCOUNT_CLOSED = Account to be updated is CLOSED,  
