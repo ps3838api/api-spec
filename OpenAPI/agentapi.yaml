@@ -2,48 +2,47 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: PS3838 API - Partner API Reference
-  description:  |
-    
+  description: |
+
     # Authentication 
-    
+
     The API uses API Key to access the API. Always use HTTPS to access the API.
 
     To get API Key, the user must access to Partner Site and register key in Partner API Access at My Account menu.
-    
-    You need to send HTTP Request header like this:    
-    
-    `Authorization: Bearer <API Key>`
-    
-    Example:
-    
-    `Authorization: Bearer 2e4d7d04-2c86-11ef-a458-005056904f90=`
-    
-    # Data Formats 
-    
-    PS3838 API supports only JSON format. HTTP header Accept must be set:
-    
-    `Accept: application/json`
-    
-    POST HTTP Request must have JSON body content and Content-Type HTTP header must be set:
-    
-    `Content-Type: application/json`
-    
-    # Date Time Format
-    
-    All dates and times are in GMT time zone, ISO 8601 format
-    
-    # API Path
-    
-    To access the API, the user must use the correct path.
-    
-    The root path for the API is:
-    
-    api.ps3838.com/partner
-    
-    The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
-    
-    Example URI: api.ps3838.com/partner/v1/balance
 
+    You need to send HTTP Request header like this:    
+
+    `Authorization: Bearer <API Key>`
+
+    Example:
+
+    `Authorization: Bearer 2e4d7d04-2c86-11ef-a458-005056904f90=`
+
+    # Data Formats 
+
+    PS3838 API supports only JSON format. HTTP header Accept must be set:
+
+    `Accept: application/json`
+
+    POST HTTP Request must have JSON body content and Content-Type HTTP header must be set:
+
+    `Content-Type: application/json`
+
+    # Date Time Format
+
+    All dates and times are in GMT time zone, ISO 8601 format
+
+    # API Path
+
+    To access the API, the user must use the correct path.
+
+    The root path for the API is:
+
+    api.ps3838.com/partner
+
+    The remainder of the URI is comprised of the version of the endpoint (e.g. v1) and the endpoint itself.
+
+    Example URI: api.ps3838.com/partner/v1/balance
   x-logo:
     url: ''
 host: api.ps3838.com
@@ -65,7 +64,7 @@ paths:
       parameters:
         - name: level
           in: query
-          description: The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          description: 'The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].'
           required: false
           type: string
           enum:
@@ -96,28 +95,130 @@ paths:
           description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetBalanceV1Response'
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2023-06-13T15:24:48Z'
+                description: Report date time.
+              agent:
+                type: array
+                description: A collection of agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Nickname.
+                      example: null
+                    level:
+                      type: string
+                      description: Username level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: SMA
+                    currency:
+                      type: string
+                      description: Currency.
+                      example: USD
+                    totalBalance:
+                      type: number
+                      format: double
+                      example: -16480.15
+                      description: Total Balance.
+                    yesterdayBalance:
+                      type: number
+                      format: double
+                      example: -14580.15
+                      description: Yesterday Balance.
+                    totalCash:
+                      type: number
+                      format: double
+                      example: 1000
+                      description: Total Cash.
+                    yesterdayCash:
+                      type: number
+                      format: double
+                      example: 2048.65
+                      description: Yesterday Cash.
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
       deprecated: false
   /partner/v1/credit:
     get:
@@ -132,7 +233,7 @@ paths:
       parameters:
         - name: level
           in: query
-          description: Agent Level to be returned. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          description: 'Agent Level to be returned. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].'
           required: false
           type: string
           enum:
@@ -163,29 +264,162 @@ paths:
           description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetCreditV1Response'
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2023-06-13T15:24:48Z'
+                description: Date and time of the response.
+              agent:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Account username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Nickname.
+                      example: null
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: SMA
+                    status:
+                      type: string
+                      description: Account Status.
+                      enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                        - CLOSED
+                        - COSUSP
+                        - COINACT
+                        - FAILED_LOGINS
+                      example: ACTIVE
+                    currency:
+                      type: string
+                      description: Account Currency.
+                      example: USD
+                    creditGiven:
+                      type: number
+                      format: double
+                      example: 7819.49
+                      description: Amount of Credit Given.
+                    creditUsed:
+                      type: number
+                      format: double
+                      example: 1000
+                      description: Amount of Credit Used.
+                    availableCredit:
+                      type: number
+                      format: double
+                      example: 6819.49
+                      description: Amount of Available Credit. Not present in object for member (PL) level accounts.
+                    totalBalance:
+                      type: number
+                      format: double
+                      example: 6819.49
+                      description: Total Balance of the Account.
+                    outstanding:
+                      type: number
+                      format: double
+                      example: 100
+                      description: Amount of Outstanding Bets.
+                    downlineMaxCredit:
+                      type: number
+                      format: double
+                      example: 1563.89
+                      description: Maximum Credit Amount for downline accounts. Not present in object for member (PL) level accounts.
+                    memberMaxCredit:
+                      type: number
+                      format: double
+                      example: 1563.89
+                      description: Maximum Credit Amount for member accounts. Not present in object for member (PL) level accounts.
+                    availableBetCredit:
+                      type: number
+                      format: double
+                      description: Amount of Bet Credit. Only present in object for member (PL) level accounts.
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false 
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
     post:
       tags:
         - Credit
@@ -201,28 +435,132 @@ paths:
           description: Set Credit request.
           required: true
           schema:
-            $ref: '#/definitions/SetCreditV1Request'
+            type: object
+            properties:
+              credit:
+                type: object
+                properties:
+                  usercode:
+                    type: string
+                    example: QSA
+                    description: Usercode of account to be updated.
+                  currency:
+                    type: string
+                    example: USD
+                    description: Currency of the update. Destination Currency (currency of account being updated).
+                  creditGiven:
+                    type: number
+                    format: double
+                    example: 1000
+                    description: Amount of Credit Given.
+                  downlineMaxCredit:
+                    type: number
+                    format: double
+                    example: 200
+                    description: Maximum Credit Amount for downline accounts.
+                  memberMaxCredit:
+                    type: number
+                    format: double
+                    example: 200
+                    description: Maximum Credit Amount for member accounts.
+                description: ''
+            description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SetCreditV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/SetCreditV1ErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
+                  USED_EXCEEDS_CREDIT = Credit Used exceeds Credit Given,  
+                  CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
+                  CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
+                  DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
+                  USED_EXCEEDS_DOWNLINE = Credit Used exceeds Downline Max Credit,  
+                  MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
+                  MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
+                  USED_EXCEEDS_MEMBER = Credit Used exceeds Member Max Credit,  
+                  INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
+                  ACCOUNT_CLOSED = Account to be updated is Closed. This cannot happen on the Partner Services Back Office as the option is not available,  
+                  MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                enum:
+                  - SYSTEM_SECURITY_BLOCK_BALANCE
+                  - USED_EXCEEDS_CREDIT
+                  - CREDIT_EXCEEDS_PARENT_DOWNLINE
+                  - CREDIT_EXCEEDS_MEMBER
+                  - DOWNLINE_EXCEEDS_CREDIT
+                  - USED_EXCEEDS_DOWNLINE
+                  - MEMBER_EXCEEDS_CREDIT
+                  - MEMBER_EXCEEDS_DOWNLINE
+                  - USED_EXCEEDS_MEMBER
+                  - INVALID_CURRENCY
+                  - ACCOUNT_CLOSED
+                  - MEMBER_EXCEEDS_GIVEN
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'	
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
   /partner/v1/account-status:
     post:
       tags:
@@ -239,28 +577,104 @@ paths:
           name: request
           required: true
           schema:
-            $ref: '#/definitions/UpdateAccountStatusV1Request'
+            type: object
+            properties:
+              usercode:
+                type: string
+                example: QSA
+                description: Usercode of account to be updated.
+              status:
+                type: string
+                description: Account Status.
+                enum:
+                  - ACTIVE
+                  - INACTIVE
+                  - SUSPENDED
+                  - CLOSED
+                example: INACTIVE
+            description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/UpdateAccountStatusV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/UpdateAccountStatusV1ErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  INVALID_STATUS = Invalid account status,  
+                  INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                  OUTSTANDING_BETS = Account cannot be closed because at least one player has outstanding bets,  
+                enum:
+                  - ACCOUNT_NOT_DIRECT
+                  - ACCOUNT_CLOSED
+                  - INVALID_STATUS
+                  - INVALID_STATUS_UPDATE
+                  - PERMISSION_DENIED
+                  - OUTSTANDING_BETS
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'	  
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
   /partner/v1/change-password:
     post:
       tags:
@@ -277,28 +691,103 @@ paths:
           name: request
           required: true
           schema:
-            $ref: '#/definitions/ChangePasswordV1Request'
+            type: object
+            properties:
+              usercode:
+                type: string
+                example: QSA
+                description: Usercode of account to be updated.
+              password:
+                type: string
+                example: 1234qwer@
+                description: New Password.
+              confirmPassword:
+                type: string
+                example: 1234qwer@
+                description: Confirm New Password.
+            description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/ChangePasswordV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ChangePasswordV1ErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  PASSWORD_MISMATCH = Password and Confirm Password do not match,  
+                  PASSWORD_CRITERIA_FAIL = Password fails to meet the required criteria,  
+                  PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                enum:
+                  - ACCOUNT_NOT_DIRECT
+                  - ACCOUNT_CLOSED
+                  - PASSWORD_MISMATCH
+                  - PASSWORD_CRITERIA_FAIL
+                  - PASSWORD_SAME_AS_OLD
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'	
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
   /partner/v1/downline-transfer:
     post:
       tags:
@@ -315,35 +804,163 @@ paths:
           name: request
           required: true
           schema:
-            $ref: '#/definitions/DownlineTransferV1Request'
+            type: object
+            properties:
+              usercode:
+                type: string
+                example: QSA
+                description: Usercode of account to be updated.
+              transferAmount:
+                type: number
+                format: double
+                example: 12456.78
+                description: Amount to be transferred. May include decimal places.
+              comment:
+                type: string
+                description: Optional.
+                example: ''
+            description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/DownlineTransferV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+              transferAccount:
+                type: object
+                properties:
+                  usercode:
+                    type: string
+                    description: Account Username.
+                    example: MGZ10
+                  nickname:
+                    type: string
+                    description: Nickname.
+                    example: null
+                  currency:
+                    type: string
+                    description: Account Currency.
+                    example: USD
+                  yesterdayBalance:
+                    type: number
+                    format: double
+                    example: 56789.55
+                    description: New value of Yesterday's Balance.
+                  totalBalance:
+                    type: number
+                    format: double
+                    example: 56789.55
+                    description: New value of Total Balance.
+                  yesterdayCash:
+                    type: number
+                    format: double
+                    example: 67890.55
+                    description: New value of Yesterday's Cash Balance.
+                  totalCash:
+                    type: number
+                    format: double
+                    example: 67890.55
+                    description: New value of Total Cash Balance.
+                  creditUsed:
+                    type: number
+                    format: double
+                    example: 900000
+                    description: New value of Credit Used.
+                description: Updated account information for the account updated.
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/DownlineTransferV1ErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  USER_NOT_FOUND = Account to be updated is not in user's downline,  
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
+                  INVALID_AMOUNT = Transfer amount must be numeric,  
+                  TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,  
+                  SYSTEM_SECURITY_BLOCK_TRANSFER = Please contact your upline,  
+                  INVALID_ACCOUNT_BALANCE = Cannot transfer if account balance is zero,  
+                  CANNOT_TRANSFER_TODAY = You are not authorised to transfer today,  
+                  INVALID_TRANSFER_AMOUNT = Invalid transfer amount,  
+                  INVALID_PARTIAL_TRANSFER = Partial transfer is not valid for this account,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                  INVALID_ACCOUNT = Username is not valid,  
+                  COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,  
+                  COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,  
+                enum:
+                  - USER_NOT_FOUND
+                  - ACCOUNT_NOT_DIRECT
+                  - INVALID_AMOUNT
+                  - TRANSFER_AMOUNT_ZERO
+                  - SYSTEM_SECURITY_BLOCK_TRANSFER
+                  - INVALID_ACCOUNT_BALANCE
+                  - CANNOT_TRANSFER_TODAY
+                  - INVALID_TRANSFER_AMOUNT
+                  - INVALID_PARTIAL_TRANSFER
+                  - PERMISSION_DENIED
+                  - INVALID_ACCOUNT
+                  - COMMENT_CHAR_EXCEEDED
+                  - COMMENT_SPECIAL_CHARS
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-  
-  ##### START API TRANSFER CONDITION #####
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
   /partner/v1/transfer-condition:
     get:
       tags:
         - Transfer Condition
-      summary: Get Transfer Condition – v1
+      summary: Transfer Condition – v1
       description: Gets the transfer condition information for the account(s) requested.
       operationId: Transfer_Condition_V1_Get
       consumes: []
@@ -352,7 +969,7 @@ paths:
       parameters:
         - name: level
           in: query
-          description: The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG].
+          description: 'The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG].'
           required: false
           type: string
           enum:
@@ -377,28 +994,158 @@ paths:
           description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetTransferConditionV1Response'
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2023-06-13T15:24:48Z'
+                description: Date and time of the response.
+              agent:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Account username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Nickname.
+                      example: null
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                      example: SMA
+                    status:
+                      type: string
+                      description: Account Status.
+                      enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                        - CLOSED
+                        - COSUSP
+                        - COINACT
+                        - FAILED_LOGINS
+                      example: ACTIVE
+                    transferType:
+                      type: string
+                      description: Transfer Condition.
+                      enum:
+                        - DAILY
+                        - WEEKLY
+                      example: WEEKLY
+                    automatedSettlement:
+                      type: boolean
+                      description: Whether Automated Settlement is enabled.
+                      example: false
+                    transferDays:
+                      type: array
+                      description: Days on which transfers take place. Only returned if transferType is WEEKLY.
+                      items:
+                        type: string
+                        enum:
+                          - MON
+                          - TUE
+                          - WED
+                          - THU
+                          - FRI
+                          - SAT
+                          - SUN
+                      example:
+                        - MON
+                        - TUE
+                        - WED
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/ErrorGetTransferConditionResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: PERMISSION_DENIED
+                description: |
+                  PERMISSION_DENIED = User does not have permission to perform this action.  
+                enum:
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                example: INVALID_REQUEST_DATA
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
       deprecated: false
     post:
       tags:
@@ -415,31 +1162,120 @@ paths:
           description: Update transfer condition.
           required: true
           schema:
-            $ref: '#/definitions/UpdateTransferConditionV1Request'
+            type: object
+            properties:
+              transferCondition:
+                type: object
+                properties:
+                  usercode:
+                    type: string
+                    example: S4R50
+                    description: Usercode of account to be updated.
+                  transferType:
+                    type: string
+                    description: Transfer Condition.
+                    enum:
+                      - DAILY
+                      - WEEKLY
+                    example: WEEKLY
+                  transferDays:
+                    type: array
+                    description: Days on which transfers take place. Will be ignored if transferType is DAILY.
+                    items:
+                      type: string
+                      enum:
+                        - MON
+                        - TUE
+                        - WED
+                        - THU
+                        - FRI
+                        - SAT
+                        - SUN
+                    example:
+                      - MON
+                      - TUE
+                      - WED
+                description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SuccessAcctionV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/UpdateTransferConditionV1ErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  USER_NOT_FOUND = Account to be updated is a player level account and is or in the same downline as the authenticated user,  
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline of the authenticated user,  
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                  DAYS_NOT_SPECIFIED = transferType is WEEKLY and transferDays is NULL.  
+                enum:
+                  - USER_NOT_FOUND
+                  - ACCOUNT_NOT_DIRECT
+                  - ACCOUNT_CLOSED
+                  - PERMISSION_DENIED
+                  - DAYS_NOT_SPECIFIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-  ##### END API TRANSFER CONDITION #####
-
-  ##### START API BET SETTING #####
+            type: object
+            properties:
+              ref:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+      deprecated: false
   /partner/v1/bet-setting:
     get:
       tags:
@@ -453,7 +1289,7 @@ paths:
       parameters:
         - name: level
           in: query
-          description: The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].
+          description: 'The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].'
           required: false
           type: string
           enum:
@@ -484,28 +1320,227 @@ paths:
           description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
           required: false
           type: integer
-          default: 0  
+          default: 0
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/GetBetSettingV1Response'
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2024-06-13T15:24:48Z'
+                description: Date and time of the response.
+              newAccountMaxBet:
+                type: number
+                format: double
+                example: 500
+                description: Maximum Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
+              newAccountMaxPerMatch:
+                type: number
+                format: double
+                example: 2000
+                description: Maximum Bet Per Match setting for new accounts. NOTE Refers to the account of the authenticated user.
+              inplayNewAccountMaxBet:
+                type: number
+                format: double
+                example: 300
+                description: Maximum inplay Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
+              agent:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Account username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Account nickname (return null if not set).
+                      example: ABC123
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: PL
+                    status:
+                      type: string
+                      description: Account Status.
+                      enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                        - CLOSED
+                        - COSUSP
+                        - COINACT
+                        - FAILED_LOGINS
+                      example: ACTIVE
+                    currency:
+                      type: string
+                      description: Account Currency.
+                      example: USD
+                    maxBetPreference:
+                      type: string
+                      description: Max Bet Preference.
+                      enum:
+                        - WIN
+                        - RISK
+                        - BASE
+                      example: WIN
+                    settings:
+                      type: array
+                      description: Sport Setting Data.
+                      items:
+                        type: object
+                        properties:
+                          minBet:
+                            type: number
+                            format: double
+                            example: 1.25
+                            description: Pregame Minimum Bet Setting.
+                          maxBet:
+                            type: number
+                            format: double
+                            example: 500
+                            description: Pregame Maximum Bet Setting.
+                          maxPerMatch:
+                            type: number
+                            format: double
+                            example: 2000
+                            description: Pregame and Inplay Maximum Per Match Bet Setting.
+                          inplayMinBet:
+                            type: number
+                            format: double
+                            example: 1.5
+                            description: Inplay Minimum Bet Setting.
+                          inplayMaxBet:
+                            type: number
+                            format: double
+                            example: 300
+                            description: Inplay Maximum Bet Setting.
+                          directBetSetting:
+                            type: object
+                            properties:
+                              minBet:
+                                type: number
+                                format: double
+                                example: 5
+                                description: Pregame Minimum Bet Setting.
+                              maxBet:
+                                type: number
+                                format: double
+                                example: 250
+                                description: Pregame Maximum Bet Setting.
+                              maxPerMatch:
+                                type: number
+                                format: double
+                                example: 1500
+                                description: Pregame and Inplay Maximum Per Match Bet Setting.
+                              inplayMinBet:
+                                type: number
+                                format: double
+                                example: 10
+                                description: Inplay Minimum Bet Setting.
+                              inplayMaxBet:
+                                type: number
+                                format: double
+                                example: 180
+                                description: Inplay Maximum Bet Setting.
+                          sport:
+                            type: string
+                            description: Sport Setting Name.
+                            example: Soccer
+                          league:
+                            type: string
+                            description: League Setting Name.
+                            example: AFF ChampU20
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/GetBetSettingBadRequestResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  INVALID_REQUEST = When data entered is in an invalid format,  
+                  USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                enum:
+                  - INVALID_REQUEST
+                  - USER_NOT_FOUND
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/BetSettingInternalErrorResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
     post:
       tags:
         - Bet Setting
@@ -521,28 +1556,175 @@ paths:
           description: Set Bet Setting.
           required: true
           schema:
-            $ref: '#/definitions/SetBetSettingV1Request'
+            type: object
+            properties:
+              betSetting:
+                type: object
+                properties:
+                  usercode:
+                    type: string
+                    example: 00A
+                    description: Usercode of account to be updated.
+                  currency:
+                    type: string
+                    example: USD
+                    description: Currency of the update. Expected value Authenticated User Currency (currency of account performing the update).
+                  minBet:
+                    type: number
+                    format: double
+                    example: 12
+                    description: Pregame Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+                  maxBet:
+                    type: number
+                    format: double
+                    example: 8500000
+                    description: Pregame Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+                  maxPerMatch:
+                    type: number
+                    format: double
+                    example: 9500000
+                    description: Pregame and Inplay Maximum Per Match Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+                  inplayMinBet:
+                    type: number
+                    format: double
+                    example: 15
+                    description: Inplay Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+                  inplayMaxBet:
+                    type: number
+                    format: double
+                    example: 9500000
+                    description: Inplay Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
+                description: Optional
+              newAccountSetting:
+                type: object
+                properties:
+                  newAccountMaxBet:
+                    type: number
+                    format: double
+                    example: 140
+                    description: Maximum Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
+                  newAccountMaxPerMatch:
+                    type: number
+                    format: double
+                    example: 8250000
+                    description: Maximum Bet Per Match setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
+                  inplayNewAccountMaxBet:
+                    type: number
+                    format: double
+                    example: 4250000
+                    description: Maximum inplay Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
+                description: Optional
+            description: ''
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SetCreditV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/SetBetSettingBadRequestResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: MIN_BET_EXCEEDS_MAX_BET
+                description: |
+                  USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts. Or Usercode is authenticated user in Bet Setting Object,    
+                  INVALID_CURRENCY = Currency must be currency of authenticated account,  
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  MIN_BET_EXCEEDS_MAX_BET = Min Bet is greater than the Max Bet,  
+                  MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Bet is greater than the Max Per Match Bet,  
+                  MIN_BET_LESS_THAN_UPLINE = Min Bet is less than upline Min Bet,  
+                  INPLAY_MIN_BET_LESS_THAN_UPLINE = Inplay Min Bet is less than upline Inplay Min Bet,  
+                  MAX_BET_EXCEEDS_UPLINE = Max Bet is greater than upline Max Bet,  
+                  INPLAY_MAX_BET_EXCEEDS_UPLINE = Inplay Max Bet is greater than upline Inplay Max Bet,  
+                  MAX_PER_MATCH_EXCEEDS_UPLINE = Max Per Match Bet is greater than upline Max Per Match Bet,  
+                  PERMISSION_DENIED = SUB User does not have permission,  
+                  NEW_ACCOUNT_BOTH_FIELDS_REQUIRED = Max Bet and Max Per Match must both have a value,  
+                  NEW_ACCOUNT_VALUE_TOO_LONG = New Account Max Bet or New Account Max Per Match exceed 18 characters,  
+                  NA_MAX_BET_EXCEEDS_MAX_PER_MATCH = New Account Max Bet is greater than New Account Max Per Match,  
+                  NEW_ACCOUNT_MAX_BET_INVALID = New Account Max Bet must be between Min Bet and Max Bet,  
+                  NEW_ACCOUNT_MAX_PER_MATCH_INVALID = New Account Max Per Match must be between Min Bet and Max Per Match,  
+                  INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Inplay Max Bet must be equal to or less than Max Per Match,  
+                  NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Per Match amount is less than New Account Inplay Max Bet amount,  
+                  INPLAY_MIN_BET_EXCEEDS_MAX_BET = Inplay Min Bet amount is greater than the Inplay Max Bet amount,  
+                enum:
+                  - USER_NOT_FOUND
+                  - ACCOUNT_NOT_DIRECT
+                  - INVALID_CURRENCY
+                  - ACCOUNT_CLOSED
+                  - MIN_BET_EXCEEDS_MAX_BET
+                  - MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - MIN_BET_LESS_THAN_UPLINE
+                  - INPLAY_MIN_BET_LESS_THAN_UPLINE
+                  - MAX_BET_EXCEEDS_UPLINE
+                  - INPLAY_MAX_BET_EXCEEDS_UPLINE
+                  - MAX_PER_MATCH_EXCEEDS_UPLINE
+                  - PERMISSION_DENIED
+                  - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
+                  - NEW_ACCOUNT_VALUE_TOO_LONG
+                  - NA_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - NEW_ACCOUNT_MAX_BET_INVALID
+                  - NEW_ACCOUNT_MAX_PER_MATCH_INVALID
+                  - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - INPLAY_MIN_BET_EXCEEDS_MAX_BET
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/BetSettingInternalErrorResponse'	
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
     delete:
       tags:
         - Bet Setting
@@ -562,1087 +1744,823 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/SetCreditV1Response'
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
         '400':
           description: BadRequest
           schema:
-            $ref: '#/definitions/DeleteDirectBetBadResponse'
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: NOT_PLAYER
+                description: |
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                  USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  NOT_PLAYER = Account entered is not a player level account.,    
+                enum:
+                  - PERMISSION_DENIED
+                  - USER_NOT_FOUND
+                  - ACCOUNT_CLOSED
+                  - NOT_PLAYER
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
         '401':
           description: Unauthorized
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '403':
           description: Forbidden
           schema:
-            $ref: '#/definitions/ErrorResponse'
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/BetSettingInternalErrorResponse'
-  ##### END API BET SETTING #####
-  
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
+  /partner/v1/position-taking:
+    get:
+      tags:
+        - Position Taking
+      summary: Get Position Taking – v1
+      description: Gets position taking for the account(s) requested.
+      operationId: PositionTaking_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: 'The level for which to get the data. Value must be one of the following [PART, CORP, SMA, MA, AG, PL].'
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: direct
+          in: query
+          description: Whether to limit to direct downline accounts (including member accounts). Default value if not passed = false.
+          required: false
+          type: boolean
+        - name: sport
+          in: query
+          description: 'Sport to be returned. If provided, must be an enum (see values below). If not provided, it should retrieve settings for main sports and specific sports/leagues that have customized settings on them.'
+          required: false
+          type: string
+          enum:
+            - SOCCER
+            - BASKETBALL
+            - FOOTBALL
+            - ESPORTS
+            - PARLAY
+            - TEASERS
+            - OTHERS
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2024-06-13T15:24:48Z'
+                description: Date and time of the response.
+              agent:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      example: S4R0
+                      description: Account name.
+                    nickname:
+                      type: string
+                      example: null
+                      description: Account nickname (return null if not set).
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: SMA
+                    status:
+                      type: string
+                      description: Account Status.
+                      enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                        - CLOSED
+                        - COSUSP
+                        - COINACT
+                        - FAILED_LOGINS
+                      example: ACTIVE
+                    settings:
+                      type: object
+                      properties:
+                        sport:
+                          type: string
+                          description: Sport Setting Name.
+                          example: Soccer
+                        league:
+                          type: string
+                          description: League Setting Name.
+                          example: General
+                        inplay:
+                          type: boolean
+                          description: Whether setting applies for Pregame or Inplay
+                          example: false
+                        mainSettings:
+                          type: object
+                          description: PT setting data for the sport and league for the main sports (Not present if sport is not one of the main sports).
+                          properties:
+                            ft1x2:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftML:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftHDP:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftOU:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftTT:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftOthers:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            ftOutright:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            fh1x2:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            fhML:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            fhHDP:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            fhOU:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                        otherSetting:
+                          type: object
+                          description: PT setting data for the sport and league for the non-main sports (Not present if sport is one of the main sports).
+                          properties:
+                            ML:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            HDP:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            OU:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            others:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                            outright:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                        parlayTeaserSetting:
+                          type: object
+                          description: PT setting data for Mix Parlays and Teasers (Only present if sport is Mix Parlay or Teaser).
+                          properties:
+                            setting:
+                              type: object
+                              properties:
+                                minPos:
+                                  type: number
+                                  format: double
+                                  example: 5
+                                  description: Minimum Position.
+                                maxPos:
+                                  type: number
+                                  format: double
+                                  example: 60
+                                  description: Maximum Position.
+                                preset:
+                                  type: number
+                                  format: double
+                                  example: 15
+                                  description: 'Preset Position (If not populated, value must be null).'
+                                extraPT:
+                                  type: number
+                                  format: double
+                                  example: null
+                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  INVALID_REQUEST = When data entered is in an invalid format,  
+                  USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
+                  PERMISSION_DENIED = User does not have permission to perform this action,  
+                enum:
+                  - INVALID_REQUEST
+                  - USER_NOT_FOUND
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
+    post:
+      tags:
+        - Position Taking
+      summary: Set Position Taking - v1
+      operationId: PositionTaking_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Set Position Taking.
+          required: true
+          schema:
+            type: object
+            properties:
+              setting:
+                type: object
+                properties:
+                  usercode:
+                    type: string
+                    example: S4R0
+                    description: Usercode of account to be updated.
+                  minPos:
+                    type: number
+                    format: double
+                    example: 5
+                    description: Minimum Position.
+                  maxPos:
+                    type: number
+                    format: double
+                    example: 60
+                    description: Maximum Position.
+                  preset:
+                    type: number
+                    format: double
+                    example: 15
+                    description: 'Preset Position (If not populated, value must be null).'
+                  extraPT:
+                    type: number
+                    format: double
+                    example: null
+                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: MIN_POS_EXCEEDS_MAX_PT
+                description: |
+                  USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
+                  ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts. Or Usercode is authenticated user in Bet Setting Object,    
+                  ACCOUNT_CLOSED = Account to be updated is CLOSED,  
+                  PERMISSION_DENIED = SUB User does not have permission,  
+                  MIN_POS_EXCEEDS_MAX_PT = Min Position must be less than or equal to Max PT,  
+                  MIN_POS_EXCEEDS_DOWNLINES_SUM_PT = Min Position must be less than or equal to sum of downline Min PT and his Preset,  
+                  INVALID_MAX_POS = Sum of Max PT and Preset PT must be greater than or equal to upline Max PT,  
+                  INVALID_PRESET = Sum of Max PT and Preset PT must be greater than or equal to upline Max PT,  
+                  INVALID_MIN_POS = Sum of Min PT and Preset/Extra must be greater than or equal to their own Min PT.,  
+                  INVALID_EXTRA_PT = Extra PT must be less than or equal to their own Max PT.,  
+                  INVALID_MEMBER_UPDATE = Member update other than Preset,  
+                  INVALID_MAX_POS_DOWNLINE = Max PT must be greater than or equal to sum of downline Max PT and his Preset.,  
+                enum:
+                  - USER_NOT_FOUND
+                  - ACCOUNT_NOT_DIRECT
+                  - INVALID_CURRENCY
+                  - ACCOUNT_CLOSED
+                  - PERMISSION_DENIED
+                  - MIN_POS_EXCEEDS_MAX_PT
+                  - MIN_POS_EXCEEDS_DOWNLINES_SUM_PT
+                  - INVALID_MAX_POS
+                  - INVALID_PRESET
+                  - INVALID_MIN_POS
+                  - INVALID_EXTRA_PT
+                  - INVALID_MEMBER_UPDATE
+                  - INVALID_MAX_POS_DOWNLINE
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
 securityDefinitions:
   apiKey:
-    type: Bearer  
-definitions:
-  ErrorResponse:
-    type: object
-    properties:
-      code:
-        type: string
-        description: Identifier representing the type of error that occurred.
-      message:
-        type: string
-        description: Description of the error.
-    description: Contains details of an error that was encountered.
-  ExtendedErrorResponse:
-    type: object
-    properties:
-      ref:
-        type: string
-      code:
-        type: string
-      message:
-        type: string
-  GetBalanceV1Response:
-    type: object
-    properties:
-      moreAvailable:
-        type: boolean 
-        description: Indicates whether more pages are available.
-        example: true
-      pageSize:
-        type: integer 
-        description: The requested page size. Default is 1000.
-        example: 1000
-      fromRecord:
-        type: integer 
-        description: Starting record number of the result set. Records start at zero
-        example: 0
-      toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
-        example: 999
-      reportDateTime:
-        type: string
-        format: date-time
-        example: '2023-06-13T15:24:48Z'
-        description: Report date time.
-      agent:
-        type: array
-        description: A collection of agents.
-        items:
-          $ref: '#/definitions/BalanceAgentResult'
-  BalanceAgentResult:
-    type: object
-    properties:
-      username:
-        type: string 
-        description: Username.
-        example: 'ABC123'
-      nickname:
-        type: string 
-        description: Nickname.
-        example: null
-      level:
-        type: string 
-        description: Username level.
-        enum:
-          - PART
-          - CORP
-          - SMA
-          - MA
-          - AG
-          - PL
-        example: 'SMA'
-      currency:
-        type: string 
-        description: Currency.
-        example: 'USD'
-      totalBalance:
-        type: number
-        format: double
-        example: -16480.15
-        description: Total Balance.
-      yesterdayBalance:
-        type: number
-        format: double
-        example: -14580.15
-        description: Yesterday Balance.
-      totalCash:
-        type: number
-        format: double
-        example: 1000
-        description: Total Cash.
-      yesterdayCash:
-        type: number
-        format: double
-        example: 2048.65
-        description: Yesterday Cash.
-  GetCreditV1Response:
-    type: object
-    properties:
-      moreAvailable:
-        type: boolean 
-        description: Indicates whether more pages are available.
-        example: true
-      pageSize:
-        type: integer 
-        description: The requested page size. Default is 1000.
-        example: 1000
-      fromRecord:
-        type: integer 
-        description: Starting record number of the result set. Records start at zero
-        example: 0
-      toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
-        example: 999
-      reportDateTime:
-        type: string
-        format: date-time
-        example: '2023-06-13T15:24:48Z'
-        description: Date and time of the response.
-      agent:
-        type: array
-        description: Contains a list of Agents.
-        items:
-          $ref: '#/definitions/Agent'
-  Agent:
-    type: object
-    properties:
-      username:
-        type: string 
-        description: Account username.
-        example: 'ABC123'
-      nickname:
-        type: string 
-        description: Nickname.
-        example: null
-      level:
-        type: string 
-        description: Agent Level.
-        enum:
-          - PART
-          - CORP
-          - SMA
-          - MA
-          - AG
-          - PL
-        example: 'SMA'
-      status:
-        type: string 
-        description: Account Status.
-        enum:
-          - ACTIVE
-          - INACTIVE
-          - SUSPENDED
-          - CLOSED
-          - COSUSP
-          - COINACT
-          - FAILED_LOGINS
-        example: 'ACTIVE'
-      currency:
-        type: string 
-        description: Account Currency.
-        example: 'USD'
-      creditGiven:
-        type: number
-        format: double
-        example: 7819.49
-        description: Amount of Credit Given.
-      creditUsed:
-        type: number
-        format: double
-        example: 1000.00
-        description: Amount of Credit Used.
-      availableCredit:
-        type: number
-        format: double
-        example: 6819.49
-        description: Amount of Available Credit. Not present in object for member (PL) level accounts.
-      totalBalance:
-        type: number
-        format: double
-        example: 6819.49
-        description: Total Balance of the Account.
-      outstanding:
-        type: number
-        format: double
-        example: 100.00
-        description: Amount of Outstanding Bets.
-      downlineMaxCredit:
-        type: number
-        format: double
-        example: 1563.89
-        description: Maximum Credit Amount for downline accounts. Not present in object for member (PL) level accounts.
-      memberMaxCredit:
-        type: number
-        format: double
-        example: 1563.89
-        description: Maximum Credit Amount for member accounts. Not present in object for member (PL) level accounts.
-      availableBetCredit:
-        type: number
-        format: double
-        description: Amount of Bet Credit. Only present in object for member (PL) level accounts.
-  SetCreditV1Request:
-    type: object
-    properties:
-      credit:
-        $ref: '#/definitions/SetCreditObject'
-    description: ''
-  SetCreditObject:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: QSA
-        description: Usercode of account to be updated.
-      currency:
-        type: string
-        example: USD
-        description: Currency of the update. Destination Currency (currency of account being updated). 
-      creditGiven:
-        type: number
-        format: double
-        example: 1000
-        description: Amount of Credit Given.
-      downlineMaxCredit:
-        type: number
-        format: double
-        example: 200
-        description: Maximum Credit Amount for downline accounts.
-      memberMaxCredit:
-        type: number
-        format: double
-        example: 200
-        description: Maximum Credit Amount for member accounts.
-    description: ''
-  SetCreditV1Response:
-    type: object
-    properties:
-      status:
-        type: string
-        example: SUCCESS
-        description: Status of the response.
-        enum:
-          - SUCCESS
-    description: ''
-  SetCreditV1ErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-          
-          SYSTEM_SECURITY_BLOCK_BALANCE = Please contact your upline,  
-          USED_EXCEEDS_CREDIT = Credit Used exceeds Credit Given,  
-          CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit Given exceeds Downline Max Credit of parent agent,  
-          CREDIT_EXCEEDS_MEMBER = Credit Given exceeds upline's Member Max Credit. Only applicable for Member updates,  
-          DOWNLINE_EXCEEDS_CREDIT = Downline Max Credit exceeds new credit given (or old if no new value specified),  
-          USED_EXCEEDS_DOWNLINE = Credit Used exceeds Downline Max Credit,  
-          MEMBER_EXCEEDS_CREDIT = Member Max Credit exceeds new credit given (or old if no new value specified),  
-          MEMBER_EXCEEDS_DOWNLINE = Member Max Credit exceeds new downline max credit (or old if no new value specified),  
-          USED_EXCEEDS_MEMBER = Credit Used exceeds Member Max Credit,  
-          INVALID_CURRENCY = Currency must be either currency of logged in account or the destination account,  
-          ACCOUNT_CLOSED = Account to be updated is Closed. This cannot  happen on the Partner Services Back Office as the option is not available,  
-          MEMBER_EXCEEDS_GIVEN = Member Max Credit exceeds given credit,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-        enum:
-          - SYSTEM_SECURITY_BLOCK_BALANCE
-          - USED_EXCEEDS_CREDIT
-          - CREDIT_EXCEEDS_PARENT_DOWNLINE
-          - CREDIT_EXCEEDS_MEMBER
-          - DOWNLINE_EXCEEDS_CREDIT
-          - USED_EXCEEDS_DOWNLINE
-          - MEMBER_EXCEEDS_CREDIT
-          - MEMBER_EXCEEDS_DOWNLINE
-          - USED_EXCEEDS_MEMBER
-          - INVALID_CURRENCY
-          - ACCOUNT_CLOSED
-          - MEMBER_EXCEEDS_GIVEN
-          - PERMISSION_DENIED
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  ChangePasswordV1Request:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: QSA
-        description: Usercode of account to be updated.
-      password:
-        type: string
-        example: 1234qwer@
-        description: New Password.
-      confirmPassword:
-        type: string
-        example: 1234qwer@
-        description: Confirm New Password.
-    description: ''
-  ChangePasswordV1Response:
-    type: object
-    properties:
-      status:
-        type: string
-        example: SUCCESS
-        description: Status of the response.
-        enum:
-          - SUCCESS
-    description: ''
-  ChangePasswordV1ErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-          
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          PASSWORD_MISMATCH = Password and Confirm Password do not match,  
-          PASSWORD_CRITERIA_FAIL = Password fails to meet the required criteria,  
-          PASSWORD_SAME_AS_OLD = New Password cannot be the same as the Old Password,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-        enum:
-          - ACCOUNT_NOT_DIRECT
-          - ACCOUNT_CLOSED
-          - PASSWORD_MISMATCH
-          - PASSWORD_CRITERIA_FAIL
-          - PASSWORD_SAME_AS_OLD
-          - PERMISSION_DENIED
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  UpdateAccountStatusV1Request:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: QSA
-        description: Usercode of account to be updated.
-      status:
-        type: string 
-        description: Account Status.
-        enum:
-          - ACTIVE
-          - INACTIVE
-          - SUSPENDED
-          - CLOSED
-        example: 'INACTIVE'
-    description: ''
-  UpdateAccountStatusV1Response:
-    type: object
-    properties:
-      status:
-        type: string
-        example: SUCCESS
-        description: Status of the response.
-        enum:
-          - SUCCESS
-    description: ''
-  UpdateAccountStatusV1ErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-          
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          INVALID_STATUS = Invalid account status,  
-          INVALID_STATUS_UPDATE = Account status cannot be changed. Please contact your upline,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-          OUTSTANDING_BETS = Account cannot be closed because at least one player has outstanding bets,  
-        enum:
-          - ACCOUNT_NOT_DIRECT
-          - ACCOUNT_CLOSED
-          - INVALID_STATUS
-          - INVALID_STATUS_UPDATE
-          - PERMISSION_DENIED
-          - OUTSTANDING_BETS
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  DownlineTransferV1Request:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: QSA
-        description: Usercode of account to be updated.
-      transferAmount:
-        type: number
-        format: double
-        example: 12456.78
-        description: Amount to be transferred. May include decimal places.
-      comment:
-        type: string
-        description: Optional.
-        example: ''
-    description: ''
-  DownlineTransferV1Response:
-    type: object
-    properties:
-      status:
-        type: string
-        example: SUCCESS
-        description: Status of the response.
-        enum:
-          - SUCCESS
-      transferAccount:
-        $ref: '#/definitions/TransferAccountObject'
-    description: ''
-  TransferAccountObject:
-    type: object
-    properties:
-      usercode:
-        type: string
-        description: Account Username.
-        example: 'MGZ10'
-      nickname:
-        type: string 
-        description: Nickname.
-        example: null
-      currency:
-        type: string
-        description: Account Currency.
-        example: 'USD'
-      yesterdayBalance:
-        type: number
-        format: double
-        example: 56789.55
-        description: New value of Yesterday's Balance.
-      totalBalance:
-        type: number
-        format: double
-        example: 56789.55
-        description: New value of Total Balance.
-      yesterdayCash:
-        type: number
-        format: double
-        example: 67890.55
-        description: New value of Yesterday's Cash Balance.
-      totalCash:
-        type: number
-        format: double
-        example: 67890.55
-        description: New value of Total Cash Balance.
-      creditUsed:
-        type: number
-        format: double
-        example: 900000.00
-        description: New value of Credit Used.
-    description: Updated account information for the account updated.
-  DownlineTransferV1ErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-
-          USER_NOT_FOUND = Account to be updated is not in user's downline,  
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline,  
-          INVALID_AMOUNT = Transfer amount must be numeric,  
-          TRANSFER_AMOUNT_ZERO = Transfer amount cannot be 0,  
-          SYSTEM_SECURITY_BLOCK_TRANSFER = Please contact your upline,  
-          INVALID_ACCOUNT_BALANCE = Cannot transfer if account balance is zero,  
-          CANNOT_TRANSFER_TODAY = You are not authorised to transfer today,  
-          INVALID_TRANSFER_AMOUNT = Invalid transfer amount,  
-          INVALID_PARTIAL_TRANSFER = Partial transfer is not valid for this account,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-          INVALID_ACCOUNT = Username is not valid,  
-          COMMENT_CHAR_EXCEEDED = Comment character length is restricted to 200 characters,  
-          COMMENT_SPECIAL_CHARS = Comment cannot contain any special characters,  
-        enum:
-          - USER_NOT_FOUND
-          - ACCOUNT_NOT_DIRECT
-          - INVALID_AMOUNT
-          - TRANSFER_AMOUNT_ZERO
-          - SYSTEM_SECURITY_BLOCK_TRANSFER
-          - INVALID_ACCOUNT_BALANCE
-          - CANNOT_TRANSFER_TODAY
-          - INVALID_TRANSFER_AMOUNT
-          - INVALID_PARTIAL_TRANSFER
-          - PERMISSION_DENIED
-          - INVALID_ACCOUNT
-          - COMMENT_CHAR_EXCEEDED
-          - COMMENT_SPECIAL_CHARS
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  SuccessAcctionV1Response:
-    type: object
-    properties:
-      status:
-        type: string
-        example: SUCCESS
-        description: Status of the response.
-        enum:
-          - SUCCESS
-    description: ''
-  
-  ##### START DEFINITION TRANSFER CONDITION #####
-  GetTransferConditionV1Response:
-    type: object
-    properties:
-      moreAvailable:
-        type: boolean 
-        description: Indicates whether more pages are available.
-        example: true
-      pageSize:
-        type: integer 
-        description: The requested page size. Default is 1000.
-        example: 1000
-      fromRecord:
-        type: integer 
-        description: Starting record number of the result set. Records start at zero
-        example: 0
-      toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
-        example: 999
-      reportDateTime:
-        type: string
-        format: date-time
-        example: '2023-06-13T15:24:48Z'
-        description: Date and time of the response.
-      agent:
-        type: array
-        description: Contains a list of Agents.
-        items:
-          $ref: '#/definitions/AgentTransferCondition'
-  AgentTransferCondition:
-    type: object
-    properties:
-      username:
-        type: string 
-        description: Account username.
-        example: 'ABC123'
-      nickname:
-        type: string 
-        description: Nickname.
-        example: null
-      level:
-        type: string 
-        description: Agent Level.
-        enum:
-          - PART
-          - CORP
-          - SMA
-          - MA
-          - AG
-        example: 'SMA'
-      status:
-        type: string 
-        description: Account Status.
-        enum:
-          - ACTIVE
-          - INACTIVE
-          - SUSPENDED
-          - CLOSED
-          - COSUSP
-          - COINACT
-          - FAILED_LOGINS
-        example: 'ACTIVE'
-      transferType:
-        type: string 
-        description: Transfer Condition.
-        enum:
-          - DAILY
-          - WEEKLY
-        example: 'WEEKLY'
-      automatedSettlement:
-        type: boolean 
-        description: Whether Automated Settlement is enabled.
-        example: false
-      transferDays:
-        type: array 
-        description: Days on which transfers take place. Only returned if transferType is WEEKLY.
-        items:
-          $ref: '#/definitions/EnumTransferDays'
-        example: ['MON','TUE','WED']
-  EnumTransferDays:
-    type: string
-    enum:
-      - MON
-      - TUE
-      - WED
-      - THU
-      - FRI
-      - SAT
-      - SUN
-    description: ''
-  ErrorGetTransferConditionResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        example: PERMISSION_DENIED
-        description: |
-          
-          PERMISSION_DENIED = User does not have permission to perform this action.  
-        enum:
-          - PERMISSION_DENIED
-      errorCode:
-        type: string
-        example: INVALID_REQUEST_DATA
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  UpdateTransferConditionV1Request:
-    type: object
-    properties:
-      transferCondition:
-        $ref: '#/definitions/TransferConditionUpdateObject'
-    description: ''
-  TransferConditionUpdateObject:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: S4R50
-        description: Usercode of account to be updated.
-      transferType:
-        type: string
-        description: Transfer Condition.
-        enum:
-          - DAILY
-          - WEEKLY
-        example: 'WEEKLY'
-      transferDays:
-        type: array 
-        description: Days on which transfers take place. Will be ignored if transferType is DAILY.
-        items:
-          $ref: '#/definitions/EnumTransferDays'
-        example: ['MON','TUE','WED']
-    description: ''
-  UpdateTransferConditionV1ErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-          
-          USER_NOT_FOUND = Account to be updated is a player level account and is or in the same downline as the authenticated user,  
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline of the authenticated user,  
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-          DAYS_NOT_SPECIFIED = transferType is WEEKLY and transferDays is NULL.  
-        enum:
-          - USER_NOT_FOUND
-          - ACCOUNT_NOT_DIRECT
-          - ACCOUNT_CLOSED
-          - PERMISSION_DENIED
-          - DAYS_NOT_SPECIFIED
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  ##### END DEFINITION TRANSFER CONDITION #####
-
-  ##### START DEFINITION BET SETTING  #####
-  GetBetSettingV1Response:
-    type: object
-    properties:
-      moreAvailable:
-        type: boolean 
-        description: Indicates whether more pages are available.
-        example: true
-      pageSize:
-        type: integer 
-        description: The requested page size. Default is 1000.
-        example: 1000
-      fromRecord:
-        type: integer 
-        description: Starting record number of the result set. Records start at zero
-        example: 0
-      toRecord:
-        type: integer 
-        description: Ending record number of the result set. 
-        example: 999
-      reportDateTime:
-        type: string
-        format: date-time
-        example: '2024-06-13T15:24:48Z'
-        description: Date and time of the response.
-      newAccountMaxBet:
-        type: number
-        format: double
-        example: 500.00
-        description: Maximum Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
-      newAccountMaxPerMatch:
-        type: number
-        format: double
-        example: 2000.00
-        description: Maximum Bet Per Match setting for new accounts. NOTE Refers to the account of the authenticated user.
-      inplayNewAccountMaxBet:
-        type: number
-        format: double
-        example: 300.00
-        description: Maximum inplay Bet setting for new accounts. NOTE Refers to the account of the authenticated user.
-      agent:
-        type: array
-        description: Contains a list of Agents.
-        items:
-          $ref: '#/definitions/BetSettingAgentObject'
-  BetSettingAgentObject:
-    type: object
-    properties:
-      username:
-        type: string 
-        description: Account username.
-        example: 'ABC123'
-      nickname:
-        type: string 
-        description: Account nickname (return null if not set).
-        example: 'ABC123'  
-      level:
-        type: string 
-        description: Agent Level.
-        enum:
-          - PART
-          - CORP
-          - SMA
-          - MA
-          - AG
-          - PL
-        example: 'PL'
-      status:
-        type: string 
-        description: Account Status.
-        enum:
-          - ACTIVE
-          - INACTIVE
-          - SUSPENDED
-          - CLOSED
-          - COSUSP
-          - COINACT
-          - FAILED_LOGINS
-        example: 'ACTIVE'
-      currency:
-        type: string 
-        description: Account Currency.
-        example: 'USD'
-      maxBetPreference:
-        type: string 
-        description: Max Bet Preference.
-        enum:
-          - WIN
-          - RISK
-          - BASE
-        example: 'WIN'
-      settings:
-        type: array
-        description: Sport Setting Data.
-        items:
-          $ref: '#/definitions/BetSettingObject'
-
-  BetSettingObject:
-    type: object
-    properties:
-      minBet:
-        type: number
-        format: double
-        example: 1.25
-        description: Pregame Minimum Bet Setting.
-      maxBet:
-        type: number
-        format: double
-        example: 500.00
-        description: Pregame Maximum Bet Setting.
-      maxPerMatch:
-        type: number
-        format: double
-        example: 2000.00
-        description: Pregame and Inplay Maximum Per Match Bet Setting.
-      inplayMinBet:
-        type: number
-        format: double
-        example: 1.50
-        description: Inplay Minimum Bet Setting.
-      inplayMaxBet:
-        type: number
-        format: double
-        example: 300.00
-        description: Inplay Maximum Bet Setting.
-      directBetSetting:
-        type: object
-        description: Direct Bet Settings.
-        $ref: '#/definitions/BetDirectObject'
-      sport:
-        type: string 
-        description: Sport Setting Name.
-        example: 'Soccer'
-      league:
-        type: string 
-        description: League Setting Name.
-        example: 'AFF ChampU20'  
-  BetDirectObject:
-    type: object
-    properties:
-      minBet:
-        type: number
-        format: double
-        example: 5
-        description: Pregame Minimum Bet Setting.
-      maxBet:
-        type: number
-        format: double
-        example: 250.00
-        description: Pregame Maximum Bet Setting.
-      maxPerMatch:
-        type: number
-        format: double
-        example: 1500.00
-        description: Pregame and Inplay Maximum Per Match Bet Setting.
-      inplayMinBet:
-        type: number
-        format: double
-        example: 10
-        description: Inplay Minimum Bet Setting.
-      inplayMaxBet:
-        type: number
-        format: double
-        example: 180.00
-        description: Inplay Maximum Bet Setting.
-  GetBetSettingBadRequestResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        description: |
-          INVALID_REQUEST = When data entered is in an invalid format,  
-          USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-        enum:
-          - INVALID_REQUEST
-          - USER_NOT_FOUND
-          - PERMISSION_DENIED
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''      
-  SetBetSettingBadRequestResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        example: MIN_BET_EXCEEDS_MAX_BET
-        description: |
-          
-          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
-          ACCOUNT_NOT_DIRECT = Account to be updated is not a direct downline. Does not apply when updating Member (PL) accounts. Or Usercode is authenticated user in Bet Setting Object,    
-          INVALID_CURRENCY = Currency must be currency of authenticated account,  
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          MIN_BET_EXCEEDS_MAX_BET = Min Bet is greater than the Max Bet,  
-          MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Bet is greater than the Max Per Match Bet,  
-          MIN_BET_LESS_THAN_UPLINE = Min Bet is less than upline Min Bet,
-          INPLAY_MIN_BET_LESS_THAN_UPLINE = Inplay Min Bet is less than upline Inplay Min Bet,
-          MAX_BET_EXCEEDS_UPLINE = Max Bet is greater than upline Max Bet,  
-          INPLAY_MAX_BET_EXCEEDS_UPLINE = Inplay Max Bet is greater than upline Inplay Max Bet,  
-          MAX_PER_MATCH_EXCEEDS_UPLINE = Max Per Match Bet is greater than upline Max Per Match Bet,  
-          PERMISSION_DENIED = SUB User does not have permission,  
-          NEW_ACCOUNT_BOTH_FIELDS_REQUIRED = Max Bet and Max Per Match must both have a value,  
-          NEW_ACCOUNT_VALUE_TOO_LONG = New Account Max Bet or New Account Max Per Match exceed 18 characters,  
-          NA_MAX_BET_EXCEEDS_MAX_PER_MATCH = New Account Max Bet is greater than New Account Max Per Match,  
-          NEW_ACCOUNT_MAX_BET_INVALID = New Account Max Bet must be between Min Bet and Max Bet,  
-          NEW_ACCOUNT_MAX_PER_MATCH_INVALID = New Account Max Per Match must be between Min Bet and Max Per Match,  
-          INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Inplay Max Bet must be equal to or less than Max Per Match,  
-          NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Max Per Match amount is less than New Account Inplay Max Bet amount,  
-          INPLAY_MIN_BET_EXCEEDS_MAX_BET = Inplay Min Bet amount is greater than the Inplay Max Bet amount,  
-        enum:
-          - USER_NOT_FOUND
-          - ACCOUNT_NOT_DIRECT
-          - INVALID_CURRENCY
-          - ACCOUNT_CLOSED
-          - MIN_BET_EXCEEDS_MAX_BET
-          - MAX_BET_EXCEEDS_MAX_PER_MATCH
-          - MIN_BET_LESS_THAN_UPLINE
-          - INPLAY_MIN_BET_LESS_THAN_UPLINE
-          - MAX_BET_EXCEEDS_UPLINE
-          - INPLAY_MAX_BET_EXCEEDS_UPLINE
-          - MAX_PER_MATCH_EXCEEDS_UPLINE
-          - PERMISSION_DENIED
-          - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
-          - NEW_ACCOUNT_VALUE_TOO_LONG
-          - NA_MAX_BET_EXCEEDS_MAX_PER_MATCH
-          - NEW_ACCOUNT_MAX_BET_INVALID
-          - NEW_ACCOUNT_MAX_PER_MATCH_INVALID
-          - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
-          - NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
-          - INPLAY_MIN_BET_EXCEEDS_MAX_BET 
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-  BetSettingInternalErrorResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: ERROR
-        description: If processing catch exception, the status must be reported as ERROR.
-        enum:
-          - ERROR
-  SetBetSettingV1Request:
-    type: object
-    properties:
-      betSetting:
-        $ref: '#/definitions/SetBetSettingObject'
-        description: 'Optional'
-      newAccountSetting:
-        $ref: '#/definitions/SetNewAccountSettingObject'
-        description: 'Optional'
-    description: ''
-  SetBetSettingObject:
-    type: object
-    properties:
-      usercode:
-        type: string
-        example: 00A
-        description: Usercode of account to be updated.
-      currency:
-        type: string
-        example: USD
-        description: Currency of the update. Expected value Authenticated User Currency (currency of account performing the update).
-      minBet:
-        type: number
-        format: double
-        example: 12
-        description: Pregame Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
-      maxBet:
-        type: number
-        format: double
-        example: 8500000
-        description: Pregame Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
-      maxPerMatch:
-        type: number
-        format: double
-        example: 9500000
-        description: Pregame and Inplay Maximum Per Match Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
-      inplayMinBet:
-        type: number
-        format: double
-        example: 15
-        description: Inplay Minimum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
-      inplayMaxBet:
-        type: number
-        format: double
-        example: 9500000
-        description: Inplay Maximum Bet Setting. NULL value for unchanged value. NOTE Will be applied to the usercode account.
-  SetNewAccountSettingObject:
-    type: object
-    properties:
-      newAccountMaxBet:
-        type: number
-        format: double
-        example: 140
-        description: Maximum Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
-      newAccountMaxPerMatch:
-        type: number
-        format: double
-        example: 8250000
-        description: Maximum Bet Per Match setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
-      inplayNewAccountMaxBet:
-        type: number
-        format: double
-        example: 4250000
-        description: Maximum inplay Bet setting for new accounts. NULL value for unchanged value. NOTE Will be applied to the account of the authenticated user.
-    description: ''
-  DeleteDirectBetBadResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: REJECTED
-        description: If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response. 
-        enum:
-          - REJECTED
-      rejectCode:
-        type: string
-        example: NOT_PLAYER
-        description: |
-          PERMISSION_DENIED = User does not have permission to perform this action,  
-          USER_NOT_FOUND = Account to be updated is not in the same downline as the authenticated user,    
-          ACCOUNT_CLOSED = Account to be updated is CLOSED,  
-          NOT_PLAYER = Account entered is not a player level account.,    
-        enum:
-          - PERMISSION_DENIED
-          - USER_NOT_FOUND
-          - ACCOUNT_CLOSED
-          - NOT_PLAYER
-      errorCode:
-        type: string
-        description: Error code.
-        enum:
-          - INVALID_REQUEST_DATA
-    description: ''
-##### END DEFINITION BET SETTING  #####
+    type: Bearer
+definitions: {}
