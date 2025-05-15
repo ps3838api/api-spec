@@ -1941,423 +1941,902 @@ paths:
                         - FAILED_LOGINS
                       example: ACTIVE
                     settings:
-                      type: object
-                      properties:
-                        sport:
-                          type: string
-                          description: Sport Setting Name.
-                          example: Soccer
-                        league:
-                          type: string
-                          description: League Setting Name.
-                          example: General
-                        inplay:
-                          type: boolean
-                          description: Whether setting applies for Pregame or Inplay
-                          example: false
-                        mainSettings:
-                          type: object
-                          description: PT setting data for the sport and league for the main sports (Not present if sport is not one of the main sports).
-                          properties:
-                            ft1x2:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftML:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftHDP:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftOU:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftTT:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftOthers:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            ftOutright:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            fh1x2:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            fhML:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            fhHDP:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            fhOU:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                        otherSetting:
-                          type: object
-                          description: PT setting data for the sport and league for the non-main sports (Not present if sport is one of the main sports).
-                          properties:
-                            ML:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            HDP:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            OU:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            others:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                            outright:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
-                        parlayTeaserSetting:
-                          type: object
-                          description: PT setting data for Mix Parlays and Teasers (Only present if sport is Mix Parlay or Teaser).
-                          properties:
-                            setting:
-                              type: object
-                              properties:
-                                minPos:
-                                  type: number
-                                  format: double
-                                  example: 5
-                                  description: Minimum Position.
-                                maxPos:
-                                  type: number
-                                  format: double
-                                  example: 60
-                                  description: Maximum Position.
-                                preset:
-                                  type: number
-                                  format: double
-                                  example: 15
-                                  description: 'Preset Position (If not populated, value must be null).'
-                                extraPT:
-                                  type: number
-                                  format: double
-                                  example: null
-                                  description: 'Extra Position (auto position - If not populated, value must be null).'
+                      type: array
+                      description: Sport Setting Data.
+                      items:
+                        type: object
+                        properties:
+                          sport:
+                            type: string
+                            description: Sport Setting Name.
+                            example: Soccer
+                          league:
+                            type: string
+                            description: League Setting Name.
+                            example: General
+                          inplay:
+                            type: boolean
+                            description: Whether setting applies for Pregame or Inplay
+                            example: false
+                          mainSettings:
+                            type: object
+                            description: PT setting data for the sport and league for the main sports (Not present if sport is not one of the main sports).
+                            properties:
+                              ft1x2:
+                                type: object
+                                description: 'Full time 1x2 Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftML:
+                                type: object
+                                description: 'Full time Money Line Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftHDP:
+                                type: object
+                                description: Full time Handicap Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftOU:
+                                type: object
+                                description: Full time Over/Under Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftTT:
+                                type: object
+                                description: 'Full time Team Totals Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftOthers:
+                                type: object
+                                description: 'Full time Others Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              ftOutright:
+                                type: object
+                                description: 'Full time Outright Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              fh1x2:
+                                type: object
+                                description: '1st Half 1x2 Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              fhML:
+                                type: object
+                                description: '1st Half Money Line Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              fhHDP:
+                                type: object
+                                description: 1st Half Handicap Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              fhOU:
+                                type: object
+                                description: 1st Half Over/Under Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                          otherSetting:
+                            type: object
+                            description: PT setting data for the sport and league for the non-main sports (Not present if sport is one of the main sports).
+                            properties:
+                              ML:
+                                type: object
+                                description: 'Money Line Bet Type (If not applicable, return null).'
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              HDP:
+                                type: object
+                                description: Handicap Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              OU:
+                                type: object
+                                description: Over/Under Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              others:
+                                type: object
+                                description: Others Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                              outright:
+                                type: object
+                                description: Outright Bet Type.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
+                          parlayTeaserSetting:
+                            type: object
+                            description: PT setting data for Mix Parlays and Teasers (Only present if sport is Mix Parlay or Teaser).
+                            properties:
+                              setting:
+                                type: object
+                                description: Setting.
+                                properties:
+                                  minPos:
+                                    type: number
+                                    format: double
+                                    example: 5
+                                    description: Minimum Position.
+                                  maxPos:
+                                    type: number
+                                    format: double
+                                    example: 60
+                                    description: Maximum Position.
+                                  preset:
+                                    type: number
+                                    format: double
+                                    example: 15
+                                    description: 'Preset Position (If not populated, value must be null).'
+                                  extraPT:
+                                    type: number
+                                    format: double
+                                    example: null
+                                    description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  specialPT:
+                                    type: array
+                                    description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
+                                    example: null
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                            - PL
+                                        individualPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Individual Position (If not populated, value must be null).'
+                                        directPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Direct Position (If not populated, value must be null).'
         '400':
           description: BadRequest
           schema:
