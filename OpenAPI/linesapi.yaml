@@ -4859,7 +4859,7 @@ definitions:
         format: date-time
         description: Date of the special in UTC.
         type: string
-      cutoff:
+      cutOff:
         format: date-time
         description: Wagering cutoff date in UTC.
         type: string
