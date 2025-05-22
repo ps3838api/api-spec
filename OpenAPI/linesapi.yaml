@@ -4861,7 +4861,7 @@ definitions:
         type: string
       cutOff:
         format: date-time
-        description: Wagering cutoff date in UTC.
+        description: Wagering cutOff date in UTC.
         type: string
       category:
         description: The category that the special falls under.
