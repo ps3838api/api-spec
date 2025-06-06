@@ -4408,6 +4408,10 @@ definitions:
   OddsTeamTotalV4:
     type: object
     properties:
+      altLineId:
+        type: number
+        format: int64
+        description: This is present only if it’s alternative line.
       points:
         type: number
         format: double
@@ -4420,6 +4424,15 @@ definitions:
         type: number
         format: double
         description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTeamTotal` market limit.        
+    required:
+      - points
+      - over
+      - under
   ParlayOddsResponseV1:
     type: object
     properties:
