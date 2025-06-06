@@ -1369,6 +1369,84 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+  /v4/odds/parlay:
+    get:
+      tags:
+        - Odds
+      summary: Get Parlay Odds - v4
+      description: Returns parlay odds for all non-settled events. Please note that it is possible that the event is in Get Fixtures response but notin Get Odds. This happens when the odds are not currently available for wagering.
+      operationId: Odds_Parlays_V4_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: sportId
+          in: query
+          description: The sportid for which to retrieve the odds.
+          required: true
+          type: integer
+          format: int32
+        - name: leagueIds
+          in: query
+          description: The leagueIds array may contain a list of comma separated league ids.
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int32
+          collectionFormat: multi
+        - name: oddsFormat
+          in: query
+          description: Format in which we return the odds. Default is American. [American, Decimal, HongKong, Indonesian, Malay]
+          required: false
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: since
+          in: query
+          description: This is used to receive incremental updates. Use the value of last from previous odds response. When since parameter is not provided, the odds are delayed up to 1 min to encourage the use of the parameter. Please note that when using since parameter you will get in the response ONLY changed periods. If a period didn’t have any changes it will not be in the response.
+          required: false
+          type: integer
+          format: int64
+        - name: isLive
+          in: query
+          description: To retrieve ONLY live odds set the value to 1 (isLive=1). Otherwise response will have all odds.
+          required: false
+          type: boolean
+        - name: eventIds
+          in: query
+          description: Filter by EventIds
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int64
+          collectionFormat: multi
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParlayOddsResponseV4'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
   /v1/odds/teaser:
     get:
       tags:
@@ -4549,6 +4627,26 @@ definitions:
       - sportId
       - last
       - leagues
+  ParlayOddsResponseV4:
+    type: object
+    properties:
+      sportId:
+        type: integer
+        format: int32
+        description: Same as requested sport Id.
+      last:
+        type: integer
+        format: int64
+        description: Use this value for the subsequent requests for since query parameter to get just the changes since previous response.
+      leagues:
+        type: array
+        description: Contains a list of Leagues.
+        items:
+          $ref: '#/definitions/ParlayOddsLeagueV4'
+    required:
+      - sportId
+      - last
+      - leagues
   ParlayOddsLeagueV3:
     type: object
     properties:
@@ -4561,6 +4659,21 @@ definitions:
         description: Contains a list of events.
         items:
           $ref: '#/definitions/ParlayOddsEventV3'
+    required:
+      - id
+      - events
+  ParlayOddsLeagueV4:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: League Id.
+      events:
+        type: array
+        description: Contains a list of events.
+        items:
+          $ref: '#/definitions/ParlayOddsEventV4'
     required:
       - id
       - events
@@ -4592,6 +4705,37 @@ definitions:
         description: Contains a list of periods.
         items:
           $ref: '#/definitions/ParlayOddsPeriodV3'
+    required:
+      - id
+      - periods
+  ParlayOddsEventV4:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Event Id.
+      awayScore:
+        type: number
+        format: double
+        description: Away team score. Only for live soccer events.
+      homeScore:
+        type: number
+        format: double
+        description: Home team score. Only for live soccer events.
+      awayRedCards:
+        type: integer
+        format: int32
+        description: Away team red cards. Only for live soccer events.
+      homeRedCards:
+        type: integer
+        format: int32
+        description: Home team red cards. Only for live soccer events.
+      periods:
+        type: array
+        description: Contains a list of periods.
+        items:
+          $ref: '#/definitions/ParlayOddsPeriodV4'
     required:
       - id
       - periods
@@ -4683,7 +4827,123 @@ definitions:
       - lineId
       - number
       - cutoff
+  ParlayOddsPeriodV4:
+    type: object
+    properties:
+      lineId:
+        type: integer
+        format: int64
+        description: Line Id.
+      number:
+        type: integer
+        format: int32
+        description: This represents the period of the match. For example, for soccer we have 0 (Game), 1 (1st Half) & 2 (2nd Half)
+      cutoff:
+        type: string
+        format: date-time
+        description: Period’s wagering cut-off date in UTC.
+      status:
+        type: integer
+        format: int32
+        description: |
+              1 - online, period is open for betting 
+              2 - offline, period is not open for betting
+        example: 1  
+      maxSpread:
+        type: number
+        format: double
+        description: Maximum spread bet. Only in straight odds response.
+      maxMoneyline:
+        type: number
+        format: double
+        description: Maximum moneyline bet. Only in straight odds response.
+      maxTotal:
+        type: number
+        format: double
+        description: Maximum total points bet. Only in straight odds response.
+      maxTeamTotal:
+        type: number
+        format: double
+        description: Maximum team total points bet. Only in straight odds response.
+      moneylineUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last moneyline update.
+      spreadUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last spread update.
+      totalUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last total update.
+      teamTotalUpdatedAt:
+        type: number
+        format: double
+        description: Date time of the last team total update.                
+      spreads:
+        type: array
+        description: Container for spread odds.
+        items:
+          $ref: '#/definitions/ParlayOddsSpreadV4'
+      moneyline:
+        $ref: '#/definitions/ParlayOddsMoneylineV4'
+      totals:
+        type: array
+        description: Container for team total points.
+        items:
+          $ref: '#/definitions/ParlayOddsTotalV4'
+      teamTotal:
+        $ref: '#/definitions/ParlayOddsTeamTotalsV4'
+      awayScore:
+        type: number
+        format: double
+        description: Period away team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeScore:
+        type: number
+        format: double
+        description: Period home team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      awayRedCards:
+        type: number
+        format: double
+        description: Period away team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeRedCards:
+        type: number
+        format: double
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).               
+    required:
+      - lineId
+      - number
+      - cutoff
   ParlayOddsSpreadV3:
+    type: object
+    properties:
+      altLineId:
+        type: integer
+        format: int64
+        description: This is present only if it’s alternative line.
+      hdp:
+        type: number
+        format: double
+        description: Home team handicap.
+      home:
+        type: number
+        format: double
+        description: Home team price.
+      away:
+        type: number
+        format: double
+        description: Away team price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.
+    required:
+      - hdp
+      - home
+      - away
+  ParlayOddsSpreadV4:
     type: object
     properties:
       altLineId:
@@ -4729,8 +4989,28 @@ definitions:
     required:
       - home
       - away
+  ParlayOddsMoneylineV4:
+    type: object
+    properties:
+      home:
+        type: number
+        format: double
+        description: Away team price
+      away:
+        type: number
+        format: double
+        description: Away team price.
+      draw:
+        type: number
+        format: double
+        description: Draw price. This is present only for events we offer price for draw.
+    required:
+      - home
+      - away
   ParlayOddsTotalV3:
     $ref: '#/definitions/ParlayOddsTotalsV3'
+  ParlayOddsTotalV4:
+    $ref: '#/definitions/ParlayOddsTotalsV4'
   ParlayOddsTeamTotalsV3:
     type: object
     properties:
@@ -4738,7 +5018,42 @@ definitions:
         $ref: '#/definitions/ParlayOddsTotalsV3'
       home:
         $ref: '#/definitions/ParlayOddsTotalsV3'
+  ParlayOddsTeamTotalsV4:
+    type: object
+    properties:
+      away:
+        $ref: '#/definitions/ParlayOddsTotalsV4'
+      home:
+        $ref: '#/definitions/ParlayOddsTotalsV4'
   ParlayOddsTotalsV3:
+    type: object
+    properties:
+      altLineId:
+        type: number
+        format: int64
+        description: Line Id for the alternate line. This is present only if it’s alternative line.
+      points:
+        type: number
+        format: double
+        description: Total points.
+      over:
+        type: number
+        format: double
+        description: Over price.
+      under:
+        type: number
+        format: double
+        description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.         
+    required:
+      - points
+      - over
+      - under
+  ParlayOddsTotalsV4:
     type: object
     properties:
       altLineId:
