@@ -1137,6 +1137,89 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+  /v4/odds:
+    get:
+      tags:
+        - Odds
+      summary: Get Straight Odds - v4
+      description: Returns straight odds for all non-settled events. Please note that it is possible that the event is in Get Fixtures response but not in Get Odds. This happens when the odds are not currently available for wagering.
+      operationId: Odds_Straight_V4_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: sportId
+          in: query
+          description: The sportid for which to retrieve the odds.
+          required: true
+          type: integer
+          format: int32
+        - name: leagueIds
+          in: query
+          description: The leagueIds array may contain a list of comma separated league ids.
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int32
+          collectionFormat: multi
+        - name: oddsFormat
+          in: query
+          description: Format in which we return the odds. Default is American. [American, Decimal, HongKong, Indonesian, Malay]
+          required: false
+          type: string
+          enum:
+            - American
+            - Decimal
+            - HongKong
+            - Indonesian
+            - Malay
+        - name: since
+          in: query
+          description: This is used to receive incremental updates. Use the value of last from previous odds response. When since parameter is not provided, the odds are delayed up to 1 min to encourage the use of the parameter. Please note that when using since parameter you will get in the response ONLY changed periods. If a period did not have any changes it will not be in the response.
+          required: false
+          type: integer
+          format: int64
+        - name: isLive
+          in: query
+          description: To retrieve ONLY live odds set the value to 1 (isLive=1). Otherwise response will have all odds.
+          required: false
+          type: boolean
+        - name: eventIds
+          in: query
+          description: Filter by EventIds
+          required: false
+          type: array
+          items:
+            type: integer
+            format: int64
+          collectionFormat: multi
+        - name: toCurrencyCode
+          in: query
+          description: 3 letter currency code as in the [/currency](https://ps3838api.github.io/docs/?api=lines#tag/Others/operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/OddsResponseV4'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
   /v1/odds/parlay:
     get:
       tags:
@@ -3817,6 +3900,22 @@ definitions:
         description: Contains a list of Leagues.
         items:
           $ref: '#/definitions/OddsLeagueV3'
+  OddsResponseV4:
+    type: object
+    properties:
+      sportId:
+        type: integer
+        format: int32
+        description: Same as requested sport Id.
+      last:
+        type: integer
+        format: int64
+        description: Use this value for the subsequent requests for since query parameter to get just the changes since previous response.
+      leagues:
+        type: array
+        description: Contains a list of Leagues.
+        items:
+          $ref: '#/definitions/OddsLeagueV4'
   OddsLeagueV3:
     type: object
     properties:
@@ -3829,6 +3928,18 @@ definitions:
         description: Contains a list of events.
         items:
           $ref: '#/definitions/OddsEventV3'
+  OddsLeagueV4:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: League Id.
+      events:
+        type: array
+        description: Contains a list of events.
+        items:
+          $ref: '#/definitions/OddsEventV4'
   OddsEventV3:
     type: object
     properties:
@@ -3857,6 +3968,34 @@ definitions:
         description: Contains a list of periods.
         items:
           $ref: '#/definitions/OddsPeriodV3'
+  OddsEventV4:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Event Id.
+      awayScore:
+        type: number
+        format: double
+        description: Away team score. Only for live soccer events.Supported only for full match period (number=0).
+      homeScore:
+        type: number
+        format: double
+        description: Home team score. Only for live soccer events.Supported only for full match period (number=0).
+      awayRedCards:
+        type: integer
+        format: int32
+        description: Away team red cards. Only for live soccer events. Supported only for full match period (number=0).
+      homeRedCards:
+        type: integer
+        format: int32
+        description: Home team red cards. Only for live soccer events.Supported only for full match period (number=0).
+      periods:
+        type: array
+        description: Contains a list of periods.
+        items:
+          $ref: '#/definitions/OddsPeriodV4'
   OddsPeriodV3:
     type: object
     properties:
@@ -3940,7 +4079,91 @@ definitions:
       homeRedCards:
         type: number
         format: int32
-        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).        
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).     
+  OddsPeriodV4:
+    type: object
+    properties:
+      lineId:
+        type: integer
+        format: int64
+        description: Line Id.
+      number:
+        type: integer
+        format: int32
+        description: This represents the period of the match. For example, for soccer we have  0 (Game), 1 (1st Half) & 2 (2nd Half)
+      cutoff:
+        type: string
+        format: date-time
+        description: Period’s wagering cut-off date in UTC.
+      status:
+        type: integer
+        format: int32
+        description: |
+              1 - online, period is open for betting 
+              2 - offline, period is not open for betting
+        example: 1
+      maxSpread:
+        type: number
+        format: double
+        description: Maximum spread bet. Only in straight odds response.
+      maxMoneyline:
+        type: number
+        format: double
+        description: Maximum moneyline bet. Only in straight odds response.
+      maxTotal:
+        type: number
+        format: double
+        description: Maximum total points bet. Only in straight odds response.
+      maxTeamTotal:
+        type: number
+        format: double
+        description: Maximum team total points bet. Only in straight odds response.
+      moneylineUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last moneyline update.
+      spreadUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last spread update.
+      totalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last total update.
+      teamTotalUpdatedAt:
+        type: string
+        format: date-time
+        description: Date time of the last team total update.        
+      spreads:
+        type: array
+        description: Container for spread odds.
+        items:
+          $ref: '#/definitions/OddsSpreadV4'
+      moneyline:
+        $ref: '#/definitions/OddsMoneylineV4'
+      totals:
+        type: array
+        description: Container for team total points.
+        items:
+          $ref: '#/definitions/OddsTotalV4'
+      teamTotal:
+        $ref: '#/definitions/OddsTeamTotalsV4'
+      awayScore:
+        type: number
+        format: double
+        description: Period away team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeScore:
+        type: number
+        format: double
+        description: Period home team score. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      awayRedCards:
+        type: number
+        format: int32
+        description: Period away team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time (number=3).
+      homeRedCards:
+        type: number
+        format: int32
+        description: Period home team red cards. Only for live soccer events. Supported only for Match (number=0) and Extra Time number=3).
   OddsSpreadV3:
     type: object
     properties:
@@ -3965,7 +4188,46 @@ definitions:
         format: double
         nullable: true
         description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.        
+  OddsSpreadV4:
+    type: object
+    properties:
+      altLineId:
+        type: integer
+        format: int64
+        description: This is present only if it’s alternative line.
+      hdp:
+        type: number
+        format: double
+        description: Home team handicap.
+      home:
+        type: number
+        format: double
+        description: Home team price.
+      away:
+        type: number
+        format: double
+        description: Away team price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxSpread` market limit.  
   OddsMoneylineV3:
+    type: object
+    properties:
+      home:
+        type: number
+        format: double
+        description: Away team price
+      away:
+        type: number
+        format: double
+        description: Away team price.
+      draw:
+        type: number
+        format: double
+        description: Draw price. This is present only for events we offer price for draw.
+  OddsMoneylineV4:
     type: object
     properties:
       home:
@@ -4004,6 +4266,30 @@ definitions:
         format: double
         nullable: true
         description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.        
+  OddsTotalV4:
+    type: object
+    properties:
+      altLineId:
+        type: integer
+        format: int64
+        description: This is present only if it’s alternative line.
+      points:
+        type: number
+        format: double
+        description: Total points.
+      over:
+        type: number
+        format: double
+        description: Over price.
+      under:
+        type: number
+        format: double
+        description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.  
   OddsTeamTotalsV3:
     type: object
     properties:
@@ -4011,7 +4297,29 @@ definitions:
         $ref: '#/definitions/OddsTeamTotalV3'
       away:
         $ref: '#/definitions/OddsTeamTotalV3'
+  OddsTeamTotalsV4:
+    type: object
+    properties:
+      home:
+        $ref: '#/definitions/OddsTeamTotalV4'
+      away:
+        $ref: '#/definitions/OddsTeamTotalV4'
   OddsTeamTotalV3:
+    type: object
+    properties:
+      points:
+        type: number
+        format: double
+        description: Total points.
+      over:
+        type: number
+        format: double
+        description: Over price.
+      under:
+        type: number
+        format: double
+        description: Under price.
+  OddsTeamTotalV4:
     type: object
     properties:
       points:
