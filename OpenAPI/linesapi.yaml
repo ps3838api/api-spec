@@ -5026,12 +5026,12 @@ definitions:
         type: array
         description: Container for Home team's total points.
         items:
-          $ref: '#/definitions/ParlayOddsTotalsV4'
+          $ref: '#/definitions/ParlayOddsTeamTotalV4'
       away:
         type: array
         description: Container for Away team's total points.
         items:
-          $ref: '#/definitions/ParlayOddsTotalsV4'
+          $ref: '#/definitions/ParlayOddsTeamTotalV4'
   ParlayOddsTotalsV3:
     type: object
     properties:
@@ -5084,6 +5084,34 @@ definitions:
         format: double
         nullable: true
         description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTotal` market limit.         
+    required:
+      - points
+      - over
+      - under
+  ParlayOddsTeamTotalV4:
+    type: object
+    properties:
+      altLineId:
+        type: number
+        format: int64
+        description: This is present only if it’s alternative line.
+      points:
+        type: number
+        format: double
+        description: Total points.
+      over:
+        type: number
+        format: double
+        description: Over price.
+      under:
+        type: number
+        format: double
+        description: Under price.
+      max:
+        type: number
+        format: double
+        nullable: true
+        description: Maximum bet volume. Present only on alternative lines, if set it overides `maxTeamTotal` market limit.        
     required:
       - points
       - over
