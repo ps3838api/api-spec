@@ -1220,6 +1220,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true
   /v1/odds/parlay:
     get:
       tags:
