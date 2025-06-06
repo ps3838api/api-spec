@@ -1369,6 +1369,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+      deprecated: true
   /v4/odds/parlay:
     get:
       tags:
@@ -5021,10 +5022,16 @@ definitions:
   ParlayOddsTeamTotalsV4:
     type: object
     properties:
-      away:
-        $ref: '#/definitions/ParlayOddsTotalsV4'
       home:
-        $ref: '#/definitions/ParlayOddsTotalsV4'
+        type: array
+        description: Container for Home team's total points.
+        items:
+          $ref: '#/definitions/ParlayOddsTotalsV4'
+      away:
+        type: array
+        description: Container for Away team's total points.
+        items:
+          $ref: '#/definitions/ParlayOddsTotalsV4'
   ParlayOddsTotalsV3:
     type: object
     properties:
