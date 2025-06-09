@@ -5203,9 +5203,9 @@ definitions:
         format: int64
         description: Special Id.
         type: integer
-      maxRisk:
+      maxBet:
         format: double
-        description: Maximum risk amount.
+        description: Maximum bet volume amount. See [How to calculate max risk from the max volume](https://github.com/ps3838api/ps3838api.github.io/blob/master/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)
         type: number
       contestantLines:
         description: ContestantLines available for wagering on.
