@@ -3478,13 +3478,11 @@ paths:
                 description: |
                   INVALID_REQUEST = When data entered is in an invalid format,  
                   USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
-                  PERMISSION_DENIED = User does not have permission to perform this action,  
-                  NOT_PLAYER = Account entered is not a player level,
+                  PERMISSION_DENIED = User does not have permission to perform this action,
                 enum:
                   - INVALID_REQUEST
                   - USER_NOT_FOUND
                   - PERMISSION_DENIED
-                  - NOT_PLAYER
               errorCode:
                 type: string
                 description: Error code.
