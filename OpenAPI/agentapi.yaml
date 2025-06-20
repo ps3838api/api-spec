@@ -3251,7 +3251,7 @@ paths:
         - Regrade Report
       summary: Get Regrade BetList – v1
       description: Gets the regrade BetList data.
-      operationId: RegradeReport_V1_Get
+      operationId: RegradeBetList_V1_Get
       consumes: []
       produces:
         - application/json
