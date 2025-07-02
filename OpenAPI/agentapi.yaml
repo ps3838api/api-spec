@@ -3426,6 +3426,7 @@ paths:
                       example: 172.21.8.35
                     betListLevelData:
                       type: array
+                      format: BetListLevelData
                       description: The Data for each level.
                       items:
                         type: object
@@ -3461,6 +3462,64 @@ paths:
                             type: number
                             description: Total for the level.
                             example: 165.8
+                    regradeData:
+                      type: array
+                      format: RegradeData
+                      description: The regrade information for the bet.
+                      items:
+                        type: object
+                        properties:
+                          settlementDate:
+                            type: string
+                            format: date-time
+                            example: '2025-03-06 07:46:11'
+                            description: Settlement Date and Time.
+                          remarks:
+                            type: string
+                            description: 'Remarks on the record. (Original, Adjusted)'
+                            example: Original
+                          status:
+                            type: string
+                            description: Status of the record.
+                            example: WON
+                          betListLevelData:
+                            type: array
+                            format: BetListLevelData
+                            description: The Data for each level.
+                            items:
+                              type: object
+                              properties:
+                                level:
+                                  type: string
+                                  description: Agent Level.
+                                  enum:
+                                    - PART
+                                    - CORP
+                                    - SMA
+                                    - MA
+                                    - AG
+                                    - PL
+                                  example: PL
+                                winLossPT:
+                                  type: number
+                                  description: Win Loss Position Taking for the level.
+                                  example: 0
+                                winLossAmount:
+                                  type: number
+                                  description: Win Loss Amount for the level.
+                                  example: 165.8
+                                commissionPct:
+                                  type: number
+                                  description: Commission Percentage for the level.
+                                  example: 0
+                                commissionAmount:
+                                  type: number
+                                  description: Commission Amount for the level.
+                                  example: 0
+                                total:
+                                  type: number
+                                  description: Total for the level.
+                                  example: 165.8
         '400':
           description: BadRequest
           schema:
