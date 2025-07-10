@@ -1986,6 +1986,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2013,6 +2040,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftML:
                                 type: object
                                 description: 'Full time Money Line Bet Type (If not applicable, return null).'
@@ -2037,6 +2086,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2064,6 +2140,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftHDP:
                                 type: object
                                 description: Full time Handicap Bet Type.
@@ -2088,6 +2186,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2115,6 +2240,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftOU:
                                 type: object
                                 description: Full time Over/Under Bet Type.
@@ -2139,6 +2286,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2166,6 +2340,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftTT:
                                 type: object
                                 description: 'Full time Team Totals Bet Type (If not applicable, return null).'
@@ -2190,6 +2386,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2217,6 +2440,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftOthers:
                                 type: object
                                 description: 'Full time Others Bet Type (If not applicable, return null).'
@@ -2241,6 +2486,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2268,6 +2540,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               ftOutright:
                                 type: object
                                 description: 'Full time Outright Bet Type (If not applicable, return null).'
@@ -2292,6 +2586,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2319,6 +2640,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               fh1x2:
                                 type: object
                                 description: '1st Half 1x2 Bet Type (If not applicable, return null).'
@@ -2343,6 +2686,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2370,6 +2740,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               fhML:
                                 type: object
                                 description: '1st Half Money Line Bet Type (If not applicable, return null).'
@@ -2394,6 +2786,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2421,6 +2840,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               fhHDP:
                                 type: object
                                 description: 1st Half Handicap Bet Type.
@@ -2445,6 +2886,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2472,6 +2940,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               fhOU:
                                 type: object
                                 description: 1st Half Over/Under Bet Type.
@@ -2496,6 +2986,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2523,6 +3040,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                           otherSetting:
                             type: object
                             description: PT setting data for the sport and league for the non-main sports (Not present if sport is one of the main sports).
@@ -2551,6 +3090,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2578,6 +3144,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               HDP:
                                 type: object
                                 description: Handicap Bet Type.
@@ -2602,6 +3190,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2629,6 +3244,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               OU:
                                 type: object
                                 description: Over/Under Bet Type.
@@ -2653,6 +3290,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2680,6 +3344,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               others:
                                 type: object
                                 description: Others Bet Type.
@@ -2704,6 +3390,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2731,6 +3444,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                               outright:
                                 type: object
                                 description: Outright Bet Type.
@@ -2755,6 +3490,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2782,6 +3544,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
                           parlayTeaserSetting:
                             type: object
                             description: PT setting data for Mix Parlays and Teasers (Only present if sport is Mix Parlay or Teaser).
@@ -2810,6 +3594,33 @@ paths:
                                     format: double
                                     example: null
                                     description: 'Extra Position (auto position - If not populated, value must be null).'
+                                  uplinePT:
+                                    type: array
+                                    format: UplinePTData
+                                    description: Collection of Upline Position Taking Objects.
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        preset:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: 'Preset Position (If not populated, value must be null).'
+                                        extraPT:
+                                          type: number
+                                          format: double
+                                          example: null
+                                          description: 'Extra Position (auto position - If not populated, value must be null).'
                                   specialPT:
                                     type: array
                                     description: 'Collection of Special Position Taking Objects (Individual and Direct PT - If not populated, value must be null).'
@@ -2837,6 +3648,28 @@ paths:
                                           format: double
                                           example: null
                                           description: 'Direct Position (If not populated, value must be null).'
+                                  effectivePT:
+                                    type: array
+                                    format: EffectivePTData
+                                    description: 'Collection of Effective Position Taking Objects (If not populated, value must be null).'
+                                    items:
+                                      type: object
+                                      properties:
+                                        level:
+                                          type: string
+                                          description: Agent level
+                                          example: PART
+                                          enum:
+                                            - PART
+                                            - CORP
+                                            - SMA
+                                            - MA
+                                            - AG
+                                        effectivePos:
+                                          type: number
+                                          format: double
+                                          example: 15
+                                          description: Effective Position.
         '400':
           description: BadRequest
           schema:
