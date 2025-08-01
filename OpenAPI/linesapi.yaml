@@ -2328,42 +2328,12 @@ paths:
                 - number: 0
                   description: Match
                   shortDescription: FT
-                  spreadDescription: Handicap
-                  moneylineDescription: 1X2
-                  totalDescription: Total
-                  team1TotalDescription: Team 1 Goals
-                  team2TotalDescription: Team 2 Goals
-                  spreadShortDescription: HDP
-                  moneylineShortDescription: 1X2
-                  totalShortDescription: O/U
-                  team1TotalShortDescription: Team 1 Goals
-                  team2TotalShortDescription: Team 2 Goals
                 - number: 1
                   description: 1st Half
                   shortDescription: 1st H
-                  spreadDescription: 1H Handicap
-                  moneylineDescription: 1H 1X2
-                  totalDescription: 1H Total
-                  team1TotalDescription: 1H Team 1 Goals
-                  team2TotalDescription: 1H Team 2 Goals
-                  spreadShortDescription: 1H HDP
-                  moneylineShortDescription: 1H 1X2
-                  totalShortDescription: 1H O/U
-                  team1TotalShortDescription: 1H GOAL
-                  team2TotalShortDescription: 1H GOAL
                 - number: 2
                   description: 2nd Half
                   shortDescription: 2nd H
-                  spreadDescription: 2H Handicap
-                  moneylineDescription: 2H 1X2
-                  totalDescription: 2H Total
-                  team1TotalDescription: 2H Team 1 Goals
-                  team2TotalDescription: 2H Team 2 Goals
-                  spreadShortDescription: 2H HDP
-                  moneylineShortDescription: 2H 1X2
-                  totalShortDescription: 2H O/U
-                  team1TotalShortDescription: 2H GOAL
-                  team2TotalShortDescription: 2H GOAL
         '400':
           description: BadRequest
           schema:
@@ -5239,36 +5209,6 @@ definitions:
       shortDescription:
         type: string
         description: Short description for the period
-      spreadDescription:
-        type: string
-        description: Description for the Spread
-      moneylineDescription:
-        type: string
-        description: Description for the Moneyline
-      totalDescription:
-        type: string
-        description: Description for the Totals
-      team1TotalDescription:
-        type: string
-        description: Description for Team1 Totals
-      team2TotalDescription:
-        type: string
-        description: Description for Team2 Totals
-      spreadShortDescription:
-        type: string
-        description: Short description for the Spread
-      moneylineShortDescription:
-        type: string
-        description: Short description for the Moneyline
-      totalShortDescription:
-        type: string
-        description: Short description for the Totals
-      team1TotalShortDescription:
-        type: string
-        description: Short description for Team1 Totals
-      team2TotalShortDescription:
-        type: string
-        description: Short description for Team2 Totals
   SportsResponseV1:
     type: object
     properties:
