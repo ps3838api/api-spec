@@ -260,6 +260,164 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+  /v4/bets/place:
+    post:
+      tags:
+        - Place Bets
+      summary: Place straight bet  - v4
+      description: | 
+           Place straight bet (SPREAD, MONEYLINE, TOTAL_POINTS, TEAM_TOTAL_POINTS).
+      
+           Please note when the status is PENDING_ACCEPTANCE and if the live delay was applied, the response will not have betId. Client would have to call /bets by uniqueRequestId to check the status if the bet was ACCEPTED.
+           
+           For more details please see [How to place a bet on live events?](https://github.com/pinny888/pinny888.github.io/blob/main/FAQs.md#how-to-place-a-bet-on-live-events)
+      operationId: Bets_StraightV4
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/PlaceBetRequestV2'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PlaceBetResponseV4'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
+  /v4/bets/parlay:
+    post:
+      tags:
+        - Place Bets
+      summary: Place parlay bet - v4
+      operationId: Bets_ParlayV4
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: The Parlay request.
+          required: true
+          schema:
+            $ref: '#/definitions/PlaceParlayBetRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PlaceParlayBetResponseV4'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'	
+  /v4/bets/teaser:
+    post:
+      tags:
+        - Place Bets
+      summary: Place teaser bet - v4
+      operationId: Bets_TeaserV4
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: The PlaceTeaser request.
+          required: true
+          schema:
+            $ref: '#/definitions/PlaceTeaserBetRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PlaceTeaserBetResponseV4'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
+  /v4/bets/special:
+    post:
+      tags:
+        - Place Bets
+      summary: Place specials bet - v4
+      operationId: Bets_SpecialV4
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: The SpecialBet request.
+          required: true
+          schema:
+            $ref: '#/definitions/MultiBetRequest[SpecialBetRequest]'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/MultiBetResponse[SpecialBetResponseV4]'
+        '400':
+          description: BadRequest
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
   /v1/bets:
     get:
       tags:
@@ -1213,6 +1371,105 @@ definitions:
       straightBet:
         $ref: '#/definitions/StraightBet'
     description: ''
+  PlaceBetResponseV4:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ACCEPTED
+        description: Status of the response.
+        enum:
+          - ACCEPTED
+          - PENDING_ACCEPTANCE
+          - PROCESSED_WITH_ERROR
+      errorCode:
+        type: string
+        example: null
+        x-nullable: true
+        description: |
+          If Status is PROCESSED_WITH_ERROR, errorCode will be in the response. 
+          
+          ALL_BETTING_CLOSED = Betting is not allowed at this moment. This may happen during system maintenance,  
+          ALL_LIVE_BETTING_CLOSED = Live betting is not allowed at this moment. This may happen during system maintenance,  
+          ABOVE_EVENT_MAX = Bet cannot be placed because client exceeded allowed maximum of risk on a line,  
+          ABOVE_MAX_BET_AMOUNT = Stake is above allowed maximum amount,   
+          BELOW_MIN_BET_AMOUNT = Stake is below allowed minimum amount,  
+          BLOCKED_BETTING = Betting is suspended for the client,  
+          BLOCKED_CLIENT = Client is no longer active,   
+          INSUFFICIENT_FUNDS = Bet is submitted by a client with insufficient funds,  
+          INVALID_COUNTRY = Client country is not allowed for betting,  
+          INVALID_EVENT = Invalid eventid,  
+          INVALID_ODDS_FORMAT = If a bet was submitted with the odds format that is not allowed for the client,  
+          LINE_CHANGED = Bet is submitted on a line that has changed,  
+          LISTED_PITCHERS_SELECTION_ERROR = If bet was submitted with pitcher1MustStart and/or pitcher2MustStart parameters in Place Bet request with values that are not allowed,  
+          OFFLINE_EVENT = Bet is submitted on a event that is offline or the submitted line is not offered at the moment due to points/handicap change or the submitted bet type is just not offered at the moment,  
+          PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,  
+          RED_CARDS_CHANGED = Bet is submitted on a live soccer event with changed red card count,  
+          SCORE_CHANGED = Bet is submitted on a live soccer event with changed score,             
+          DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          INCOMPLETE_CUSTOMER_BETTING_PROFILE = System configuration issue,  
+          INVALID_CUSTOMER_PROFILE = System configuration issue,  
+          LIMITS_CONFIGURATION_ISSUE = System configuration issue,  
+          RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Client has reached his total loss limit,  
+          RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
+          RESUBMIT_REQUEST = Unable to process the request but the request itself is valid. This happens more often on the live betting in situations when there is more than one place bet request at the same on the same line. When this happens, we don't keep the place bet request on the server until we know if we can accept or reject the bet, but instead we return the error. It's very likely that the line will change after that. To reduce a chance of getting RESUBMIT_REQUEST client can try to place a bet as fast as possible,  
+          SYSTEM_ERROR_3 = Unexpected error,  
+          LICENCE_RESTRICTION_LIVE_BETTING_BLOCKED - Live betting blocked due to licence restrictions,  
+          INVALID_HANDICAP = Invalid handicap,  
+          BETTING_SUSPENDED = Due to anomalous market circumstances bets are not currently being accepted on this line. Try again with next LineId.
+        enum:
+          - ALL_BETTING_CLOSED
+          - ALL_LIVE_BETTING_CLOSED
+          - ABOVE_EVENT_MAX
+          - ABOVE_MAX_BET_AMOUNT
+          - BELOW_MIN_BET_AMOUNT
+          - BLOCKED_BETTING
+          - BLOCKED_CLIENT
+          - INSUFFICIENT_FUNDS
+          - INVALID_COUNTRY
+          - INVALID_EVENT
+          - INVALID_ODDS_FORMAT
+          - LINE_CHANGED
+          - LISTED_PITCHERS_SELECTION_ERROR
+          - OFFLINE_EVENT
+          - PAST_CUTOFFTIME
+          - RED_CARDS_CHANGED
+          - SCORE_CHANGED          
+          - DUPLICATE_UNIQUE_REQUEST_ID
+          - INCOMPLETE_CUSTOMER_BETTING_PROFILE
+          - INVALID_CUSTOMER_PROFILE
+          - LIMITS_CONFIGURATION_ISSUE
+          - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
+          - RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED
+          - RESUBMIT_REQUEST
+          - SYSTEM_ERROR_3
+          - LICENCE_RESTRICTION_LIVE_BETTING_BLOCKED
+          - INVALID_HANDICAP
+          - BETTING_SUSPENDED
+      uniqueRequestId:
+        type: string
+        example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
+        description: Echo of the uniqueRequestId from the request.
+      win:
+        type: number
+        format: double
+        example: 5.5
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 10.5
+        description: Risk amount.
+      price:
+        type: number
+        format: double
+        example: 2.5
+        description: Price
+      points:
+        type: number
+        format: double
+        example: 1
+        description: points
   StraightBet:
     type: object
     required:
@@ -2262,6 +2519,121 @@ definitions:
       parlayBet:
         $ref: '#/definitions/ParlayBetV2'		
     description: ''	
+  PlaceParlayBetResponseV4:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ACCEPTED
+        description: Status of the response.
+        enum:
+          - ACCEPTED
+          - PENDING_ACCEPTANCE
+          - PROCESSED_WITH_ERROR
+      errorCode:
+        type: string
+        example: null
+        x-nullable: true
+        description: | 
+          When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+          
+          
+          ABOVE_MAX_BET_AMOUNT = Stake is above allowed maximum amount,  
+          ALL_BETTING_CLOSED = Betting is not allowed at this moment,  
+          BELOW_MIN_BET_AMOUNT = Stake is below allowed minimum amount,  
+          BLOCKED_BETTING = Betting is suspended for the client,   
+          BLOCKED_CLIENT = Client is no longer active,  
+          INSUFFICIENT_FUNDS = Bet is submitted by a client with insufficient funds,  
+          INVALID_COUNTRY = Client country is not allowed for betting,  
+          INVALID_LEGS = One or more legs are invalid,  
+          INVALID_ODDS_FORMAT = If a bet was submitted with the odds format that is not allowed for the client,  
+          INVALID_ROUND_ROBIN_OPTIONS = Round robin options are invalid (i.e. does not match with number of legs),  
+          ROUND_ROBIN_DISALLOWED = Round robin is disallowed for one of the leagues,  
+          TOO_MANY_LEGS = Maximum of 10 legs can be specified,  
+          TOO_FEW_LEGS = At least 2 legs are required for Parlay,  
+          RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Client has reached his total loss limit,  
+          RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
+          INVALID_REQUEST = Request has invalid parameters,  
+          DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          SYSTEM_ERROR_3 = Unexpected error 
+        enum:
+          - ABOVE_MAX_BET_AMOUNT
+          - ALL_BETTING_CLOSED
+          - BELOW_MIN_BET_AMOUNT
+          - BLOCKED_BETTING
+          - BLOCKED_CLIENT
+          - INSUFFICIENT_FUNDS
+          - INVALID_COUNTRY
+          - INVALID_LEGS
+          - INVALID_ODDS_FORMAT
+          - INVALID_ROUND_ROBIN_OPTIONS
+          - ROUND_ROBIN_DISALLOWED
+          - TOO_MANY_LEGS
+          - TOO_FEW_LEGS
+          - RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED
+          - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
+          - INVALID_REQUEST
+          - DUPLICATE_UNIQUE_REQUEST_ID
+          - SYSTEM_ERROR_3
+      betId:
+        type: integer
+        format: int64
+        example: 759629245
+        description: Id of a newly created bet.
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
+        description: Unique identifier provided in the request.
+      roundRobinOptionWithOdds:
+        type: array
+        description: Provides array with all acceptable Round Robin options with parlay odds for that option.
+        items:
+          $ref: '#/definitions/RoundRobinOptionWithOdds'
+      validLegs:
+        type: array
+        description: Collection of valid legs (format described below). Can be empty if no valid legs found.
+        items:
+          $ref: '#/definitions/ParlayLegResponse'
+      invalidLegs:
+        type: array
+        description: The collection of legs that resulted in error (format described below). Can be empty if no invalid legs found.
+        items:
+          $ref: '#/definitions/ParlayLegResponse'
+      wagers:
+        type: array
+        description: The collection of returning wagers
+        items:
+          $ref: '#/definitions/ParlayWagerV4Response'
+    description: ''
+  ParlayWagerV4Response:
+    type: object
+    properties:
+      wagerNumber:
+        type: number
+        format: int32
+        example: 1
+        description: Wager number.
+      win:
+        type: number
+        format: double
+        example: 5.5
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 10.5
+        description: Risk amount.
+      price:
+        type: number
+        format: double
+        example: 7.1
+        description: Price amount.
+      legIds:
+        type: array
+        format: double
+        example: ["A9EB2EB1-13A5-4600-9F1B-4859379CDEC4", "CFAD8ACF-E410-437C-8F0F-33611F565981"]
+        description: Collection of leg ids of the wager.
   RoundRobinOptionWithOdds:
     type: object
     properties:
@@ -3347,6 +3719,103 @@ definitions:
       teaserBet:
         $ref: '#/definitions/TeaserBet'
         description: 'Present if bet was accepted'
+  PlaceTeaserBetResponseV4:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Status of the request.
+      errorCode:
+        type: string
+        description: |
+          When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+          
+          ABOVE_MAX_BET_AMOUNT = Bet is above the maximum allowed,  
+          ALL_BETTING_CLOSED = The wagering is disabled in the system (not related to a customer),  
+          BELOW_MIN_BET_AMOUNT = Bet is below the minimum allowed,  
+          BLOCKED_BETTING = Betting is suspended for the client,  
+          BLOCKED_CLIENT = Customer is inactive in the system,  
+          DOUBLE_HIT = The website submitted the same bet more than once,  
+          DUPLICATE_CLIENT_REFERENCE_ID = The teaser unique id and/or one of the leg unique id are the same,  
+          INCOMPLETE_CUSTOMER_BETTING_PROFILE = The customer does not exist,  
+          INSUFFICIENT_FUNDS = The risk amount is above the customer’s available balance,  
+          INVALID_COUNTRY = Current location is proscribed,  
+          INVALID_CUSTOMER_PROFILE = Either the customer does not exist OR the customer business rules are not verified,  
+          INVALID_LEGS = One or more legs are not verified,  
+          INVALID_REQUEST = Teaser request is not valid,  
+          ODDS_FORMAT_MISMATCH = Agent customer’s odds format differs from wager request odds format,  
+          RESUBMIT_REQUEST = The ticket hast to be resubmitted,  
+          TEASER_DOES_NOT_EXIST = Teaser does not exist in the system,  
+          SAME_EVENT_ONLY_REQUIRED = Legs required to be for the same game only. Specified in the Teaser Specifications,  
+          SYSTEM_ERROR_1 = System error,  
+          SYSTEM_ERROR_2 = System error,  
+          SYSTEM_ERROR_3 = System error,  
+          TOO_FEW_LEGS = Legs count is below Min Picks specified in the Teaser Specifications,  
+          TOO_MANY_LEGS = Legs count is above Max Picks specified in the Teaser Specifications,
+          DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Client has reached his total loss limit,  
+          RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit
+
+        enum:
+          - ABOVE_MAX_BET_AMOUNT
+          - ALL_BETTING_CLOSED
+          - BELOW_MIN_BET_AMOUNT
+          - BLOCKED_BETTING
+          - BLOCKED_CLIENT
+          - DOUBLE_HIT
+          - DUPLICATE_CLIENT_REFERENCE_ID
+          - INCOMPLETE_CUSTOMER_BETTING_PROFILE
+          - INSUFFICIENT_FUNDS
+          - INVALID_COUNTRY
+          - INVALID_CUSTOMER_PROFILE
+          - INVALID_LEGS
+          - INVALID_REQUEST
+          - ODDS_FORMAT_MISMATCH
+          - RESUBMIT_REQUEST
+          - TEASER_DOES_NOT_EXIST
+          - SAME_EVENT_ONLY_REQUIRED
+          - SYSTEM_ERROR_1
+          - SYSTEM_ERROR_2
+          - SYSTEM_ERROR_3
+          - TOO_FEW_LEGS
+          - TOO_MANY_LEGS
+          - DUPLICATE_UNIQUE_REQUEST_ID
+          - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
+          - RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED
+      betId:
+        type: integer
+        format: int64
+        description: Id of a newly created bet.
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Unique identifier provided in the request.
+      price:
+        type: number
+        format: double
+        description: Price for the bet.
+      risk:
+        type: number
+        format: double
+        description: Amount wagered.
+      win:
+        type: number
+        format: double
+        description: Potential winnings.
+      winRiskStake:
+        type: string
+        description: Whether the stake amount is risk or win amount.
+      invalidLegs:
+        type: array
+        description: 'A collection of invalid legs, if any.'
+        items:
+          $ref: '#/definitions/PlaceTeaserBetLegResponse'
+      validLegs:
+        type: array
+        description: 'A collection of valid legs, if any.'
+        items:
+          $ref: '#/definitions/PlaceTeaserBetLegResponse'
   PlaceTeaserBetLegResponse:
     type: object
     properties:
@@ -3539,6 +4008,96 @@ definitions:
         description: Whether or not the bet was accepted on the line that changed in favour of client. This can be true only if acceptBetterLine in the Place Bet request is set to TRUE.
       specialBet:
         $ref: '#/definitions/SpecialBetV2'
+    description: ''
+  SpecialBetResponseV4:
+    type: object
+    properties:
+      status:
+        type: string
+        example: ACCEPTED
+        description: Status of the request.
+        enum:
+          - ACCEPTED
+          - PROCESSED_WITH_ERROR
+      errorCode:
+        type: string
+        example: null
+        x-nullable: true
+        description: |
+          When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+          
+          ALL_BETTING_CLOSED = Betting is not allowed at this moment. This may happen during system maintenance.  
+           ABOVE_MAX_BET_AMOUNT = Stake is above allowed maximum amount,  
+           BELOW_MIN_BET_AMOUNT = Stake is below allowed minimum amount,  
+           BLOCKED_BETTING = Betting is suspended for the client,  
+           BLOCKED_CLIENT = Client is no longer active,  
+           CONTEST_NOT_FOUND = Incorrect contest id provided or contest is no longer available,  
+           DUPLICATE_UNIQUE_REQUEST_ID = UniqueRequestId must be unique for each bet,  
+           INCOMPLETE_CUSTOMER_BETTING_PROFILE = Customer profile could not be loaded,   
+           INSUFFICIENT_FUNDS = Bet is submitted by a client with insufficient funds,  
+           INVALID_COUNTRY = Client country is not allowed for betting,  
+           INVALID_REQUEST = Special bet request is not valid,  
+           LINE_CHANGED = Bet is submitted on a line that has changed,  
+           PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,  
+           RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED = Self-imposed loss limit exceeded,  
+           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Self-imposed risk limit exceeded,  
+           RESUBMIT_REQUEST = The ticket hast to be resubmitted,  
+           SYSTEM_ERROR_1 = Unexpected error,  
+           SYSTEM_ERROR_2 = Unexpected error,  
+           UNIQUE_REQUEST_ID_REQUIRED = UniqueRequestId is missing,  
+           BETTING_SUSPENDED = Due to anomalous market circumstances bets are not currently being accepted on this line. Try again with next LineId,  
+           INVALID_CUSTOMER_PROFILE
+        enum:
+          - ALL_BETTING_CLOSED
+          - ABOVE_MAX_BET_AMOUNT
+          - BELOW_MIN_BET_AMOUNT
+          - BLOCKED_BETTING
+          - BLOCKED_CLIENT
+          - CONTEST_NOT_FOUND
+          - DUPLICATE_UNIQUE_REQUEST_ID
+          - INCOMPLETE_CUSTOMER_BETTING_PROFILE
+          - INSUFFICIENT_FUNDS
+          - INVALID_COUNTRY
+          - INVALID_REQUEST
+          - LINE_CHANGED
+          - PAST_CUTOFFTIME
+          - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
+          - RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED
+          - RESUBMIT_REQUEST
+          - SYSTEM_ERROR_1
+          - SYSTEM_ERROR_2
+          - UNIQUE_REQUEST_ID_REQUIRED
+          - BETTING_SUSPENDED
+          - INVALID_CUSTOMER_PROFILE
+      betId:
+        type: integer
+        format: int64
+        example: 760745142
+        description: Id of a newly created bet.
+      uniqueRequestId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Unique identifier provided in the request.
+      betterLineWasAccepted:
+        type: boolean
+        example: false
+        description: Whether or not the bet was accepted on the line that changed in favour of client. This can be true only if acceptBetterLine in the Place Bet request is set to TRUE.
+      win:
+        type: number
+        format: double
+        example: 1
+        description: Win amount.
+      risk:
+        type: number
+        format: double
+        example: 1.51
+        description: Risk amount.
+      price:
+        type: number
+        format: double
+        example: 1.51
+        description: Price amount.
     description: ''
   SpecialBet:
     type: object
