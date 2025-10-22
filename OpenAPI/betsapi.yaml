@@ -3932,6 +3932,15 @@ definitions:
         items:
           $ref: '#/definitions/SpecialBetResponse'
     description: ''
+  'MultiBetResponse[SpecialBetResponseV4]':
+    type: object
+    properties:
+      bets:
+        type: array
+        description: The individual bets.
+        items:
+          $ref: '#/definitions/SpecialBetResponseV4'
+    description: ''
   SpecialBetResponse:
     type: object
     properties:
