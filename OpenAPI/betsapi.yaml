@@ -205,7 +205,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/PlaceTeaserBetResponse'
+            $ref: '#/definitions/PlaceTeaserBetResponseV4'
         '400':
           description: BadRequest
           schema:
@@ -2594,12 +2594,12 @@ definitions:
         type: array
         description: Collection of valid legs (format described below). Can be empty if no valid legs found.
         items:
-          $ref: '#/definitions/ParlayLegResponse'
+          $ref: '#/definitions/ParlayLegResponseV4'
       invalidLegs:
         type: array
         description: The collection of legs that resulted in error (format described below). Can be empty if no invalid legs found.
         items:
-          $ref: '#/definitions/ParlayLegResponse'
+          $ref: '#/definitions/ParlayLegResponseV4'
       wagers:
         type: array
         description: The collection of returning wagers
@@ -2741,6 +2741,99 @@ definitions:
         format: double
         example: 167
         description: Price that the bet was placed on.
+      correlatedLegs:
+        type: array
+        description: If errorCode is CORRELATED will contain legIds of all correlated legs.
+        items:
+          type: string
+          format: uuid
+          example: 10924E23-A2FE-4317-BFFD-80504675F554
+    description: ''
+  ParlayLegResponseV4:
+    type: object
+    properties:
+      status:
+        type: string
+        example: VALID
+        description: Status of the request.
+        enum:
+          - PROCESSED_WITH_ERROR
+          - VALID
+      errorCode:
+        type: string
+        example: null
+        x-nullable: true
+        description: |
+            When Status is PROCESSED_WITH_ERROR, provides a code indicating the specific problem.
+            
+            CANNOT_PARLAY_LIVE_GAME = The wager is placed on Live game,  
+            CORRELATED = The leg is correlated with another one,  
+            EVENT_NO_LONGER_AVAILABLE_FOR_BETTING = The event is no longer offered,  
+            EVENT_NOT_OFFERED_FOR_PARLAY = The event is not offered for parlaying,  
+            INVALID_EVENT = Live betting is not allowed at this moment,  
+            INVALID_LEG_BET_TYPE = Leg bet type is not accepted for parlaying. Accepted values are SPREAD, MONEYLINE, TOTAL_POINTS,  
+            INVALID_PARLAY_BET = The leg did not validated due to error on Parlay Bet. Check the error PlaceParlayBet response for error details,  
+            LINE_CHANGED = Bet is submitted on a line that has changed,  
+            LINE_DOES_NOT_BELONG_TO_EVENT = LineId does not match the EventId specified in the request,  
+            LISTED_PITCHERS_SELECTION_ERROR = If bet was submitted with pitcher1MustStart and/or pitcher2MustStart parameters with values that are not allowed,  
+            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_1 = Due to line change odds are not offered for parlaying,   
+            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_2 = Due to line change odds are not offered for parlaying,   
+            ODDS_NO_LONGER_OFFERED_FOR_PARLAY_3 = Due to line change odds are not offered for parlaying,   
+            OFFLINE_EVENT = Bet is submitted on an event that is offline or with incorrect lineId,  
+            PAST_CUTOFFTIME = Bet is submitted on a game after the betting cutoff time,   
+            SYSTEM_ERROR_1 = Unexpected error,  
+            SYSTEM_ERROR_2 = Unexpected error,  
+            SYSTEM_ERROR_3 = Unexpected error,  
+            LINE_IS_NOT_AVAILABLE = Line is not available for the specified Parlay Leg,  
+            BETTING_SUSPENDED = Due to anomalous market circumstances bets are not currently being accepted on this line. Try again with next LineId.
+            
+        enum:
+          - CANNOT_PARLAY_LIVE_GAME
+          - CORRELATED
+          - EVENT_NO_LONGER_AVAILABLE_FOR_BETTING
+          - EVENT_NOT_OFFERED_FOR_PARLAY
+          - INVALID_EVENT
+          - INVALID_LEG_BET_TYPE
+          - INVALID_PARLAY_BET
+          - LINE_CHANGED
+          - LINE_DOES_NOT_BELONG_TO_EVENT
+          - LISTED_PITCHERS_SELECTION_ERROR
+          - ODDS_NO_LONGER_OFFERED_FOR_PARLAY_1
+          - ODDS_NO_LONGER_OFFERED_FOR_PARLAY_2
+          - ODDS_NO_LONGER_OFFERED_FOR_PARLAY_3
+          - OFFLINE_EVENT
+          - PAST_CUTOFFTIME
+          - SYSTEM_ERROR_1
+          - SYSTEM_ERROR_2
+          - SYSTEM_ERROR_3
+          - LINE_IS_NOT_AVAILABLE
+          - BETTING_SUSPENDED
+      legId:
+        type: string
+        format: uuid
+        example: 10924E23-A2FE-4317-BFFD-80504675F554
+        description: Echo of the legId from the request.
+      lineId:
+        type: integer
+        format: int64
+        example: 419715968
+        description: Line identification that bet was placed on.
+      altLineId:
+        type: integer
+        format: int64
+        example: null
+        x-nullable: true
+        description: 'If bet was accepted on alternate line, the altLineId will be returned.'
+      price:
+        type: number
+        format: double
+        example: 167
+        description: Price that the bet was placed on.
+      points:
+        type: number
+        format: double
+        description: Number of points.
+        example: 1
       correlatedLegs:
         type: array
         description: If errorCode is CORRELATED will contain legIds of all correlated legs.
@@ -4107,6 +4200,11 @@ definitions:
         format: double
         example: 1.51
         description: Price amount.
+      points:
+        type: number
+        format: double
+        example: 1
+        description: points
     description: ''
   SpecialBet:
     type: object
