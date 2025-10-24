@@ -1623,7 +1623,7 @@ components:
           type: array
           description: The collection of returning wagers
           items:
-            $ref: '#/definitions/ParlayWagerV4Response'
+            $ref: '#/components/schemas/ParlayWagerV4Response'
     ParlayWagerV4Response:
       type: object
       properties:
