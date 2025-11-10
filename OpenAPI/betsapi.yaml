@@ -1450,6 +1450,11 @@ definitions:
         type: string
         example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
         description: Echo of the uniqueRequestId from the request.
+      betId:
+        type: integer
+        format: int64
+        example: 759629245
+        description: Bet identification
       win:
         type: number
         format: double
@@ -5480,3 +5485,4 @@ definitions:
           - ALL_LIVE_BETTING_CLOSED
           - ALL_BETTING_CLOSED
     description: ''
+
