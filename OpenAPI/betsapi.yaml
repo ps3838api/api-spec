@@ -205,7 +205,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/PlaceTeaserBetResponseV4'
+            $ref: '#/definitions/PlaceTeaserBetResponse'
         '400':
           description: BadRequest
           schema:
