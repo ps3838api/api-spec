@@ -1717,11 +1717,20 @@ paths:
                   - INVALID_CURRENCY
                   - ACCOUNT_CLOSED
                   - MIN_BET_EXCEEDS_MAX_BET
+                  - INPLAY_MIN_BET_EXCEEDS_MAX_BET
+                  - API_MIN_BET_EXCEEDS_MAX_BET
                   - MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - API_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - MIN_BET_EXCEEDS_MAX_PER_MATCH
+                  - INPLAY_MIN_BET_EXCEEDS_MAX_PER_MATCH
+                  - API_MIN_BET_EXCEEDS_MAX_PER_MATCH
                   - MIN_BET_LESS_THAN_UPLINE
                   - INPLAY_MIN_BET_LESS_THAN_UPLINE
+                  - API_MIN_BET_LESS_THAN_UPLINE
                   - MAX_BET_EXCEEDS_UPLINE
                   - INPLAY_MAX_BET_EXCEEDS_UPLINE
+                  - API_MAX_BET_EXCEEDS_UPLINE
                   - MAX_PER_MATCH_EXCEEDS_UPLINE
                   - PERMISSION_DENIED
                   - NEW_ACCOUNT_BOTH_FIELDS_REQUIRED
@@ -1729,9 +1738,8 @@ paths:
                   - NA_MAX_BET_EXCEEDS_MAX_PER_MATCH
                   - NEW_ACCOUNT_MAX_BET_INVALID
                   - NEW_ACCOUNT_MAX_PER_MATCH_INVALID
-                  - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
                   - NA_INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
-                  - INPLAY_MIN_BET_EXCEEDS_MAX_BET
+                  - NA_API_MAX_BET_EXCEEDS_MAX_PER_MATCH
               errorCode:
                 type: string
                 description: Error code.
