@@ -2636,9 +2636,12 @@ definitions:
         description: Price amount.
       legIds:
         type: array
-        format: double
         example: ["A9EB2EB1-13A5-4600-9F1B-4859379CDEC4", "CFAD8ACF-E410-437C-8F0F-33611F565981"]
         description: Collection of leg ids of the wager.
+        items:
+          type: string
+          format: uuid
+          example: A9EB2EB1-13A5-4600-9F1B-4859379CDEC4
   RoundRobinOptionWithOdds:
     type: object
     properties:
