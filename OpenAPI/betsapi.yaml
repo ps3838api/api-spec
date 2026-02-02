@@ -2488,6 +2488,7 @@ definitions:
           - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
           - INVALID_REQUEST
           - DUPLICATE_UNIQUE_REQUEST_ID
+          - LINE_CHANGED
           - SYSTEM_ERROR_3
       betId:
         type: integer
@@ -2581,6 +2582,7 @@ definitions:
           - RESPONSIBLE_BETTING_LOSS_LIMIT_EXCEEDED
           - INVALID_REQUEST
           - DUPLICATE_UNIQUE_REQUEST_ID
+          - LINE_CHANGED
           - SYSTEM_ERROR_3
       betId:
         type: integer
