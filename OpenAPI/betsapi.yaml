@@ -2468,6 +2468,7 @@ definitions:
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           INVALID_REQUEST = Request has invalid parameters,  
           DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          LINE_CHANGED = Bet is submitted on a line that has changed,
           SYSTEM_ERROR_3 = Unexpected error 
         enum:
           - ABOVE_MAX_BET_AMOUNT
@@ -2560,6 +2561,7 @@ definitions:
           RESPONSIBLE_BETTING_RISK_LIMIT_EXCEEDED = Client has reached his total risk limit,  
           INVALID_REQUEST = Request has invalid parameters,  
           DUPLICATE_UNIQUE_REQUEST_ID = Request with the same uniqueRequestId was already processed. Please set the new value if you still want the request to be processed,  
+          LINE_CHANGED = Bet is submitted on a line that has changed,
           SYSTEM_ERROR_3 = Unexpected error 
         enum:
           - ABOVE_MAX_BET_AMOUNT
