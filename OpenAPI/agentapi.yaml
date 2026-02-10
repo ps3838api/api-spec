@@ -3813,10 +3813,11 @@ paths:
                   MIN_POS_EXCEEDS_DOWNLINES_SUM_PT = Min Position must be less than or equal to sum of downline Min PT and his Preset,  
                   INVALID_MAX_POS = Sum of Max PT and Preset PT must be greater than or equal to upline Max PT,  
                   INVALID_PRESET = Sum of Max PT and Preset PT must be greater than or equal to upline Max PT,  
-                  INVALID_MIN_POS = Sum of Min PT and Preset/Extra must be greater than or equal to their own Min PT.,  
-                  INVALID_EXTRA_PT = Extra PT must be less than or equal to their own Max PT.,  
+                  INVALID_MIN_POS = Sum of Min PT and Preset/Extra must be greater than or equal to their own Min PT,  
+                  INVALID_EXTRA_PT = Extra PT must be less than or equal to their own Max PT,  
                   INVALID_MEMBER_UPDATE = Member update other than Preset,  
-                  INVALID_MAX_POS_DOWNLINE = Max PT must be greater than or equal to sum of downline Max PT and his Preset.,  
+                  INVALID_MAX_POS_DOWNLINE = Max PT must be greater than or equal to sum of downline Max PT and his Preset,  
+                  MEMBER_IN_QS = Member exists in QS Group,  
                 enum:
                   - USER_NOT_FOUND
                   - ACCOUNT_NOT_DIRECT
@@ -3831,6 +3832,7 @@ paths:
                   - INVALID_EXTRA_PT
                   - INVALID_MEMBER_UPDATE
                   - INVALID_MAX_POS_DOWNLINE
+                  - MEMBER_IN_QS
               errorCode:
                 type: string
                 description: Error code.
