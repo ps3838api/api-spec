@@ -1517,6 +1517,7 @@ components:
             - ROUND_ROBIN_DISALLOWED
             - TOO_FEW_LEGS
             - TOO_MANY_LEGS
+            - LINE_CHANGED
         betId:
           type: integer
           format: int64
@@ -1586,6 +1587,7 @@ components:
             - ROUND_ROBIN_DISALLOWED
             - TOO_FEW_LEGS
             - TOO_MANY_LEGS
+            - LINE_CHANGED
         betId:
           type: integer
           format: int64
