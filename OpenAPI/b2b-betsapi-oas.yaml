@@ -78,6 +78,7 @@ paths:
               $ref: '#/components/schemas/MultiBetStraightRequest'
         description: The Place Straight Bet request.
         required: true
+      deprecated: true
   /b2b/v2/bets/straight:
     post:
       tags:
@@ -122,6 +123,7 @@ paths:
               $ref: '#/components/schemas/MultiBetStraightRequest'
         description: The Place Straight Bet request.
         required: true
+      deprecated: true
         
   /b2b/v1/bets/special:
     post:
@@ -166,7 +168,8 @@ paths:
             schema:
               $ref: '#/components/schemas/MultiBetSpecialBetRequest'
         description: The Place Special Bet request.
-        required: true      
+        required: true
+      deprecated: true
         
   /b2b/v1/bets/parlay:
     post:
@@ -211,7 +214,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseWithErrorRef'      
+                $ref: '#/components/schemas/ErrorResponseWithErrorRef'
+      deprecated: true
 
       
   /b2b/v1/bets/teaser:
@@ -258,6 +262,7 @@ paths:
               $ref: '#/components/schemas/MultiBetTeaserRequest'
         description: The PlaceTeaser request.
         required: true
+      deprecated: true
 
   /b2b/v4/bets/straight:
     post:
