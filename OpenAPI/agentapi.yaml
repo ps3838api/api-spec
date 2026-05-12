@@ -1024,15 +1024,15 @@ paths:
                 type: string
                 example: INVALID_SENDER
                 description: |
-                  INVALID_SENDER = Sender Account is not a sender in an ATA Group,    
-                  INVALID_RECEIVER = Receiver Account is not a receiver in an ATA Group,    
-                  USER_NOT_FOUND = Sender and Receiver Accounts not in the same ATA Group,  
-                  DOWNLINE_SENDER_INVALID = Not allowed to transfer from sender’s downline’s balance,  
-                  DOWNLINE_RECEIVER_INVALID = Not allowed to transfer to receiver’s downline’s balance,  
-                  INVALID_AMOUNT = Sender Account’s Statement Total - Transfer Amount must be greater than Statement Total Transfer Limit.,  
-                  SENDER_BLOCKED = Sender account listed in the Sender Account Exceptions,  
-                  RECEIVER_BLOCKED = Receiver account listed in the Receiver Account Exceptions,  
-                  CREDIT_EXCEEDED = Sending account is PL level and transfer amount will make the account exceed their bet credit limit,
+                  INVALID_SENDER = Sender account is incorrect,    
+                  INVALID_RECEIVER = Receiver account is incorrect,    
+                  USER_NOT_FOUND = Sender and Receiver Accounts are not valid,  
+                  DOWNLINE_SENDER_INVALID = Not allowed to transfer from sender's downline's balance,  
+                  DOWNLINE_RECEIVER_INVALID = Not allowed to transfer to receiver's downline's balance,  
+                  INVALID_AMOUNT = Transfer will exceed maximum allowable amount,  
+                  SENDER_BLOCKED = Not allowed to send to the sender account,  
+                  RECEIVER_BLOCKED = Not allowed to send to the receiver account,  
+                  CREDIT_EXCEEDED = Transfer will cause bet credit to be negative,
                 enum:
                   - INVALID_SENDER
                   - INVALID_RECEIVER
