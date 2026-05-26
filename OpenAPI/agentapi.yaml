@@ -956,6 +956,134 @@ paths:
               message:
                 type: string
       deprecated: false
+  /partner/v1/transfer:
+    post:
+      tags:
+        - Transfer
+      summary: Transfer - v1
+      description: Performs a transfer from sender to receiver via ATA group settings.
+      operationId: Transfer_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Do Transfer.
+          required: true
+          schema:
+            type: object
+            properties:
+              transfer:
+                type: object
+                properties:
+                  sender:
+                    type: string
+                    example: 00A
+                    description: Sending Account.
+                  receiver:
+                    type: string
+                    example: 00B
+                    description: Receiving Account.
+                  amount:
+                    type: number
+                    format: double
+                    example: 1.25
+                    description: Amount to Transfer.
+                  comments:
+                    type: string
+                    example: Note
+                    description: Comment to apply to the transfer.
+            description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: INVALID_SENDER
+                description: |
+                  INVALID_SENDER = Sender account is incorrect,    
+                  INVALID_RECEIVER = Receiver account is incorrect,    
+                  USER_NOT_FOUND = Sender and Receiver Accounts are not valid,  
+                  DOWNLINE_SENDER_INVALID = Not allowed to transfer from sender's downline's balance,  
+                  DOWNLINE_RECEIVER_INVALID = Not allowed to transfer to receiver's downline's balance,  
+                  INVALID_AMOUNT = Transfer will exceed maximum allowable amount,  
+                  SENDER_BLOCKED = Not allowed to send to the sender account,  
+                  RECEIVER_BLOCKED = Not allowed to send to the receiver account,  
+                  CREDIT_EXCEEDED = Transfer will cause bet credit to be negative,
+                enum:
+                  - INVALID_SENDER
+                  - INVALID_RECEIVER
+                  - USER_NOT_FOUND
+                  - DOWNLINE_SENDER_INVALID
+                  - DOWNLINE_RECEIVER_INVALID
+                  - INVALID_AMOUNT
+                  - SENDER_BLOCKED
+                  - RECEIVER_BLOCKED
+                  - CREDIT_EXCEEDED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
   /partner/v1/transfer-condition:
     get:
       tags:
