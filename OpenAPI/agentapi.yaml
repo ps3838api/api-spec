@@ -1263,45 +1263,49 @@ paths:
           schema:
             type: object
             properties:
-              usercode:
-                type: string
-                example: 00A
-                description: Usercode of account to be updated.
-              agentCommissionData:
+              setting:
                 type: object
+                description: ''
                 properties:
-                  groupCode:
+                  usercode:
                     type: string
-                    description: Group Code (e.g. A)
-                    example: A
-                  commission:
-                    type: number
-                    format: double
-                    description: Commission Amount
-                    example: 1.5
-                description: Commission settings for Agent Level. Send null if updating PL Level.
-              playerCommissionData:
-                type: object
-                properties:
-                  oddsGroup:
-                    type: string
-                    description: Odds Group. Send null if not updating oddsGroup.
-                    example: A
-                  inplayOddsGroup:
-                    type: string
-                    description: Inplay Odds Group. Send null if not updating inplayOddsGroup.
-                    example: B
-                  commission:
-                    type: number
-                    format: double
-                    description: Pregame Commission Settings.
-                    example: 1.5
-                  inplayCommission:
-                    type: number
-                    format: double
-                    description: Inplay Commission Settings.
-                    example: 2.5
-                description: Odds Group and Commission settings for Player Level. Send null if updating agent (not PL) Level.
+                    example: 00A
+                    description: Usercode of account to be updated.
+                  agentCommissionData:
+                    type: object
+                    properties:
+                      groupCode:
+                        type: string
+                        description: Group Code (e.g. A)
+                        example: A
+                      commission:
+                        type: number
+                        format: double
+                        description: Commission Amount
+                        example: 1.5
+                    description: Commission settings for Agent Level. Send null if updating PL Level.
+                  playerCommissionData:
+                    type: object
+                    properties:
+                      oddsGroup:
+                        type: string
+                        description: Odds Group. Send null if not updating oddsGroup.
+                        example: A
+                      inplayOddsGroup:
+                        type: string
+                        description: Inplay Odds Group. Send null if not updating inplayOddsGroup.
+                        example: B
+                      commission:
+                        type: number
+                        format: double
+                        description: Pregame Commission Settings.
+                        example: 1.5
+                      inplayCommission:
+                        type: number
+                        format: double
+                        description: Inplay Commission Settings.
+                        example: 2.5
+                    description: Odds Group and Commission settings for Player Level. Send null if updating agent (not PL) Level.
       responses:
         '200':
           description: OK
