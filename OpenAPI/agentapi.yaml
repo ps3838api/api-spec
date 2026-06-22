@@ -1295,7 +1295,7 @@ paths:
                         type: string
                         description: Inplay Odds Group. Send null if not updating inplayOddsGroup.
                         example: B
-                      commission:
+                      pregameCommission:
                         type: number
                         format: double
                         description: Pregame Commission Settings.
