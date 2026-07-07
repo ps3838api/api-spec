@@ -788,6 +788,604 @@ paths:
               message:
                 type: string
       deprecated: false
+  /partner/v1/commission:
+    get:
+      tags:
+        - Commission Setting
+      summary: Get Commission Setting – v1
+      description: Gets Commission Setting for the account(s) requested.
+      operationId: CommissionSetting_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: level
+          in: query
+          description: 'Agent Level to be returned. If provided, must be one of the following [PART, CORP, SMA, MA, AG, PL].'
+          required: false
+          type: string
+          enum:
+            - PART
+            - CORP
+            - SMA
+            - MA
+            - AG
+            - PL
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Page size in case. Max is 1000.
+          required: false
+          type: integer
+          default: 1000
+        - name: fromRecord
+          in: query
+          description: 'Starting record (inclusive) of the result. To fetch next page set it to toRecord+1 '
+          required: false
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: true
+              pageSize:
+                type: integer
+                description: The requested page size. Default is 1000.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set. Records start at zero
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 999
+              reportDateTime:
+                type: string
+                format: date-time
+                example: '2024-06-13T15:24:48Z'
+                description: Date and time of the response.
+              agents:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Account username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Account nickname (return null if not set).
+                      example: ABC123
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: PL
+                    status:
+                      type: string
+                      description: Account Status.
+                      enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                        - CLOSED
+                        - COSUSP
+                        - COINACT
+                        - FAILED_LOGINS
+                      example: ACTIVE
+                    commissionMath:
+                      type: string
+                      description: Commission Math.
+                      enum:
+                        - GROSS
+                        - TOPDOWN
+                      example: GROSS
+                    agentCommissionData:
+                      type: array
+                      nullable: true
+                      description: Commission settings for Agent Level. Return null if account is PL level.
+                      items:
+                        type: object
+                        properties:
+                          group:
+                            type: string
+                            description: Group Name (e.g. Soccer games)
+                            example: Soccer games
+                          commissionGroupSettings:
+                            type: array
+                            description: Group Settings
+                            items:
+                              type: object
+                              properties:
+                                groupCode:
+                                  type: string
+                                  description: Group Code (e.g. A)
+                                  example: A
+                                commission:
+                                  type: number
+                                  format: double
+                                  example: 2.15
+                                  description: Commission Amount
+                    oddsGroup:
+                      type: string
+                      nullable: true
+                      description: Odds Group for PL level account. Return null if account is Agent level.
+                      example: A
+                    inplayOddsGroup:
+                      type: string
+                      nullable: true
+                      description: Inplay Odds Group for PL level account. Return null if account is Agent level.
+                      example: B
+                    playerData:
+                      type: array
+                      nullable: true
+                      description: Commission settings for Player Level. Return null if account is Agent level.
+                      items:
+                        type: object
+                        properties:
+                          receiver:
+                            type: string
+                            description: Receiver Name (e.g. Company)
+                            example: Company
+                          pregameCommissionSettings:
+                            type: array
+                            description: Pregame Commission Settings.
+                            items:
+                              type: object
+                              properties:
+                                groupName:
+                                  type: string
+                                  description: Group Name (e.g. Soccer games)
+                                  example: Soccer games
+                                commission:
+                                  type: number
+                                  format: double
+                                  example: 2.15
+                                  description: Commission Amount
+                          inplayCommissionSettings:
+                            type: array
+                            description: Inplay Commission Settings.
+                            items:
+                              type: object
+                              properties:
+                                groupName:
+                                  type: string
+                                  description: Group Name (e.g. Soccer games)
+                                  example: Soccer games
+                                commission:
+                                  type: number
+                                  format: double
+                                  example: 2.15
+                                  description: Commission Amount
+                          customSettings:
+                            type: array
+                            description: Custom Settings. Return null if none set.
+                            items:
+                              type: object
+                              properties:
+                                sport:
+                                  type: string
+                                  description: Sport Name (e.g. Soccer).
+                                  example: Soccer
+                                league:
+                                  type: string
+                                  description: League Name (e.g. General).
+                                  example: General
+                                pregameOddsGroup:
+                                  type: string
+                                  description: Pregame Odds Group (e.g. A). Return null if none set.
+                                  example: A
+                                inplayOddsGroup:
+                                  type: string
+                                  description: Inplay Odds Group (e.g. A). Return null if none set.
+                                  example: A
+                                pregameCommissionSettings:
+                                  type: array
+                                  description: Pregame Commission Settings. Return null if none set.
+                                  items:
+                                    type: object
+                                    properties:
+                                      groupName:
+                                        type: string
+                                        description: Group Name (e.g. Soccer games)
+                                        example: Soccer games
+                                      commission:
+                                        type: number
+                                        format: double
+                                        example: 2.15
+                                        description: Commission Amount
+                                inplayCommissionSettings:
+                                  type: array
+                                  description: Inplay Commission Settings. Return null if none set.
+                                  items:
+                                    type: object
+                                    properties:
+                                      groupName:
+                                        type: string
+                                        description: Group Name (e.g. Soccer games)
+                                        example: Soccer games
+                                      commission:
+                                        type: number
+                                        format: double
+                                        example: 2.15
+                                        description: Commission Amount
+          examples:
+            application/json:
+              moreAvailable: false
+              pageSize: 1000
+              fromRecord: 0
+              toRecord: 1
+              reportDateTime: '2026-05-14T05:18:06Z'
+              agents:
+                - username: ABC1
+                  nickname: null
+                  level: PART
+                  status: ACTIVE
+                  commissionMath: GROSS
+                  agentCommissionData:
+                    - group: Soccer games
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                    - group: Very high commission
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                    - group: High commission
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                    - group: Normal commission
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                    - group: Parlays
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                    - group: Teasers
+                      commissionGroupSettings:
+                        - groupCode: A
+                          commission: 0
+                        - groupCode: B
+                          commission: 0
+                        - groupCode: C
+                          commission: 0
+                        - groupCode: D
+                          commission: 0
+                        - groupCode: E
+                          commission: 0
+                  oddsGroup: null
+                  inplayOddsGroup: null
+                  playerData: null
+                - username: ABC00000
+                  nickname: null
+                  level: PL
+                  status: ACTIVE
+                  commissionMath: GROSS
+                  agentCommissionData: null
+                  oddsGroup: A
+                  inplayOddsGroup: B
+                  playerData:
+                    - receiver: Company
+                      pregameCommissionSettings:
+                        - groupName: Soccer games
+                          commission: -1.23
+                        - groupName: Very high commission
+                          commission: -1.23
+                        - groupName: High commission
+                          commission: -1.23
+                        - groupName: Normal commission
+                          commission: -1.23
+                        - groupName: Parlays
+                          commission: -1.23
+                        - groupName: Teasers
+                          commission: -1.23
+                      inplayCommissionSettings:
+                        - groupName: Soccer games
+                          commission: -1.56
+                        - groupName: Very high commission
+                          commission: -1.56
+                        - groupName: High commission
+                          commission: -1.56
+                        - groupName: Normal commission
+                          commission: -1.56
+                      customSettings: null
+                    - receiver: Member
+                      pregameCommissionSettings:
+                        - groupName: Soccer games
+                          commission: 1.23
+                        - groupName: Very high commission
+                          commission: 1.23
+                        - groupName: High commission
+                          commission: 1.23
+                        - groupName: Normal commission
+                          commission: 1.23
+                        - groupName: Parlays
+                          commission: 1.23
+                        - groupName: Teasers
+                          commission: 1.23
+                      inplayCommissionSettings:
+                        - groupName: Soccer games
+                          commission: 1.56
+                        - groupName: Very high commission
+                          commission: 1.56
+                        - groupName: High commission
+                          commission: 1.56
+                        - groupName: Normal commission
+                          commission: 1.56
+                      customSettings:
+                        - sport: Soccer
+                          league: General
+                          pregameOddsGroup: A
+                          inplayOddsGroup: B
+                          pregameCommissionSettings:
+                            - groupName: Soccer games
+                              commission: 0.03
+                          inplayCommissionSettings:
+                            - groupName: Soccer games
+                              commission: 0.07
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |
+                  INVALID_REQUEST = When data entered is in an invalid format,  
+                  USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,  
+                  PERMISSION_DENIED = User does not have permission to perform this action.,
+                enum:
+                  - INVALID_REQUEST
+                  - USER_NOT_FOUND
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
+    post:
+      tags:
+        - Commission Setting
+      summary: Set Commission Setting - v1
+      operationId: CommissionSetting_V1_Set
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Set Commission Setting.
+          required: true
+          schema:
+            type: object
+            properties:
+              setting:
+                type: object
+                description: ''
+                properties:
+                  usercode:
+                    type: string
+                    example: 00A
+                    description: Usercode of account to be updated.
+                  agentCommissionData:
+                    type: object
+                    properties:
+                      groupCode:
+                        type: string
+                        description: Group Code (e.g. A)
+                        example: A
+                      commission:
+                        type: number
+                        format: double
+                        description: Commission Amount
+                        example: 1.5
+                    description: Commission settings for Agent Level. Send null if updating PL Level.
+                  playerCommissionData:
+                    type: object
+                    properties:
+                      oddsGroup:
+                        type: string
+                        description: Odds Group. Send null if not updating oddsGroup.
+                        example: A
+                      inplayOddsGroup:
+                        type: string
+                        description: Inplay Odds Group. Send null if not updating inplayOddsGroup.
+                        example: B
+                      pregameCommission:
+                        type: number
+                        format: double
+                        description: Pregame Commission Settings.
+                        example: 1.5
+                      inplayCommission:
+                        type: number
+                        format: double
+                        description: Inplay Commission Settings.
+                        example: 2.5
+                    description: Odds Group and Commission settings for Player Level. Send null if updating agent (not PL) Level.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If the record fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: INVALID_COMMISSION
+                description: |
+                  PERMISSION_DENIED = User does not have permission to perform this action.,
+                  USER_NOT_FOUND = Account is not found.
+                  ACCOUNT_NOT_DIRECT = Account is not a direct downline.,    
+                  INVALID_COMMISSION = Commission amount is not valid.,  
+                  INVALID_ODDS_GROUP = Odds Group is not valid.,
+                enum:
+                  - PERMISSION_DENIED
+                  - USER_NOT_FOUND
+                  - ACCOUNT_NOT_DIRECT
+                  - INVALID_COMMISSION
+                  - INVALID_ODDS_GROUP
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+            description: ''
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
   /partner/v1/downline-transfer:
     post:
       tags:
