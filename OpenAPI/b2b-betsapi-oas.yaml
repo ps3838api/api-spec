@@ -1140,6 +1140,7 @@ components:
           description: Status of the request.
           enum:
             - ACCEPTED
+            - PENDING_ACCEPTANCE
             - PROCESSED_WITH_ERROR
         errorCode:
           type: string
