@@ -5203,6 +5203,277 @@ paths:
                 description: 'If processing catch exception, the status must be reported as ERROR.'
                 enum:
                   - ERROR
+  /partner/v1/win-loss-simple:
+    get:
+      tags:
+        - Win Loss Simple Report
+      summary: Win Loss Simple Report - v1
+      description: Gets the Win Loss Simple Report data.
+      operationId: WinLossSimple_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: fromDate
+          in: query
+          description: |-
+            From Date for the Report.
+
+            Must be in yyyy-MM-dd format.
+          required: true
+          type: string
+        - name: toDate
+          in: query
+          description: |-
+            To Date for the Report.
+
+            Must be in yyyy-MM-dd format.
+          required: true
+          type: string
+        - name: dateBy
+          in: query
+          description: |-
+            Date to be used.
+
+            If provided, must be an enum (see values below):
+
+            “GRADED”
+
+            “ACCEPTED”
+
+            “EVENT”
+
+            If not provided, default will be “GRADED”.
+          required: false
+          type: string
+          enum:
+            - GRADED
+            - ACCEPTED
+            - EVENT
+        - name: username
+          in: query
+          description: The username of the account for which to return data.
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: |-
+            Default: 1,000
+
+            Max Value: 1,000
+          required: false
+          type: integer
+          maximum: 1000
+        - name: fromRecord
+          in: query
+          description: |-
+            Default: 0
+
+            Starting record (inclusive) of the result.
+
+            To fetch next page, value to toRecord+1
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            description: Returns the Win Loss Analysis Report Data.
+            properties:
+              moreAvailable:
+                type: boolean
+                description: Indicates whether more pages are available.
+                example: false
+              pageSize:
+                type: integer
+                description: The requested page size.
+                example: 1000
+              fromRecord:
+                type: integer
+                description: Starting record number of the result set.
+                example: 0
+              toRecord:
+                type: integer
+                description: Ending record number of the result set.
+                example: 0
+              reportDateTime:
+                type: string
+                format: date-time
+                description: Date and time of the response.
+                example: '2026-03-31T23:59:59Z'
+              agents:
+                type: array
+                description: Contains a list of Agents.
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Account username.
+                      example: ABC123
+                    nickname:
+                      type: string
+                      description: Account nickname (return null if not set).
+                      example: null
+                    name:
+                      type: string
+                      description: Account Name
+                      example: ABC123
+                    level:
+                      type: string
+                      description: Agent Level.
+                      enum:
+                        - PART
+                        - CORP
+                        - SMA
+                        - MA
+                        - AG
+                        - PL
+                      example: PL
+                    currency:
+                      type: string
+                      description: Account Currency
+                      example: USD
+                    turnover:
+                      type: number
+                      format: double
+                      description: Turnover
+                      example: 100.53
+                    volume:
+                      type: number
+                      format: double
+                      description: Volume
+                      example: 100.77
+                    grossComm:
+                      type: number
+                      format: double
+                      description: Gross Commission
+                      example: 5.27
+                    payout:
+                      type: number
+                      format: double
+                      description: Payout Amount
+                      example: 95.26
+                    levelComm:
+                      allOf:
+                        - type: object
+                          properties:
+                            level:
+                              type: string
+                              description: Account Level
+                              enum:
+                                - PART
+                                - CORP
+                                - SMA
+                                - MA
+                                - AG
+                                - PL
+                              example: AG
+                            winLoss:
+                              type: number
+                              format: double
+                              description: Win Loss Amount
+                              example: 10.23
+                            comm:
+                              type: number
+                              format: double
+                              description: Commission Amount
+                              example: 1.59
+                            total:
+                              type: number
+                              format: double
+                              description: Total Amount
+                              example: 11.82
+                    company:
+                      type: number
+                      format: double
+                      description: Company Settlement Amount
+                      example: 83.44
+          examples:
+            application/json:
+              moreAvailable: false
+              pageSize: 1000
+              fromRecord: 0
+              toRecord: 0
+              reportDateTime: '2026-03-31T23:59:59Z'
+              agents:
+                - username: ABC123
+                  nickname: null
+                  name: ABC123
+                  level: PL
+                  currency: USD
+                  turnover: 100.53
+                  volume: 100.77
+                  grossComm: 5.27
+                  payout: 95.26
+                  levelComm:
+                    level: AG
+                    winLoss: 10.23
+                    comm: 1.59
+                    total: 11.82
+                  company: 83.44
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                description: |-
+                  INVALID_REQUEST = When data entered is in an invalid format,
+                  USER_NOT_FOUND = Account search is not in the same downline as the authenticated user,
+                  PERMISSION_DENIED = User does not have permission to perform this action,
+                enum:
+                  - INVALID_REQUEST
+                  - USER_NOT_FOUND
+                  - PERMISSION_DENIED
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
 securityDefinitions:
   apiKey:
     type: Bearer
