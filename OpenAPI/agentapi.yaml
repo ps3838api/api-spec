@@ -5203,6 +5203,179 @@ paths:
                 description: 'If processing catch exception, the status must be reported as ERROR.'
                 enum:
                   - ERROR
+  /partner/v1/user/search:
+    get:
+      tags:
+        - Search User
+      summary: Search User - v1
+      description: |
+        Gets the data for a User (Agent or Player).
+      operationId: UserSearch_V1_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: Optional. The username of the account for which to return data.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            description: Returns the User Data.
+            properties:
+              reportDateTime:
+                type: string
+                format: date-time
+                description: Date and time of the response.
+                example: '2026-11-04T05:18:06Z'
+              user:
+                type: object
+                description: User Object.
+                properties:
+                  username:
+                    type: string
+                    description: Account username.
+                    example: AGENT01
+                  nickname:
+                    type: string
+                    nullable: true
+                    description: Account nickname (return null if not set).
+                    example: null
+                  name:
+                    type: string
+                    description: Account Name
+                    example: Alex Agent
+                  level:
+                    type: string
+                    description: Agent Level.
+                    enum:
+                      - PART
+                      - CORP
+                      - SMA
+                      - MA
+                      - AG
+                      - PL
+                    example: AG
+                  currency:
+                    type: string
+                    description: Account Currency
+                    example: USD
+                  status:
+                    type: string
+                    description: Account Status
+                    enum:
+                      - ACTIVE
+                      - INACTIVE
+                      - SUSPENDED
+                      - CLOSED
+                      - CO.SUSP
+                      - CO.INACT
+                    example: ACTIVE
+                  lineInfo:
+                    type: array
+                    description: array of objects (lineData)
+                    items:
+                      type: object
+                      description: Line Data Object
+                      properties:
+                        level:
+                          type: string
+                          description: Account Level.
+                          enum:
+                            - PART
+                            - CORP
+                            - SMA
+                            - MA
+                            - AG
+                            - PL
+                          example: AG
+                        username:
+                          type: string
+                          description: Account Username.
+                          example: AGENT01
+                        currency:
+                          type: string
+                          description: Account Currency
+                          example: USD
+          examples:
+            application/json:
+              reportDateTime: '2026-11-04T05:18:06Z'
+              user:
+                username: AGENT01
+                nickname: null
+                name: Agent name
+                level: AG
+                currency: USD
+                status: ACTIVE
+                lineInfo:
+                  - level: MA
+                    username: MANAGER01
+                    currency: USD
+                  - level: AG
+                    username: AGENT01
+                    currency: USD
+        '400':
+          description: BadRequest
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                enum:
+                  - USER_NOT_FOUND
+                  - PERMISSION_DENIED
+                example: USER_NOT_FOUND
+              errorCode:
+                type: string
+                description: Error code.
+                enum:
+                  - INVALID_REQUEST_DATA
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: 'If processing catch exception, the status must be reported as ERROR.'
+                enum:
+                  - ERROR
+      deprecated: false
   /partner/v1/win-loss-simple:
     get:
       tags:
@@ -5474,179 +5647,6 @@ paths:
                 description: 'If processing catch exception, the status must be reported as ERROR.'
                 enum:
                   - ERROR
-  /partner/v1/user/search:
-    get:
-      tags:
-        - User
-      summary: Search User - v1
-      description: |
-        Gets the data for a User (Agent or Player).
-      operationId: UserSearch_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: username
-          in: query
-          description: Optional. The username of the account for which to return data.
-          required: false
-          type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            description: Returns the User Data.
-            properties:
-              reportDateTime:
-                type: string
-                format: date-time
-                description: Date and time of the response.
-                example: '2026-11-04T05:18:06Z'
-              user:
-                type: object
-                description: User Object.
-                properties:
-                  username:
-                    type: string
-                    description: Account username.
-                    example: AGENT01
-                  nickname:
-                    type: string
-                    nullable: true
-                    description: Account nickname (return null if not set).
-                    example: null
-                  name:
-                    type: string
-                    description: Account Name
-                    example: Alex Agent
-                  level:
-                    type: string
-                    description: Agent Level.
-                    enum:
-                      - PART
-                      - CORP
-                      - SMA
-                      - MA
-                      - AG
-                      - PL
-                    example: AG
-                  currency:
-                    type: string
-                    description: Account Currency
-                    example: USD
-                  status:
-                    type: string
-                    description: Account Status
-                    enum:
-                      - ACTIVE
-                      - INACTIVE
-                      - SUSPENDED
-                      - CLOSED
-                      - CO.SUSP
-                      - CO.INACT
-                    example: ACTIVE
-                  lineInfo:
-                    type: array
-                    description: array of objects (lineData)
-                    items:
-                      type: object
-                      description: Line Data Object
-                      properties:
-                        level:
-                          type: string
-                          description: Account Level.
-                          enum:
-                            - PART
-                            - CORP
-                            - SMA
-                            - MA
-                            - AG
-                            - PL
-                          example: AG
-                        username:
-                          type: string
-                          description: Account Username.
-                          example: AGENT01
-                        currency:
-                          type: string
-                          description: Account Currency
-                          example: USD
-          examples:
-            application/json:
-              reportDateTime: '2026-11-04T05:18:06Z'
-              user:
-                username: AGENT01
-                nickname: null
-                name: Alex Agent
-                level: AG
-                currency: USD
-                status: ACTIVE
-                lineInfo:
-                  - level: MA
-                    username: MANAGER01
-                    currency: USD
-                  - level: AG
-                    username: AGENT01
-                    currency: USD
-        '400':
-          description: BadRequest
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: REJECTED
-                description: 'If param filter fails validation, the status must be reported as REJECTED, the errorCode as INVALID_REQUEST_DATA will be in the response.'
-                enum:
-                  - REJECTED
-              rejectCode:
-                type: string
-                enum:
-                  - USER_NOT_FOUND
-                  - PERMISSION_DENIED
-                example: USER_NOT_FOUND
-              errorCode:
-                type: string
-                description: Error code.
-                enum:
-                  - INVALID_REQUEST_DATA
-        '401':
-          description: Unauthorized
-          schema:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Identifier representing the type of error that occurred.
-              message:
-                type: string
-                description: Description of the error.
-            description: Contains details of an error that was encountered.
-        '403':
-          description: Forbidden
-          schema:
-            type: object
-            properties:
-              code:
-                type: string
-                description: Identifier representing the type of error that occurred.
-              message:
-                type: string
-                description: Description of the error.
-            description: Contains details of an error that was encountered.
-        '500':
-          description: InternalServerError
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: ERROR
-                description: 'If processing catch exception, the status must be reported as ERROR.'
-                enum:
-                  - ERROR
-      deprecated: false
 securityDefinitions:
   apiKey:
     type: Bearer
