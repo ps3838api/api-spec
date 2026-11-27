@@ -6145,7 +6145,7 @@ paths:
                     description: Extra position-taking percentage. Mutually exclusive with preset.
       responses:
         '200':
-          description: Agent created successfully.
+          description: OK
           schema:
             type: object
             properties:
@@ -6157,7 +6157,7 @@ paths:
                   - SUCCESS
             description: ''
         '400':
-          description: The request was rejected because its data or a business rule was invalid.
+          description: BadRequest
           schema:
             type: object
             required:
