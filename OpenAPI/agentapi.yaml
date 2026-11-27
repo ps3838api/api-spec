@@ -5934,6 +5934,361 @@ paths:
                 description: 'If processing catch exception, the status must be reported as ERROR.'
                 enum:
                   - ERROR
+  /partner/v1/create-agent:
+    post:
+      tags:
+        - Create Agent
+      summary: Create Agent - v1
+      description: Creates a NORMAL direct-downline agent and its required sportsbook settings.
+      operationId: CreateAgent_V1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          description: Agent and optional sportsbook settings. Omitted settings use the applicable defaults inherited from the direct upline.
+          required: true
+          schema:
+            type: object
+            required:
+              - username
+              - password
+              - level
+            properties:
+              username:
+                type: string
+                minLength: 1
+                maxLength: 50
+                example: ABC1234
+                description: Username for the new agent. It must satisfy the target level's direct-downline length and upline-prefix rules.
+              password:
+                type: string
+                minLength: 8
+                maxLength: 15
+                example: Zq7!mN4@pL2#
+                description: Password containing at least one letter and one number. Additional password-policy rules may apply.
+              level:
+                type: string
+                example: AG
+                description: Agent level to create. It must be an eligible direct-downline level for the authenticated caller.
+                enum:
+                  - PART
+                  - CORP
+                  - SMA
+                  - MA
+                  - AG
+              firstName:
+                type: string
+                example: Test 123
+                description: 'Optional first name containing only letters, numbers, and spaces.'
+              lastName:
+                type: string
+                example: Agent 456
+                description: 'Optional last name containing only letters, numbers, and spaces.'
+              transferCondition:
+                type: object
+                description: 'Optional transfer schedule. If omitted, DAILY is used.'
+                required:
+                  - transferType
+                properties:
+                  transferType:
+                    type: string
+                    example: WEEKLY
+                    enum:
+                      - DAILY
+                      - WEEKLY
+                  transferDays:
+                    type: array
+                    description: Required and non-empty when transferType is WEEKLY. Duplicate values are not allowed.
+                    uniqueItems: true
+                    items:
+                      type: string
+                      enum:
+                        - MON
+                        - TUE
+                        - WED
+                        - THU
+                        - FRI
+                        - SAT
+                        - SUN
+              creditGiven:
+                type: object
+                description: 'Optional sportsbook credit settings. If omitted, zero-valued settings are created.'
+                required:
+                  - creditGiven
+                  - memberMaxCredit
+                properties:
+                  creditGiven:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 10
+                    description: Credit assigned to the new agent.
+                  downlineMaxCredit:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 5
+                    description: Maximum credit assignable to a downline. Required for non-AG targets and ignored for AG targets.
+                  memberMaxCredit:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 1
+                    description: Maximum credit assignable to a member.
+              commission:
+                type: array
+                description: 'Optional commission values. If omitted or empty, applicable upline defaults are inherited. When supplied, every applicable group must be represented once.'
+                items:
+                  type: object
+                  required:
+                    - groupCode
+                    - commission
+                  properties:
+                    groupCode:
+                      type: string
+                      example: A
+                      description: One uppercase commission group code.
+                    commission:
+                      type: number
+                      format: double
+                      minimum: 0
+                      maximum: 5
+                      example: 1
+                      description: 'Commission amount from 0 through 5, inclusive.'
+              betSetting:
+                type: object
+                description: 'Optional sportsbook bet settings. If omitted, applicable upline defaults are inherited.'
+                required:
+                  - minBet
+                  - maxBet
+                  - maxPerMatch
+                  - inplayMinBet
+                  - inplayMaxBet
+                  - apiMinBet
+                  - apiMaxBet
+                properties:
+                  minBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 1
+                    description: Pregame minimum bet.
+                  maxBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 100
+                    description: Pregame maximum bet.
+                  maxPerMatch:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 100
+                    description: Maximum bet per match.
+                  inplayMinBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 1
+                    description: Inplay minimum bet.
+                  inplayMaxBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 100
+                    description: Inplay maximum bet.
+                  apiMinBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 1
+                    description: API minimum bet.
+                  apiMaxBet:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 100
+                    description: API maximum bet.
+              positionTaking:
+                type: object
+                description: 'Optional sportsbook position-taking settings. If supplied, exactly one of preset and extraPT is required. If omitted, applicable defaults are used.'
+                required:
+                  - minPos
+                  - maxPos
+                properties:
+                  minPos:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 0
+                    description: Minimum position-taking percentage.
+                  maxPos:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 0
+                    description: Maximum position-taking percentage.
+                  preset:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 100
+                    description: Preset position-taking percentage. Mutually exclusive with extraPT.
+                  extraPT:
+                    type: number
+                    format: double
+                    minimum: 0
+                    example: 0
+                    description: Extra position-taking percentage. Mutually exclusive with preset.
+      responses:
+        '200':
+          description: Agent created successfully.
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+                description: Status of the response.
+                enum:
+                  - SUCCESS
+            description: ''
+        '400':
+          description: The request was rejected because its data or a business rule was invalid.
+          schema:
+            type: object
+            required:
+              - status
+              - rejectCode
+              - errorCode
+            properties:
+              status:
+                type: string
+                example: REJECTED
+                description: Business rejection status.
+                enum:
+                  - REJECTED
+              rejectCode:
+                type: string
+                example: INVALID_USERNAME
+                description: |
+                  INVALID_REQUEST = Request data is not valid.  
+                  INVALID_USERNAME = Username is not valid.  
+                  INVALID_PASSWORD = Password is not valid.  
+                  DAYS_NOT_SPECIFIED = Transfer days are required for a weekly transfer.  
+                  INVALID_CREDIT = Credit setting is not valid.  
+                  SYSTEM_SECURITY_BLOCK_BALANCE = Credit given exceeds the configured maximum exposure.  
+                  CREDIT_EXCEEDS_PARENT_DOWNLINE = Credit given exceeds the upline downline maximum credit.  
+                  INVALID_ODDS_GROUP = Odds group is not valid.  
+                  INVALID_COMMISSION = Commission amount is not valid.  
+                  MIN_BET_EXCEEDS_MAX_BET = Pregame minimum bet exceeds the maximum bet.  
+                  MIN_BET_EXCEEDS_MAX_PER_MATCH = Pregame minimum bet exceeds the maximum bet per match.  
+                  MAX_BET_EXCEEDS_MAX_PER_MATCH = Pregame maximum bet exceeds the maximum bet per match.  
+                  INPLAY_MIN_BET_EXCEEDS_MAX_BET = Inplay minimum bet exceeds the maximum bet.  
+                  INPLAY_MIN_BET_EXCEEDS_MAX_PER_MATCH = Inplay minimum bet exceeds the maximum bet per match.  
+                  INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH = Inplay maximum bet exceeds the maximum bet per match.  
+                  API_MIN_BET_EXCEEDS_MAX_BET = API minimum bet exceeds the maximum bet.  
+                  API_MIN_BET_EXCEEDS_MAX_PER_MATCH = API minimum bet exceeds the maximum bet per match.  
+                  API_MAX_BET_EXCEEDS_MAX_PER_MATCH = API maximum bet exceeds the maximum bet per match.  
+                  MIN_BET_LESS_THAN_UPLINE = Pregame minimum bet is less than the upline minimum bet.  
+                  MAX_BET_EXCEEDS_UPLINE = Pregame maximum bet exceeds the upline maximum bet.  
+                  MAX_PER_MATCH_EXCEEDS_UPLINE = Pregame maximum bet per match exceeds the upline maximum bet per match.  
+                  INPLAY_MIN_BET_LESS_THAN_UPLINE = Inplay minimum bet is less than the upline minimum bet.  
+                  INPLAY_MAX_BET_EXCEEDS_UPLINE = Inplay maximum bet exceeds the upline maximum bet.  
+                  INPLAY_MAX_PER_MATCH_EXCEEDS_UPLINE = Inplay maximum bet per match exceeds the upline maximum bet per match.  
+                  API_MIN_BET_LESS_THAN_UPLINE = API minimum bet is less than the upline minimum bet.  
+                  API_MAX_BET_EXCEEDS_UPLINE = API maximum bet exceeds the upline maximum bet.  
+                  API_MAX_PER_MATCH_EXCEEDS_UPLINE = API maximum bet per match exceeds the upline maximum bet per match.  
+                  INVALID_MIN_POS = Minimum position taking is not valid.  
+                  INVALID_MAX_POS = Maximum position taking is not valid.  
+                  INVALID_POSITION_TAKING_SELECTION = Specify exactly one of preset position taking and extra position taking.  
+                  MIN_POS_EXCEEDS_MAX_PT = Minimum position taking exceeds maximum position taking.  
+                  INVALID_PRESET = Preset position taking is not valid.  
+                  INVALID_EXTRA_PT = Extra position taking is not valid.   
+                  USER_LOGIN_NOT_ACTIVE = Upline user is not active.  
+                  ACCOUNT_CREATION_LIMIT_REACHED = Account creation limit has been reached.  
+                enum:
+                  - INVALID_REQUEST
+                  - INVALID_USERNAME
+                  - INVALID_PASSWORD
+                  - DAYS_NOT_SPECIFIED
+                  - INVALID_CREDIT
+                  - SYSTEM_SECURITY_BLOCK_BALANCE
+                  - CREDIT_EXCEEDS_PARENT_DOWNLINE
+                  - INVALID_ODDS_GROUP
+                  - INVALID_COMMISSION
+                  - MIN_BET_EXCEEDS_MAX_BET
+                  - MIN_BET_EXCEEDS_MAX_PER_MATCH
+                  - MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - INPLAY_MIN_BET_EXCEEDS_MAX_BET
+                  - INPLAY_MIN_BET_EXCEEDS_MAX_PER_MATCH
+                  - INPLAY_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - API_MIN_BET_EXCEEDS_MAX_BET
+                  - API_MIN_BET_EXCEEDS_MAX_PER_MATCH
+                  - API_MAX_BET_EXCEEDS_MAX_PER_MATCH
+                  - MIN_BET_LESS_THAN_UPLINE
+                  - MAX_BET_EXCEEDS_UPLINE
+                  - MAX_PER_MATCH_EXCEEDS_UPLINE
+                  - INPLAY_MIN_BET_LESS_THAN_UPLINE
+                  - INPLAY_MAX_BET_EXCEEDS_UPLINE
+                  - INPLAY_MAX_PER_MATCH_EXCEEDS_UPLINE
+                  - API_MIN_BET_LESS_THAN_UPLINE
+                  - API_MAX_BET_EXCEEDS_UPLINE
+                  - API_MAX_PER_MATCH_EXCEEDS_UPLINE
+                  - INVALID_MIN_POS
+                  - INVALID_MAX_POS
+                  - INVALID_POSITION_TAKING_SELECTION
+                  - MIN_POS_EXCEEDS_MAX_PT
+                  - INVALID_PRESET
+                  - INVALID_EXTRA_PT
+                  - USER_LOGIN_NOT_ACTIVE
+                  - ACCOUNT_CREATION_LIMIT_REACHED
+              errorCode:
+                type: string
+                example: INVALID_REQUEST_DATA
+                description: Public error category for create-agent business rejections.
+                enum:
+                  - INVALID_REQUEST_DATA
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Identifier representing the type of error that occurred.
+              message:
+                type: string
+                description: Description of the error.
+            description: Contains details of an error that was encountered.
+        '500':
+          description: InternalServerError
+          schema:
+            type: object
+            required:
+              - status
+            properties:
+              status:
+                type: string
+                example: ERROR
+                description: Unexpected processing failure.
+                enum:
+                  - ERROR
 securityDefinitions:
   apiKey:
     type: Bearer
